@@ -56,10 +56,10 @@ create table recipe(
 )default charset=utf8mb4;
 select * from recipe;
 
-insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip) values ('국·탕·찌개·전골','된장찌개','구수함이 끝내주는 된장찌개','양파(100g),감자(100g),된장(100g)','1,1,1','1.물을 보글보글 끓여주세요.\n2.된장을 풀어주세요.\n3.완성!!!');
-insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip) values ('국·탕·찌개·전골','김치찌개','묵은지의 깊은 맛이 느껴지는 김치찌개','양파(100g),감자(100g),김치(500g)','1,1,1','1.물을 보글보글 끓여주세요.\n2.김치와 재료를 넣어주세요.\n3.완성!!!');
-insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip) values ('국·탕·찌개·전골','야채국','깔끔하고 건강한 맛','양파(100g),감자(100g),당근(100g)','1,2,1','1.물을 보글보글 끓여주세요.\n2.야채를 넣어주세요.\n3.완성!!!');
-insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip) values ('밥·죽','카레라이스','간단하고 맛있는 한끼식사','양파(100g),감자(100g),당근(100g),카레(100g)','1,2,1,1','1.야채를 볶아주세요.\n2.물을 넣고 카레가루를 넣어주세요.\n3.완성!!!');
+insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('국·탕·찌개·전골','된장찌개','구수함이 끝내주는 된장찌개','양파(100g),감자(100g),된장(100g)','1,1,1','1.물을 보글보글 끓여주세요.<br>2.된장을 풀어주세요.<br>3.완성!!!', 'djj.jpg');
+insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('국·탕·찌개·전골','김치찌개','묵은지의 깊은 맛이 느껴지는 김치찌개','양파(100g),감자(100g),김치(500g)','1,1,1','1.물을 보글보글 끓여주세요.<br>2.김치와 재료를 넣어주세요.<br>3.완성!!!', 'kjj.jpg');
+insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('국·탕·찌개·전골','북어야채국','깔끔하고 건강한 맛','북어(100g),양파(100g),감자(100g),당근(100g)','1,1,2,1','1.물을 보글보글 끓여주세요.<br>2.야채를 넣어주세요.<br>3.완성!!!', 'bs.jpg');
+insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('밥·죽','카레라이스','간단하고 맛있는 한끼식사','양파(100g),감자(100g),당근(100g),카레(100g)','1,2,1,1','1.야채를 볶아주세요.<br>2.물을 넣고 카레가루를 넣어주세요.<br>3.완성!!!', 'crice.jpg');
 
 create table foodlist (
 	f_name varchar(30) not null,
@@ -74,6 +74,7 @@ insert into foodlist values ('오이(100g)', 900);
 insert into foodlist values ('된장(100g)', 2000);
 insert into foodlist values ('김치(500g)', 8000);
 insert into foodlist values ('카레(100g)', 1200);
+insert into foodlist values ('북어(100g)', 4000);
 
 use changgimarket;
 select * from foodcustomerlist;

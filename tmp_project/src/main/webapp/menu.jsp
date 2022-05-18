@@ -40,8 +40,10 @@
                     	}
                     	else if (session.getAttribute("seller") != null ){
                     %>
+                    <ul>
                     	<a href="<c:url value='/login/processlogout.jsp'/>"><li>로그아웃</li></a>
                         <a href="<c:url value='/login/store_management.jsp'/>"><li>점포관리</li></a>
+                    </ul>
                     <%
                     	}
                     %>
@@ -76,8 +78,8 @@
                     </ul>
                     <input type="checkbox" id="sitemap">
                     <ul>
-                        <a href="<c:url value='/about/aboutUs.jsp'/>"><li>회사소개</li></a>
-                        <li>레시피
+                        <a class="col-2" href="<c:url value='/about/aboutUs.jsp'/>"><li>회사소개</li></a>
+                       	<li><span class="col-2">레시피</span>                        	
                             <ul>
                                 <a href="<c:url value='/recipe/recipes.re?r_category=밥·죽&page=1'/>"><li>밥/죽</li></a>
                                 <a href="<c:url value='/recipe/recipes.re?r_category=국·탕·찌개·전골&page=1'/>"><li>국/탕/찌개/전골</li></a>
@@ -87,9 +89,9 @@
                                 <a href="<c:url value='/recipe/recipes.re?r_category=튀김&page=1'/>"><li>튀김</li></a>
                                 <a href="<c:url value='/recipe/recipes.re?r_category=나물&page=1'/>"><li>나물</li></a>
                                 <a href="<c:url value='/recipe/recipes.re?r_category=기타&page=1'/>"><li>기타</li></a>
-                            </ul>
-                        </li>
-                        <li>커뮤니티
+                            </ul>                            
+                       	</li>
+                        <li><span class="col-2">커뮤니티</span>
                             <ul>
                                 <a href="<c:url value='/community/notice.jsp'/>"><li>공지사항</li></a>
                                 <a href="<c:url value='/community/notice.jsp'/>"><li>게시판</li></a>

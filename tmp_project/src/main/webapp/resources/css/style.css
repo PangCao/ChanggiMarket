@@ -50,6 +50,7 @@ body > nav > div > div > div > ul:nth-of-type(1) > li > ul {
     display: none;
     position: absolute;
     top:110%;
+    left:-20px;
 }
 body > nav > div > div > div > ul:nth-of-type(1) > li {
     margin: 0 80px;
@@ -127,10 +128,13 @@ body > nav > div > div > div > ul:nth-of-type(2) {
 }
 body > nav > div:nth-of-type(2) > div > div > input:checked ~ ul {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     width: 100%;
     position: absolute;
     top : 50px;
+    border-radius: 0 0 5px 5px;
+    height : 180px;
+    animation: menuani 0.3s;
 }
 body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) {
     background: white;
@@ -138,16 +142,34 @@ body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) {
     padding-right : 40px;
     opacity: 0.9;
 }
+body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) > li {
+	display: flex;
+	align-items: center;
+}
+body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) > li > ul{
+	display: flex;
+	align-items: center;
+}
+@keyframes menuani {
+    from{height: 0;}
+    to{height: 180px;}
+}
 body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) > li, body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) > a {
     font-size: 20px;
     font-weight: 500;
     border: 1px;
     color: #28b421;
+    margin-top : 15px;
+}
+body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) > a {
+ 	display: flex;
+ 	align-items: center; 
 }
 body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) > li > ul > a > li {
     color: black;
     font-size: 16px;
     margin: 10px 0;
+    margin-right : 40px;
     font-weight: 400;
 }
 body > nav > div:nth-of-type(2) > div > div > ul:nth-of-type(2) > li > ul > a > li:hover{
@@ -1248,7 +1270,7 @@ body > .recipes > div:nth-of-type(2) > ul{
 body > .recipes > div:nth-of-type(2) > ul > a > li{
     margin-bottom: 10px;
 }
-body > .recipes > div:nth-of-type(2) > ul > a:nth-of-type(1) > li{
+body > .recipes > div:nth-of-type(2) > ul > .cupage > li{
     color: red;
 }
 body > .recipes > div:nth-of-type(2) > ul > a > li:hover{

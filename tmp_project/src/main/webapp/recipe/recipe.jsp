@@ -60,7 +60,6 @@
                             			if (foods[i].equals(f_price.getF_name())){
                             				fo_price = f_price.getF_price();
                             				sum_price += fo_price*Integer.parseInt(foodunit[i]);
-                            				System.out.println(fo_price);
                             				break;
                             			}
                             		}

@@ -5,7 +5,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="/tmp_project/resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="/tmp_project/resources/css/style.css?ver=1.3">
+<link rel="stylesheet" href="/tmp_project/resources/css/style.css?ver=1.4">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">

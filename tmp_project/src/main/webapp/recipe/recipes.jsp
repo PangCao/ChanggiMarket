@@ -18,7 +18,7 @@
 	}
 %>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/style.css?ver=1.2">
+<link rel="stylesheet" href="../resources/css/style.css?ver=1.4">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +29,7 @@
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
-	    <section class="recipes">
+	<section class="recipes">
         <div class="container">
             <div>
                 <div class="col-6">
@@ -94,14 +94,14 @@
             		}
             		else {
            		%>
-   		                 <a href="./recipes.jsp?page=<%=cupage-1%>"><b>&gt;</b></a></p>
+   		                 <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage-1%>"><b>&gt;</b></a></p>
            		
            		<%
             			}
                 	int pagenum = (cnt/20)+1;
                 	for (int a = 0; a < pagenum; a++) {
                 %>
-                 	<a href="./recipes.jsp?page=<%=a+1%>"><%=a+1%></a>
+                 	<a href="./recipes.re?r_category=<%=ct %>&page=<%=a+1%>"><%=a+1%></a>
                	<%
                 	}
                 	if (pagenum == cupage) { 
@@ -111,7 +111,7 @@
                 	}
                 	else {
                	%>
-                <a href="./recipes.jsp?page=<%=cupage+1%>"><b>&gt;</b></a></p>
+                <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage+1%>"><b>&gt;</b></a></p>
                 <%
                 	}
                 %>
@@ -122,15 +122,98 @@
             <label for="recipe_menu"><i class="fa-solid fa-angles-left"></i><br><i class="fa-solid fa-angles-right"></i></label>
             <ul><h3>카테고리</h3>
                 <hr>
+                <%
+                	if (ct.equals("밥·죽")){
+                %>
+                <a href="./recipes.re?r_category=밥·죽&page=1" class="cupage"><li>밥 · 죽</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=밥·죽&page=1"><li>밥 · 죽</li></a>
+                <%
+                	}
+                	if (ct.equals("국·탕·찌개·전골")){
+                %>
+                <a href="./recipes.re?r_category=국·탕·찌개·전골&page=1" class="cupage"><li>국 · 탕 · 찌개 · 전골</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=국·탕·찌개·전골&page=1"><li>국 · 탕 · 찌개 · 전골</li></a>
+                <%
+                	}
+                	if (ct.equals("면")){
+                %>
+                <a href="./recipes.re?r_category=면&page=1" class="cupage"><li>면</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=면&page=1"><li>면</li></a>
+                <%
+                	}
+                	if (ct.equals("찜·조림")){
+                %>
+                <a href="./recipes.re?r_category=찜·조림&page=1" class="cupage"><li>찜 · 조림</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=찜·조림&page=1"><li>찜 · 조림</li></a>
+                <%
+                	}
+                	if (ct.equals("구이")){
+                %>
+                <a href="./recipes.re?r_category=구이&page=1" class="cupage"><li>구이</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=구이&page=1"><li>구이</li></a>
+                <%
+                	}
+                	if (ct.equals("볶음")){
+                %>
+                <a href="./recipes.re?r_category=볶음&page=1" class="cupage"><li>볶음</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=볶음&page=1"><li>볶음</li></a>
+                <%
+                	}
+                	if (ct.equals("튀김")){
+                %>
+                <a href="./recipes.re?r_category=튀김&page=1" class="cupage"><li>튀김</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=튀김&page=1"><li>튀김</li></a>
+                <%
+                	}
+                	if (ct.equals("나물")){
+                %>
+                <a href="./recipes.re?r_category=나물&page=1" class="cupage"><li>나물</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=나물&page=1"><li>나물</li></a>
+                <%
+                	}
+                	if (ct.equals("기타")){
+                %>
+                <a href="./recipes.re?r_category=기타&page=1" class="cupage"><li>기타</li></a>
+                <%
+                	}
+                	else {
+               	%>
                 <a href="./recipes.re?r_category=기타&page=1"><li>기타</li></a>
+                <%
+                	}
+                %>
             </ul>
             <form action="" method="post">
                 <h3>가격</h3>
