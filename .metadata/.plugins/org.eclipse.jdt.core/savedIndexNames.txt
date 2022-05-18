@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+C:\Users\UserK\Documents\카카오톡 받은 파일\1project (1)\.metadata\.plugins\org.eclipse.jdt.core
+3862712956.index
+991713640.index
+1865797976.index
+821801556.index

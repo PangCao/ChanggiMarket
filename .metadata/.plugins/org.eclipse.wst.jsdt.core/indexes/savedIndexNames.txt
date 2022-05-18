@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+C:\Users\UserK\Documents\카카오톡 받은 파일\1project (1)\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3862712956.index
+973011958.index
+2074737682.index
+1367988935.index
+1857939760.index
