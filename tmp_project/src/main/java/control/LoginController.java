@@ -45,7 +45,7 @@ public class LoginController extends HttpServlet{
 				rd.forward(request, response);
 			}
 			else {
-				response.sendRedirect("/tmp_project/login/login.jsp");
+				response.sendRedirect("/tmp_project/login/login.jsp?error=1");
 			}
 		}
 	}

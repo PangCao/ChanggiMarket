@@ -78,3 +78,6 @@ insert into foodlist values ('북어(100g)', 4000);
 
 use changgimarket;
 select * from foodcustomerlist;
+use yellow_bulb;
+
+select * from customer;

@@ -47,5 +47,15 @@
         </div>
     </section>
     <jsp:include page="/footer.jsp"/>
+    <%
+    	String error = request.getParameter("error");
+    	if (error != null && error.equals("1")) {
+    %>
+    	<script type="text/javascript">
+    		alert("아이디와 비밀번호를 다시 확인해주세요.");
+    	</script>
+    <%
+    	}
+    %>
 </body>
 </html>
