@@ -5,7 +5,7 @@
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="../resources/css/style.css?ver=1.2">
-<script type="text/javascript" src="../resources/js/validate.js?ver=1.2"></script>
+<script type="text/javascript" src="../resources/js/validate.js?ver=2.4"></script>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +15,33 @@
 <meta charset="UTF-8">
 <title>사업자 고객 회원가입</title>
 </head>
+<script type="text/javascript">
+	function idChk() {
+		var id = document.getElementById("id").value;
+		
+		if (id == "") {
+			alert("사용하실 아이디를 입력 후 ID 중복 체크를 하십시오.");
+			document.getElementById("id").focus();
+			return false;
+		}
+		
+		var ajax = new Ajax.Request("/idchk.lo?id=idChk",{
+			method : "post",
+			parameters : Form.serialize("signForm"),
+			onComplete : callbacka
+		});
+	}
+	function callbacka(originalRequest) {
+		var forward = originalRequest.responseText;
+		
+		if (forward == "idChkNo") {
+			alert("이미 존재하는 아이디입니다.");
+		}\
+		else {
+			alert("사용이 가능한 아이디 입니다.")
+		}
+	}
+</script>
 <body>
 	<jsp:include page="/menu.jsp"/>
     <section class="seller_signup">
@@ -31,8 +58,8 @@
                 <form action="seller_signup.lo" method="post" name="signForm" class="form-horizatal col-9">
                     <div class="form-group row">
                         <label class="col-3">아이디 <span>*</span></label>
-                        <input name="id" id="id" type="text" placeholder="아이디(920907v)" required class="form-control col-5">
-                        <input type="button" value="중복확인" class="btn btn-secondary ml-2 col-3">
+                        <input name="id" id="id" type="text" placeholder="아이디(920907v)" required class="form-control col-5 id">
+                        <input id="idchk" type="button" value="중복확인" class="btn btn-secondary ml-2 col-3 idchk" onclick="idChk()">
                     </div>
                     <div class="form-group row">
                         <label class="col-3">비밀번호 <span>*</span></label>

@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.*;
 import dto.customer;
 
@@ -48,9 +49,52 @@ public class LoginController extends HttpServlet{
 				response.sendRedirect("/tmp_project/login/login.jsp?error=1");
 			}
 		}
+		else if (command.equals("/login/idchk.lo")) {
+			
+		}
 	}
 
-	
+	public int checkId(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String id = request.getParameter("id");
+		int re_idchk = 2;
+		
+		try {
+			String sql = "select * from seller where s_id=?";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				re_idchk = 1;
+			}
+			else {
+				re_idchk = 0;
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return re_idchk;
+	}
 	public Connection conn() {
 		Connection conn = null;
 		String url = "jdbc:mysql://localhost:3306/changgimarket?ServerTimezone=Asia/Seoul&useSSL=false";
