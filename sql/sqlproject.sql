@@ -15,6 +15,7 @@ create table customer
     c_s_Marketting boolean default false,
     c_e_marketting boolean default false,
     c_point int default 0,
+    c_class varchar(10) default 'Bronze', 
     primary key(c_id))default charset=utf8mb4;
     
 insert into customer values ('cus1', '1234', '고객1', 'cus1@cus.cus', '000-0000-0000', '고객의 주소를 입력', '선택안함','2022-05-17',true, true, 0);

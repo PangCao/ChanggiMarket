@@ -7,10 +7,22 @@
 <%	
 	String name = "";
 	int point = 0;
+	String c_class = "";
+	float dis = 0;
 	if (session.getAttribute("userInfo") != null){
 		customer cu = (customer)session.getAttribute("userInfo");
 		name = cu.getName();
 		point = cu.getPoint();
+		c_class = cu.getC_class();
+	}
+	if (c_class.equals("BRONZE")) {
+		dis = 1.0f;
+	}
+	else if (c_class.equals("SILVER")) {
+		dis = 3.0f;
+	}
+	else if (c_class.equals("GOLD")) {
+		dis = 5.0f;
 	}
 %>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
@@ -33,7 +45,7 @@
                     <div>
                         <i class="fa-solid fa-user"></i>
                         <p>안녕하세요. <%=name %>님</p>
-                        <p>GOLD 등급 | 0.5%적립</p>
+                        <p><%=c_class %> 등급 | <%=dis%>%적립</p>
                     </div>
                     <div>
                         <h5>적립금 &gt;</h5>

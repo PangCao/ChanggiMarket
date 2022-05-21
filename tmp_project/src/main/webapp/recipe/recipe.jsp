@@ -21,6 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
@@ -41,7 +42,7 @@
                         <h5 class="col-4">배송비</h5>
                         <p class="col-8">3,000원 / 3만원 이상 구매 시 무료배송</p>
                     </div>
-                    <form action="">
+                    <form action="" method="post" name="cartForm" id="cartForm">
                         <table class="table">
                             <tr>
                                 <th class="col-1"></th>
@@ -53,6 +54,7 @@
                             	String[] foods = rp.getR_product().split(",");
                             	String[] foodunit = rp.getR_unit().split(",");
                             	int sum_price = 0;
+                            	int foodlen = foods.length;
                             	for (int i = 0; i < foods.length; i++) {
                                 	int fo_price = 0;                                	
                             		for (int j = 0; j < fp.size(); j++) {
@@ -65,22 +67,86 @@
                             		}
                             %>
                             <tr class="form-group">
-                                <td><input type="checkbox" checked></td>
+                                <td><input type="checkbox" id="p_chk<%=i %>" onclick="p_chked<%=i %>()" checked></td>
                                 <td class="align-middle"><%=foods[i] %></td>
-                                <td><input type="number" value="<%=foodunit[i]%>" min="1" class="form-control"></td>
-                                <td class="align-middle text-right"><%=Integer.parseInt(foodunit[i])*fo_price %>원</td>
+                                <input type="hidden" name="foods<%=i %>" value="<%=foods[i] %>">
+                                <td><input type="number" name="foodnum<%=i %>" value="<%=foodunit[i]%>" min="0" class="form-control" onchange="p_change<%=i%>()" id="food_num<%=i%>"></td>
+                                <td class="align-middle text-right" id="priceview<%=i%>"><%=fo_price*Integer.valueOf(foodunit[i]) %>원</td>
+                                <input type="hidden" name="foodprice<%=i %>" value="<%=fo_price%>" id="pricechk<%=i%>">
+                                <input type="hidden" value="<%=fo_price*Integer.valueOf(foodunit[i]) %>" id="pricevalue<%=i%>">
                             </tr>
+                            <script type="text/javascript">
+                            	function p_chked<%=i%>() {
+                            		if (document.getElementById("p_chk<%=i%>").checked == true) {
+                            			document.getElementById("food_num<%=i%>").value = <%=foodunit[i]%>;
+                            			document.getElementById("food_num<%=i%>").disabled = false;
+                            			var foodnum<%=i%> = document.getElementById("food_num<%=i%>").value;
+    									var pricechk<%=i%> = document.getElementById("pricechk<%=i%>").value;
+    									document.getElementById("pricevalue<%=i%>").value = foodnum<%=i%>*pricechk<%=i%>;
+    									document.getElementById("priceview<%=i%>").innerHTML = (foodnum<%=i%>*pricechk<%=i%>) + "원";
+    									var sum = Number(0);
+    									var s_price = Number(0);
+                                		for (var j = 0; j < <%=foodlen%>; j++) {
+                                			var sum_name = "pricevalue"+j;
+                                			s_price = document.getElementById(sum_name).value;                           			
+                                			sum = Number(sum) + Number(s_price);
+                                		}
+                                		document.getElementById('sum_price').innerHTML = sum + "원";
+                            		}
+                            		else if (document.getElementById("p_chk<%=i%>").checked == false) {
+                            			document.getElementById("food_num<%=i%>").value = 0;
+                            			document.getElementById("food_num<%=i%>").disabled = true;
+                            			var foodnum<%=i%> = document.getElementById("food_num<%=i%>").value;
+    									var pricechk<%=i%> = document.getElementById("pricechk<%=i%>").value;
+    									document.getElementById("pricevalue<%=i%>").value = foodnum<%=i%>*pricechk<%=i%>;
+    									document.getElementById("priceview<%=i%>").innerHTML = (foodnum<%=i%>*pricechk<%=i%>) + "원";
+    									var sum = Number(0);
+    									var s_price = Number(0);
+                                		for (var j = 0; j < <%=foodlen%>; j++) {
+                                			var sum_name = "pricevalue"+j;
+                                			s_price = document.getElementById(sum_name).value;                           			
+                                			sum = Number(sum) + Number(s_price);
+                                		}
+                                		document.getElementById('sum_price').innerHTML = sum + "원";
+                            		} 
+                            	}
+								function p_change<%=i%>() {
+									var foodnum<%=i%> = document.getElementById("food_num<%=i%>").value;
+									var pricechk<%=i%> = document.getElementById("pricechk<%=i%>").value;
+									document.getElementById("pricevalue<%=i%>").value = foodnum<%=i%>*pricechk<%=i%>;
+									document.getElementById("priceview<%=i%>").innerHTML = (foodnum<%=i%>*pricechk<%=i%>) + "원";
+									var sum = Number(0);
+									var s_price = Number(0);
+                            		for (var j = 0; j < <%=foodlen%>; j++) {
+                            			var sum_name = "pricevalue"+j;
+                            			s_price = document.getElementById(sum_name).value;                           			
+                            			sum = Number(sum) + Number(s_price);
+                            		}
+                            		document.getElementById('sum_price').innerHTML = sum + "원";
+								}
+							</script>
                             <%
                             	}
                             %>
                             <tr class="ans">
                                 <th colspan="2" class="text-center">총 합계 금액</th>
-                                <th colspan="2" class="text-right"><%=sum_price %>원</th>
+                                <th colspan="2" class="text-right" id="sum_price"><%=sum_price %>원</th>
+                                <input type="hidden" >
                             </tr>
                         </table>
                         <div class="form-group row">
-                            <a href="#" class="btn btn-secondary col-5">장바구니 담기</a>
-                            <a href="#" class="btn btn-danger col-5">바로 구매하기</a>
+	                        <script type="text/javascript">
+	                        	function addCart() {
+	                        		document.getElementById('cartForm').action = "addCart.ca?name=<%=rp.getR_name() %>&len=<%=foodlen%>&file=<%=rp.getR_img() %>";
+	                        		document.cartForm.submit();
+	                        	}
+	                        	function goCart() {
+	                        		document.getElementById('cartForm').action = "goCart.ca?name=<%=rp.getR_name() %>&len=<%=foodlen%>&file=<%=rp.getR_img() %>";
+	                        		document.cartForm.submit();
+	                        	}
+	                        </script>
+                            <button class="btn btn-secondary col-5" onclick="addCart()">장바구니 담기</button>
+                            <button class="btn btn-danger col-5" onclick="goCart()">바로 구매하기</button>
                         </div>
                     </form>
                 </div>

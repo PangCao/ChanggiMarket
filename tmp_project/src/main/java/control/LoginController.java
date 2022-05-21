@@ -140,7 +140,7 @@ public class LoginController extends HttpServlet{
 		
 		try {
 			dbconn = conn();
-			String sql = "insert into customer values (?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into customer values (?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			pstmt = dbconn.prepareStatement(sql);
 
@@ -155,6 +155,7 @@ public class LoginController extends HttpServlet{
 			pstmt.setBoolean(9, smarkvalue);
 			pstmt.setBoolean(10, emarkvalue);
 			pstmt.setInt(11, 0);
+			pstmt.setString(12, "bronze");
 			
 			pstmt.executeUpdate();
 
@@ -263,7 +264,7 @@ public class LoginController extends HttpServlet{
 		
 		try {
 			dbconn = conn();
-			String sql = "select c_id, c_name, c_addr, c_point from customer where c_id = (?) and c_password= (?)";
+			String sql = "select c_id, c_name, c_addr, c_point, c_class from customer where c_id = (?) and c_password= (?)";
 
 			pstmt = dbconn.prepareStatement(sql);		
 			pstmt.setString(1, id);
@@ -277,6 +278,7 @@ public class LoginController extends HttpServlet{
 				dto.setName(rt.getString(2));
 				dto.setAddr(rt.getString(3));
 				dto.setPoint(rt.getInt(4));
+				dto.setC_class(rt.getString(5));
 				login_ans=true;
 				request.setAttribute("user", dto);
 			}

@@ -25,5 +25,13 @@
   	<servlet-name>RecipeController</servlet-name>
   	<url-pattern>*.re</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>CartController</servlet-name>
+  	<servlet-class>control.CartController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CartController</servlet-name>
+  	<url-pattern>*.ca</url-pattern>
+  </servlet-mapping>
   
 </web-app>

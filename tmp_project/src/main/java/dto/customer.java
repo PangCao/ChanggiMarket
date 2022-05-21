@@ -6,6 +6,7 @@ public class customer implements Serializable{
 	private String name;
 	private String addr;
 	private int point;
+	private String c_class;
 	public String getId() {
 		return id;
 	}
@@ -29,6 +30,12 @@ public class customer implements Serializable{
 	}
 	public void setPoint(int point) {
 		this.point = point;
+	}
+	public String getC_class() {
+		return c_class;
+	}
+	public void setC_class(String c_class) {
+		this.c_class = c_class;
 	}
 	
 }
