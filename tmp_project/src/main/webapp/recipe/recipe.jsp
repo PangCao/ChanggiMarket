@@ -147,6 +147,18 @@
 	                        		document.cartForm.submit();
 	                        	}
                         	</script>
+                     	<%
+                     		}
+                     		else if (session.getAttribute("seller") != null) {
+                       	%>
+                       		<script type="text/javascript">
+                        	function addCart() {
+                        		alert("판매자 아이디로 구매를 하실 수 없습니다.");                        		
+                        	}
+                        	function goCart() {
+                        		alert("판매자 아이디로 구매를 하실 수 없습니다.");
+                        	}
+                       	 	</script>
                        	<%
                         	}
                         	else{

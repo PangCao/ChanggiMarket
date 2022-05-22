@@ -25,18 +25,24 @@ public class CartController extends HttpServlet{
 		String uri = request.getRequestURI();
 		String context_p = request.getContextPath();
 		String command = uri.substring(context_p.length());
+		CartDao dao = CartDao.getDao();
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
 		if (command.equals("/recipe/addCart.ca")) {
-			CartDao.addCart(request);
+			dao.addCart(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/recipe/addCartClose.jsp");
 			rd.forward(request, response);
 		}
 		else if (command.equals("/recipe/goCart.ca")) {
-			CartDao.addCart(request);
+			dao.addCart(request);
 			response.sendRedirect("/tmp_project/cart/cart.jsp");
+		}
+		else if (command.equals("/cart/order.ca")) {
+			dao.order(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/cart/order_complete.jsp");
+			rd.forward(request, response);
 		}
 	}
 	

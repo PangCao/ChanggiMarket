@@ -9,8 +9,8 @@
 	int point = 0;
 	String c_class = "";
 	float dis = 0;
-	if (session.getAttribute("userInfo") != null){
-		customer cu = (customer)session.getAttribute("userInfo");
+	if (session.getAttribute("user") != null){
+		customer cu = (customer)session.getAttribute("user");
 		name = cu.getName();
 		point = cu.getPoint();
 		c_class = cu.getC_class();

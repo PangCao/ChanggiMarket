@@ -3,9 +3,9 @@ import java.sql.*;
 
 public class dbconn {
 
-		Connection conn = null;
+	public static Connection conn = null;
 
-	public Connection conn() throws ClassNotFoundException {
+	public static Connection conn() throws ClassNotFoundException {
 		String path = "jdbc:mysql://localhost:8080/changgimarket?serverTimezone=Asia/Seoul&useSSL=false";
 		String user = "root";
 		String pw = "1234";
@@ -20,7 +20,7 @@ public class dbconn {
 		return conn;
 	}
 	
-	public void connClose() {
+	public static void connClose(Connection conn) {
 		if(conn != null) {
 			try {
 				conn.close();

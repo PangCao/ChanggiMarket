@@ -18,9 +18,9 @@ create table customer
     c_class varchar(10) default 'Bronze', 
     primary key(c_id))default charset=utf8mb4;
     
-insert into customer values ('cus1', '1234', '고객1', 'cus1@cus.cus', '000-0000-0000', '고객의 주소를 입력', '선택안함','2022-05-17',true, true, 0);
-insert into customer values ('cus2', '1234', '고객1', 'cus1@cus.cus', '000-0000-0000', '고객의 주소를 입력', '선택안함','2022-05-17',true, true, 0);
-insert into customer values ('cus3', '1234', '고객1', 'cus1@cus.cus', '000-0000-0000', '고객의 주소를 입력', '선택안함','2022-05-17',true, true, 0);
+insert into customer values ('cus1', '1234', '고객1', 'cus1@cus.cus', '000-0000-0000', '고객의 주소를 입력', '선택안함','2022-05-17',true, true, 0, 'GOLD');
+insert into customer values ('cus2', '1234', '고객1', 'cus1@cus.cus', '000-0000-0000', '고객의 주소를 입력', '선택안함','2022-05-17',true, true, 0, 'SILVER');
+insert into customer values ('cus3', '1234', '고객1', 'cus1@cus.cus', '000-0000-0000', '고객의 주소를 입력', '선택안함','2022-05-17',true, true, 0, 'BRONZE');
 
 select * from customer;
 
@@ -82,3 +82,20 @@ select * from foodcustomerlist;
 use yellow_bulb;
 
 select * from customer;
+
+
+create table cusorder (
+	o_num int auto_increment,
+    o_date date,
+	o_id varchar(20) not null,
+    o_f_name varchar(30),
+    o_f_img varchar(100),
+    o_f_singname varchar(500),
+    o_f_singprice varchar(500),
+    o_f_singunit varchar(200),
+    o_addr varchar(100),
+    primary key(o_num),
+	foreign key(o_id) references customer(c_id) on delete cascade
+)default charset=utf8mb4;
+
+select * from cusorder;

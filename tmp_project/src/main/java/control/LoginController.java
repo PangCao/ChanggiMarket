@@ -300,8 +300,8 @@ public class LoginController extends HttpServlet{
 				sqlans2 = rt.getString(1);
 				login_ans=true;
 			}
-			if(session.getAttribute("sellerid") == null) {
-				session.setAttribute("sellerid", sqlans2);
+			if(session.getAttribute("seller") == null) {
+				session.setAttribute("seller", sqlans2);
 			}
 		}
 		catch (Exception e) {
