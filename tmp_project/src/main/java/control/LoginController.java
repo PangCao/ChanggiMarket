@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
 
@@ -265,7 +266,7 @@ public class LoginController extends HttpServlet{
 		try {
 			dbconn = conn();
 			String sql = "select c_id, c_name, c_addr, c_point, c_class from customer where c_id = (?) and c_password= (?)";
-
+			HttpSession session = request.getSession();
 			pstmt = dbconn.prepareStatement(sql);		
 			pstmt.setString(1, id);
 			pstmt.setString(2, pw);
@@ -280,9 +281,13 @@ public class LoginController extends HttpServlet{
 				dto.setPoint(rt.getInt(4));
 				dto.setC_class(rt.getString(5));
 				login_ans=true;
-				request.setAttribute("user", dto);
+				if (session.getAttribute("user") == null) {
+					session.setAttribute("user", dto);
+				}
 			}
-			request.setAttribute("userid", sqlans);			
+			if (session.getAttribute("userid") == null) {
+				session.setAttribute("userid", sqlans);		
+			}
 			
 			sql = "select s_id from seller where s_id = (?) and s_password= (?)";
 
@@ -295,7 +300,9 @@ public class LoginController extends HttpServlet{
 				sqlans2 = rt.getString(1);
 				login_ans=true;
 			}
-			request.setAttribute("sellerid", sqlans2);
+			if(session.getAttribute("sellerid") == null) {
+				session.setAttribute("sellerid", sqlans2);
+			}
 		}
 		catch (Exception e) {
 			e.getMessage();

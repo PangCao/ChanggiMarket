@@ -10,7 +10,6 @@
 	request.setCharacterEncoding("utf-8");
 	recipelist rp = (recipelist)request.getAttribute("sel_recipe");
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
-
 %>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="../resources/css/style.css?ver=1.3">
@@ -131,20 +130,42 @@
                             <tr class="ans">
                                 <th colspan="2" class="text-center">총 합계 금액</th>
                                 <th colspan="2" class="text-right" id="sum_price"><%=sum_price %>원</th>
-                                <input type="hidden" >
                             </tr>
                         </table>
                         <div class="form-group row">
+                        <%
+                        	if(session.getAttribute("user") != null){
+                        %>
 	                        <script type="text/javascript">
 	                        	function addCart() {
 	                        		document.getElementById('cartForm').action = "addCart.ca?name=<%=rp.getR_name() %>&len=<%=foodlen%>&file=<%=rp.getR_img() %>";
+	                        		document.getElementById('cartForm').target = "_blank";
 	                        		document.cartForm.submit();
 	                        	}
 	                        	function goCart() {
 	                        		document.getElementById('cartForm').action = "goCart.ca?name=<%=rp.getR_name() %>&len=<%=foodlen%>&file=<%=rp.getR_img() %>";
 	                        		document.cartForm.submit();
 	                        	}
-	                        </script>
+                        	</script>
+                       	<%
+                        	}
+                        	else{
+                       	 %>
+                       	 	<script type="text/javascript">
+                        	function addCart() {
+                        		alert("로그인을 하신 후 이용해주세요.");
+                        		document.getElementById('cartForm').action = "../login/login.jsp";
+                        		document.cartForm.submit();
+                        	}
+                        	function goCart() {
+                        		alert("로그인을 하신 후 이용해주세요.");
+                        		document.getElementById('cartForm').action = "../login/login.jsp";
+                        		document.cartForm.submit();
+                        	}
+                       	 	</script>
+                       	 <%
+                        	}
+                       	 %>
                             <button class="btn btn-secondary col-5" onclick="addCart()">장바구니 담기</button>
                             <button class="btn btn-danger col-5" onclick="goCart()">바로 구매하기</button>
                         </div>

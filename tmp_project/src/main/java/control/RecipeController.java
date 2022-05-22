@@ -119,7 +119,6 @@ public class RecipeController extends HttpServlet{
 					dbconn.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -173,7 +172,6 @@ public class RecipeController extends HttpServlet{
 					dbconn.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

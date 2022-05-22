@@ -2,18 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="dto.customer" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	String id = (String)request.getAttribute("userid");
-	String seller_id = (String)request.getAttribute("sellerid");
-	customer cu = (customer)request.getAttribute("user");
-	if (id != null && session.getAttribute("user") == null) {
-		session.setAttribute("user", id);
-		session.setAttribute("userInfo", cu);
-	}
-	if (seller_id != null && session.getAttribute("seller") == null) {
-		session.setAttribute("seller", seller_id);
-	}
-%>
 <body>
      <nav>
         <div>

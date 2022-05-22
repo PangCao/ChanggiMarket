@@ -1,20 +1,13 @@
 package control;
 
 import java.io.IOException;
-import java.sql.*;
 
-import dto.foodprice;
-import dto.recipelist;
-import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.mysql.jdbc.Connection;
 
 import dao.CartDao;
 
@@ -35,17 +28,15 @@ public class CartController extends HttpServlet{
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
-		CartDao dao = CartDao.getDao();
 		
 		if (command.equals("/recipe/addCart.ca")) {
-			dao.addCart(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipe.jsp");
+			CartDao.addCart(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/recipe/addCartClose.jsp");
 			rd.forward(request, response);
 		}
 		else if (command.equals("/recipe/goCart.ca")) {
-			dao.addCart(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/cart/cart.jsp");
-			rd.forward(request, response);
+			CartDao.addCart(request);
+			response.sendRedirect("/tmp_project/cart/cart.jsp");
 		}
 	}
 	

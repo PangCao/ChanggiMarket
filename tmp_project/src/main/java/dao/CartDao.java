@@ -1,5 +1,7 @@
 package dao;
 import dto.cartlist;
+import dto.foodprice;
+import dto.recipelist;
 
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class CartDao {
 		return  dao;
 	}
 	
-	public void addCart(HttpServletRequest request) {
+	public static void addCart(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("myCart") == null) {
 			ArrayList<cartlist> al = new ArrayList<cartlist>();
@@ -34,11 +36,12 @@ public class CartDao {
 		}
 		cl.setFoodName(name);
 		cl.setFoods(foods);
-		cl.setFoodunit(foods);
+		cl.setFoodunit(foodnum);
 		cl.setFoodprice(foodprice);
 		cl.setFilename(file);
 		ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
 		al.add(cl);
+		
 	}
 	
 }
