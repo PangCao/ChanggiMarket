@@ -12,6 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%
+	String id = (String)session.getAttribute("userid");
+%>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
@@ -25,7 +28,7 @@
                 <div class="form-group row">
                     <label class="col-2">작성자 <span>*</span></label>
                     <div class="col-10">
-                        <input type="text" name="" id="" class="form-control" placeholder="작성자를 입력해주세요.">
+                        <input type="text" name="" id="" value="<%= id %>" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -35,7 +38,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-2">내욜 <span>*</span></label>
+                    <label class="col-2">내용 <span>*</span></label>
                     <div class="col-10">
                         <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="내용을 입력해주세요." style="resize: none;"></textarea>
                     </div>

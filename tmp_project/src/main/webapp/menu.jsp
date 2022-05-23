@@ -21,7 +21,7 @@
                     %>                  
                     <ul>
                         <a href="<c:url value='/login/processlogout.jsp'/>"><li>로그아웃</li></a>
-                        <a href="<c:url value='/login/mypage.jsp'/>"><li>마이페이지</li></a>
+                        <a href="<c:url value='/login/mypage.ca?page=1'/>"><li>마이페이지</li></a>
                         <a href="<c:url value='/cart/cart.jsp'/>"><li>장바구니</li></a>
                     </ul>
                     <%

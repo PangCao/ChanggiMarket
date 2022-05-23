@@ -6,12 +6,26 @@ public class cartlist implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private int num;
 	private String foodName;
 	private String[] foods;
 	private String[] foodunit;
 	private String[] foodprice;
 	private String filename;
+	private String date;
 	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public String getFilename() {
 		return filename;
 	}

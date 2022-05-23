@@ -17,11 +17,6 @@
 		cnt = (Integer)request.getAttribute("cnt");
 	}
 %>
-<script type="text/javascript">
-	function add() {
-		window.open
-	}
-</script>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="../resources/css/style.css?ver=1.4">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
@@ -75,7 +70,7 @@
            		<div class="col-3">
            			<div>
            				<a href="./recipe.re?id=<%=rp.getR_id()%>"><img src="../resources/images/<%=rp.getR_img() %>" alt="" class="col-12"></a>
-                        <a href="addCartIcon.ca?id=<%=rp.getR_id()%>"><i class="fa-solid fa-cart-shopping"></i></a>           				
+                        <a href="addCartIcon.ca?id=<%=rp.getR_id()%>" target='_blank'><i class="fa-solid fa-cart-shopping"></i></a>           				
            			</div>
            			<a href="./recipe.jsp?id=<%=rp.getR_id()%>">
 	                    <h5><%=rp.getR_name()%></h5>

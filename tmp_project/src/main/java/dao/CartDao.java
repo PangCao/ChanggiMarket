@@ -23,6 +23,99 @@ public class CartDao {
 		return  dao;
 	}
 	
+	public void pagecnt(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("userid");
+		
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			dbconn = conn();
+			String sql = "select count(*) from cusorder where o_id=?";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			int cnt = rs.getInt(1);
+			String s_cnt = String.valueOf(cnt);
+			request.setAttribute("cnt", s_cnt);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void mypage(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("userid");
+		ArrayList<cartlist> al = new ArrayList<cartlist>(); 
+		
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			dbconn = conn();
+			String sql = "select * from cusorder where o_id=? order by o_date desc";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				cartlist ca = new cartlist();
+				ca.setNum(rs.getInt("o_num"));
+				ca.setFoodName(rs.getString("o_f_name"));
+				ca.setFoods(rs.getString("o_f_singname").split(","));
+				ca.setFoodprice(rs.getString("o_f_singprice").split(","));
+				ca.setFoodunit(rs.getString("o_f_singunit").split(","));
+				ca.setDate(rs.getString("o_date"));
+				ca.setFilename(rs.getString("o_f_img"));
+				
+				al.add(ca);			
+			}
+			request.setAttribute("mypage", al);
+		}
+		catch (Exception e ) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void addCartIcon(HttpServletRequest request) {
 		ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 		String id = request.getParameter("id");

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="dto.customer" %>
+<%@ page import="dto.cartlist" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,9 +26,44 @@
 	else if (c_class.equals("GOLD")) {
 		dis = 5.0f;
 	}
+	ArrayList<cartlist> al = (ArrayList<cartlist>)request.getAttribute("mypage"); 
+	
+	int cupage = Integer.parseInt(request.getParameter("page"));
+	int cnt = 0;
+	if (request.getAttribute("cnt") != null) {
+		String s_cnt = (String)request.getAttribute("cnt");
+		cnt = Integer.parseInt(s_cnt);
+	}
+	int min = (cupage-1) * 10;
+	int max = 0;
+	if (cupage * 10 > cnt){
+		max = cnt;
+	}
+	else {
+		max = cupage * 10;
+	}
+	System.out.println(cupage);
+	if (cupage == 1) {
+%>
+	<style type="text/css">
+		body > .mypage > div:nth-of-type(2) > div > div:nth-last-of-type(1) > p > a.pagenum:nth-of-type(<%=cupage%>){
+    		color: red;
+		}
+	</style>
+<%
+	}
+	else {
+%>
+	<style type="text/css">
+		body > .mypage > div:nth-of-type(2) > div > div:nth-last-of-type(1) > p > a.pagenum:nth-of-type(<%=cupage+1%>){
+    		color: red;
+		}
+	</style>
+<%
+	}
 %>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/style.css?ver=1.1">
+<link rel="stylesheet" href="../resources/css/style.css?ver=1.4">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +107,7 @@
 	                    <img src="../resources/images/logo_green.png" width="35%">
                     </div>
                     <ul>
-                        <a href="#"><li>주문 내역 <span>&gt;</span></li></a>
+                        <a href="mypage.ca?page=1"><li>주문 내역 <span>&gt;</span></li></a>
                         <a href="#"><li>찜한 상품<span>&gt;</span></li></a>
                         <a href="#"><li>배송지 관리<span>&gt;</span></li></a>
                         <a href="#"><li>상품 후기<span>&gt;</span></li></a>
@@ -92,13 +129,105 @@
                     </div>
                     <hr>
                     <div>
-                        <p>주문 내역이 없습니다.</p>
+                        <table class="table">
+                            <tr>
+                                <th class="col-2"></th>
+                                <th class="col-2">상품명</th>
+                                <th class="col-4" colspan="3">상세선택</th>
+                                <th class="col-2">합계</th>
+                                <th class="col-2">주문일</th>
+                            </tr>
+                            <%
+                            	for (int i = min; i < max; i++) {
+                            		cartlist ca = al.get(i);
+                            		int sum = 0;
+                            %>
+                            <tr>
+                            	<td><img src="../resources/images/<%=ca.getFilename() %>" alt=""></td>
+                                <td><%= ca.getFoodName() %></td>
+                                <td>
+                                    <ul>
+                                    <%
+                                    	for (int j = 0; j < ca.getFoods().length; j++) {
+                                    		String[] foods = ca.getFoods();
+                                    %>
+                                        <li><%= foods[j] %></li>
+                                    <%
+                                    	}
+                                    %>
+                                    </ul>
+                                </td>
+                                <td>
+                                	<ul>
+                                	<%
+                                		for (int x = 0; x < ca.getFoodprice().length; x++){
+                                			String[] foodprice = ca.getFoodprice();
+                                	%>
+                                    
+                                        <li><%=foodprice[x] %> 원</li>
+                                    <%
+                                		}
+                                    %>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                    <%
+                                    	for (int y = 0; y < ca.getFoodunit().length; y++) {
+                                    		String[] foodunit = ca.getFoodunit();
+                                    		String[] foodprice = ca.getFoodprice();
+                                    		sum += Integer.valueOf(foodunit[y]) * Integer.valueOf(foodprice[y]);
+                                    %>
+                                        <li><%=foodunit[y] %> 개</li>
+                                    <%
+                            			}
+                                    %>
+                                    </ul>
+                                </td>
+                                <td><%= sum %> 원</td>
+                                <td><%=ca.getDate() %><br><br>주문번호 : <%=ca.getNum() %></td>
+                            </tr>
+                            <%
+                            	}
+                            %>
+                        </table>
                     </div>
                     <hr>
                     <div>
                         <a href="../community/one_qna.jsp" class="btn btn-secondary">1:1 문의하기</a>
                     </div>
                 </div>
+                <div class="col-12">
+                <%
+            		if (cupage == 1){
+            	%>
+                <p><b>&lt;</b>
+                <%
+            		}
+            		else {
+           		%>
+   		                 <p><a href="mypage.ca?page=<%=cupage-1%>"><b>&lt;</b></a>
+           		
+           		<%
+            			}
+                	int pagenum = (cnt/10)+1;
+                	for (int a = 0; a < pagenum; a++) {
+                %>
+                 	<a href="mypage.ca?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+               	<%
+                	}
+                	if (pagenum == cupage) { 
+               	%>
+               		<b>&gt;</b></p>
+               	<%
+                	}
+                	else {
+               	%>
+                <a href="mypage.ca?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+                <%
+                	}
+                %>
+            	</div>
             </div>
         </div>
     </section>

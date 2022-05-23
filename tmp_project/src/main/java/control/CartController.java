@@ -48,7 +48,13 @@ public class CartController extends HttpServlet{
 		else if (command.equals("/recipe/addCartIcon.ca")) {
 			dao.price(request);
 			dao.addCartIcon(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/recipe/addCartClose.jsp");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/login/mypage.ca")) {
+			dao.mypage(request);
+			dao.pagecnt(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/login/mypage.jsp");
 			rd.forward(request, response);
 		}
 	}
