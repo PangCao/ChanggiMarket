@@ -1,5 +1,5 @@
 create database changgimarket;
-
+drop database changgimarket;
 use changgimarket;
 drop table customer;
 
@@ -79,7 +79,6 @@ insert into foodlist values ('북어(100g)', 4000);
 
 use changgimarket;
 select * from foodcustomerlist;
-use yellow_bulb;
 
 select * from customer;
 

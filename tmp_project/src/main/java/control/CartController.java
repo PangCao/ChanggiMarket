@@ -27,6 +27,7 @@ public class CartController extends HttpServlet{
 		String command = uri.substring(context_p.length());
 		CartDao dao = CartDao.getDao();
 		
+		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
@@ -42,6 +43,12 @@ public class CartController extends HttpServlet{
 		else if (command.equals("/cart/order.ca")) {
 			dao.order(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/cart/order_complete.jsp");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/recipe/addCartIcon.ca")) {
+			dao.price(request);
+			dao.addCartIcon(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.jsp");
 			rd.forward(request, response);
 		}
 	}

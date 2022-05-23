@@ -23,6 +23,110 @@ public class CartDao {
 		return  dao;
 	}
 	
+	public void addCartIcon(HttpServletRequest request) {
+		ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
+		String id = request.getParameter("id");
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		HttpSession session = request.getSession();
+		if (session.getAttribute("myCart") == null) {
+			ArrayList<cartlist> al = new ArrayList<cartlist>();
+			session.setAttribute("myCart", al);
+		}
+		
+		try {
+			dbconn = conn();
+			String sql = "select * from recipe where r_id=?";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			cartlist cl = new cartlist();
+			if (rs.next()) {
+				String name = rs.getString("r_name");
+				String r_foods = rs.getString("r_product");
+				String r_foodnum = rs.getString("r_unit");
+				String file = rs.getString("r_img");
+				String[] foods = r_foods.split(",");
+				String[] foodnum = r_foodnum.split(",");
+				String[] foodprice = new String[foods.length];
+				
+				for (int i = 0; i < foods.length; i++) {
+					for (int j = 0; j < fp.size(); j++) {
+						foodprice fpdto = fp.get(j);
+						if(fpdto.getF_name().equals(foods[i])) {
+							foodprice[i] = String.valueOf(fpdto.getF_price());
+							break;
+						}
+					} 
+				}
+				cl.setFoodName(name);
+				cl.setFoods(foods);
+				cl.setFoodunit(foodnum);
+				cl.setFoodprice(foodprice);
+				cl.setFilename(file);
+				ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
+				al.add(cl);	
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void price(HttpServletRequest request) {
+		Connection dbconn = null;
+		String sql = "select * from foodlist";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			ArrayList<foodprice> foodprice = RecipeDao.getFoodprice();
+			while (rs.next()) {
+				foodprice fp = new foodprice();
+				fp.setF_name(rs.getString("f_name"));
+				fp.setF_price(rs.getInt("f_price"));
+				foodprice.add(fp);				
+			}
+			request.setAttribute("foodprice", foodprice);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void addCart(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("myCart") == null) {

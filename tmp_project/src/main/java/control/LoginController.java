@@ -254,6 +254,7 @@ public class LoginController extends HttpServlet{
 	}
 	
 	public boolean login(HttpServletRequest request) {
+		
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		
@@ -272,6 +273,8 @@ public class LoginController extends HttpServlet{
 			pstmt.setString(2, pw);
 			rt = pstmt.executeQuery();
 			String sqlans =null;
+			System.out.println("여기");
+			System.out.println(id);
 			if (rt.next()) {
 				customer dto = new customer();
 				sqlans = rt.getString(1);
@@ -303,9 +306,11 @@ public class LoginController extends HttpServlet{
 			if(session.getAttribute("seller") == null) {
 				session.setAttribute("seller", sqlans2);
 			}
+			
 		}
 		catch (Exception e) {
-			e.getMessage();
+			System.out.println("여기2");
+			e.printStackTrace();
 		}
 		finally {
 			if (pstmt!=null) {
