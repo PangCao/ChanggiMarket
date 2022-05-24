@@ -33,5 +33,12 @@
   	<servlet-name>CartController</servlet-name>
   	<url-pattern>*.ca</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+  	<servlet-name>BoardController</servlet-name>
+  	<servlet-class>control.BoardController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>BoardController</servlet-name>
+  	<url-pattern>*.bo</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -102,7 +102,7 @@ body > nav > div > div > div > ul:nth-of-type(1) > li:nth-of-type(2):hover > ul 
     display: block;
     background-color: white;
     opacity: 0.9;
-    width: 120px;
+    width: 160px;
     padding: 0 20px;
 }
 body > nav > div > div > div > ul:nth-of-type(1) > li > ul > li> ul > li{
@@ -1807,3 +1807,22 @@ body > .cart > div > form > div:nth-of-type(2) > div > div > p {
     justify-content: space-between;
 }
 /*cart.jsp -------------------------------------end*/
+body > .o_complete {
+	min-height : 80vh;
+	width: 100vw;
+}
+body > .o_complete > .container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 80vh;
+	text-align: center;
+}
+body > .o_complete > .container > h1{
+	color : #28b421;
+	margin-bottom : 30px;
+}
+/*order_complete.jsp --------------------------start*/
+
+/*order_complete.jsp --------------------------end*/

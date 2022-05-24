@@ -7,24 +7,6 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/tmp_project/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="/tmp_project/resources/css/style.css?ver=1.4">
-<style type="text/css">
-	body > .o_complete {
-		min-height : 80vh;
-		width: 100vw;
-	}
-	body > .o_complete > .container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		min-height: 80vh;
-		text-align: center;
-	}
-	body > .o_complete > .container > h1{
-		color : #28b421;
-		margin-bottom : 30px;
-	}
-</style>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>

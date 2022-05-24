@@ -60,6 +60,7 @@
                             <ul>
                                 <a href="<c:url value='/community/notice.jsp'/>"><li>공지사항</li></a>
                                 <a href="<c:url value='/community/notice.jsp'/>"><li>게시판</li></a>
+                                <a href="<c:url value='/recipe/recipe_review.jsp'/>"><li>나만의 레시피</li></a>
                                 <a href="<c:url value='/community/faq.jsp'/>"><li>고객센터</li></a>
                             </ul>
                         </li>
@@ -83,6 +84,7 @@
                             <ul>
                                 <a href="<c:url value='/community/notice.jsp'/>"><li>공지사항</li></a>
                                 <a href="<c:url value='/community/notice.jsp'/>"><li>게시판</li></a>
+                                <a href="<c:url value='/recipe/recipe_review.jsp'/>"><li>나만의 레시피</li></a>
                                 <a href="<c:url value='/community/faq.jsp'/>"><li>고객센터</li></a>
                                 <a href="<c:url value='/community/faq.jsp'/>"><li>자주하는 질문</li></a>
                                 <a href="<c:url value='/community/one_qna.jsp'/>"><li>1:1 문의</li></a>
