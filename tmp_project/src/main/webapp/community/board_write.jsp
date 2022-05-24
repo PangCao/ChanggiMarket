@@ -80,7 +80,7 @@
 %>
 <script type="text/javascript">
 	function subwrite() {
-		document.boardForm.action = notice.bo;
+		document.boardForm.action = "notice_write.bo";
 		document.boardForm.submit();
 	}
 </script>

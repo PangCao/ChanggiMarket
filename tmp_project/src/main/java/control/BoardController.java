@@ -27,9 +27,20 @@ public class BoardController extends HttpServlet{
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
-		if (command.equals("/community/notice.bo")) {
+		if (command.equals("/community/notice_write.bo")) {
 			dao.noticewriter(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.bo");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/notice.bo")) {
+			dao.notice(request);
+			dao.bopage(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.jsp");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/notice_view.bo")) {
+			dao.noticeview(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp");
 			rd.forward(request, response);
 		}
 		
