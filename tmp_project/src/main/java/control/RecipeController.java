@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.sql.*;
 
+import dto.cartlist;
 import dto.foodprice;
 import dto.recipelist;
 import java.util.*;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
 
@@ -46,6 +48,78 @@ public class RecipeController extends HttpServlet{
 			price(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipe.jsp");
 			rd.forward(request, response);
+		}
+		else if (command.equals("/recipe/addCartIcon.ca")) {
+			addCartIcon(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.re");
+			rd.forward(request, response);
+		}
+	}
+	public void addCartIcon(HttpServletRequest request) {
+		ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
+		String id = request.getParameter("id");
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		HttpSession session = request.getSession();
+		if (session.getAttribute("myCart") == null) {
+			ArrayList<cartlist> al = new ArrayList<cartlist>();
+			session.setAttribute("myCart", al);
+		}
+		
+		try {
+			dbconn = conn();
+			String sql = "select * from recipe where r_id=?";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			cartlist cl = new cartlist();
+			if (rs.next()) {
+				String name = rs.getString("r_name");
+				String r_foods = rs.getString("r_product");
+				String r_foodnum = rs.getString("r_unit");
+				String file = rs.getString("r_img");
+				String[] foods = r_foods.split(",");
+				String[] foodnum = r_foodnum.split(",");
+				String[] foodprice = new String[foods.length];
+				
+				for (int i = 0; i < foods.length; i++) {
+					for (int j = 0; j < fp.size(); j++) {
+						foodprice fpdto = fp.get(j);
+						if(fpdto.getF_name().equals(foods[i])) {
+							foodprice[i] = String.valueOf(fpdto.getF_price());
+							break;
+						}
+					} 
+				}
+				cl.setFoodName(name);
+				cl.setFoods(foods);
+				cl.setFoodunit(foodnum);
+				cl.setFoodprice(foodprice);
+				cl.setFilename(file);
+				ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
+				al.add(cl);	
+			}
+			request.setAttribute("addchk", "true");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	public void sel_recipe(HttpServletRequest request) {

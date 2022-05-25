@@ -14,6 +14,14 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <%
+	request.setCharacterEncoding("utf-8");
+	String category = request.getParameter("category");
+	if (category.equals("notice")) {
+		category = "공지사항";
+	}
+	else if (category.equals("bulletin")) {
+		category = "게시판";
+	}
 	ArrayList<Boardlist> al = (ArrayList<Boardlist>)request.getAttribute("notice");
 	int cupage = 1;
 	if (request.getParameter("page") != null) {
@@ -59,8 +67,8 @@
         </div>
         <div class="container">
             <div>
-                <h3>공지사항</h3>
-                <p><i class="fa-solid fa-house"></i>&nbsp;HOME > 커뮤니티 > 공지사항</p>
+                <h3><%=category %></h3>
+                <p><i class="fa-solid fa-house"></i>&nbsp;HOME > 커뮤니티 > <%=category %></p>
             </div>
             <table class="table text-center">
                 <tr>
@@ -75,8 +83,21 @@
                 		Boardlist bl = al.get(i);
                 %>
                 	<tr>
-                		<td><%=bl.getId()%></td>
-                		<td><a href="notice_view.bo?id=<%=bl.getId()%>"><%=bl.getTitle() %></a></td>
+                		
+                		<%
+                			if (category.equals("공지사항")){
+                		%>
+                		<td><a href="notice_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=<%=category%>"><%=bl.getId()%></a></td>
+                		<td><a href="notice_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=<%=category%>"><%=bl.getTitle() %></a></td>
+                		<%
+                			}
+                			else {
+                		%>
+                		<td><a href="bulletin_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=<%=category%>"><%=bl.getId()%></a></td>
+                		<td><a href="bulletin_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=<%=category%>"><%=bl.getTitle() %></a></td>
+                		<%
+                			}
+                		%>
                 		<td><%=bl.getWriter()%></td>
                 		<td><%=bl.getDate()%></td>
                 		<td><%=bl.getHit()%></td>
@@ -86,7 +107,7 @@
                 %>
             </table>
             <div>
-                <a href="./board_write.jsp?category=notice" class="btn btn-secondary col-2">글쓰기</a>
+                <a href="./board_write.jsp?category=<%=category %>" class="btn btn-secondary col-2">글쓰기</a>
                 <form action="" method="post" class="col-4">
                     <input type="text" placeholder="검색어를 입력해주세요." class="form-control">
                     <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
@@ -94,33 +115,65 @@
             </div>
             <div class="col-12">
                 <%
-            		if (cupage == 1){
+	                if (category.equals("공지사항")){
+	            		if (cupage == 1){
             	%>
                 <p><b>&lt;</b>
                 <%
-            		}
-            		else {
+            			}
+            			else {
            		%>
    		                 <p><a href="notice.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
            		
            		<%
             			}
-                	int pagenum = (totalpage/10)+1;
-                	for (int a = 0; a < pagenum; a++) {
+                		int pagenum = ((totalpage-1)/10)+1;
+                		for (int a = 0; a < pagenum; a++) {
                 %>
                  	<a href="notice.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
                	<%
-                	}
-                	if (pagenum == cupage) { 
+	                	}
+	                	if (pagenum == cupage) { 
                	%>
                		<b>&gt;</b></p>
                	<%
-                	}
-                	else {
+	                	}
+	                	else {
                	%>
                 <a href="notice.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
                 <%
+                		}
                 	}
+	                else {
+     					if (cupage == 1){
+            	%>
+                <p><b>&lt;</b>
+                <%
+            			}
+            			else {
+           		%>
+   		                 <p><a href="bulletin.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
+           		
+           		<%
+            			}
+                		int pagenum = (totalpage/10)+1;
+                		for (int a = 0; a < pagenum; a++) {
+                %>
+                 	<a href="bulletin.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+               	<%
+	                	}
+	                	if (pagenum == cupage) { 
+               	%>
+               		<b>&gt;</b></p>
+               	<%
+	                	}
+	                	else {
+               	%>
+                <a href="bulletin.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+                <%
+                		}
+	                        	
+	                }
                 %>
             	</div>
         </div>

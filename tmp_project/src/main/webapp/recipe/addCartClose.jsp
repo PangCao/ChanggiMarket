@@ -8,6 +8,7 @@
 </head>
 <body>
 	<script type="text/javascript">
+		opener.document.getElementById('cartchk').value = '1';
 		window.close();
 	</script>
 </body>

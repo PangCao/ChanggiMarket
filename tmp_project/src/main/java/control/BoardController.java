@@ -27,6 +27,8 @@ public class BoardController extends HttpServlet{
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
+		
+		
 		if (command.equals("/community/notice_write.bo")) {
 			dao.noticewriter(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.bo");
@@ -35,15 +37,34 @@ public class BoardController extends HttpServlet{
 		else if (command.equals("/community/notice.bo")) {
 			dao.notice(request);
 			dao.bopage(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.jsp?category=notice");
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/notice_view.bo")) {
 			dao.noticeview(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp");
+			dao.bopage(request);
+			String page = request.getParameter("page");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=notice&page="+page);
 			rd.forward(request, response);
 		}
-		
+		else if (command.equals("/community/bulletin.bo")) {
+			dao.bulletin(request);
+			dao.bulletinbopage(request);			
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.jsp?category=bulletin");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/bulletin_view.bo")) {
+			dao.bulletinview(request);
+			dao.bulletinbopage(request);
+			String page = request.getParameter("page");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=bulletin&page="+page);
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/bulletin_write.bo")) {
+			dao.bulletinwriter(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/bulletin.bo");
+			rd.forward(request, response);
+		}
 	}
 
 }

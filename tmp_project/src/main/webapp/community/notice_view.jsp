@@ -5,7 +5,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/style.css?ver=1.1">
+<link rel="stylesheet" href="../resources/css/style.css?ver=1.23">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,36 +15,52 @@
 <title>Insert title here</title>
 <%
 	Boardlist bl = (Boardlist)request.getAttribute("viewInfo");
- 	
+ 	int cupage = Integer.valueOf(request.getParameter("page"));
+ 	int id = Integer.valueOf(request.getParameter("id"));
+ 	int next = id - 1;
+ 	int totalpage = (Integer)request.getAttribute("totalpage");
+ 	String category = request.getParameter("category");
+ 	String sub_title = "";
+	if (category.equals("notice")) {
+		category = "공지사항";
+	}
+	else if (category.equals("bulletin")) {
+		category = "게시판";
+	}
+	if (category.equals("공지사항")) {
+		sub_title = "NOTICE";
+	}
+	else if (category.equals("게시판")) {
+		sub_title = "BULLETIN";
+	}
 %>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
 	<section class="bo_view">
         <div class="container">
-            <h5><small>NOTICE</small></h5>
-            <h3>공지사항</h3>
+            <h5><small><%=sub_title %></small></h5>
+            <h3><%=category %></h3>
             <hr>
             <h3><%=bl.getTitle() %></h3>
             <hr>
             <div>
                 <div class="row">
                     <p><i class="fa-solid fa-pen"></i>&nbsp;<%=bl.getWriter() %></p>
-                    <p><i class="fa-solid fa-comment"></i>&nbsp; <%=bl.getHit() %></p>
+                    <p><i class="fa-solid fa-eye"></i>&nbsp; <%=bl.getHit() %></p>
                 </div>
                 <div>
                     <p><%=bl.getDate() %></p>
                 </div>
             </div>
-            <div>
-                 <img src="img/project-1.jpg" alt="" class="col-6">
-            </div>
             <p style="white-space: normal;">
-            <%
+            <%	
             	for (int i = 0; i < bl.getImg().length; i++){
+            		if (!(bl.getImg()[i].equals("")) && bl.getImg()[i] != null){
             %>
             	<img alt="" src="../resources/images/<%=bl.getImg()[i]%>" style="width:300px; height: 300px;">
             <%
+            		}
             	}
 			%>
             <%=bl.getContent() %></p>
@@ -54,11 +70,43 @@
                 <p>로그인한 회원만 댓글 등록이 가능합니다.</p>
             </div>
             <div>
-                <a href="#" class="btn btn-secondary col-2">다음글</a>
-                <a href="#" class="btn btn-success col-2">목록</a>
+            	<%
+            		if (next == 0) {
+            	%>
+                <a class="btn btn-secondary col-2" onclick="nonext()">다음글</a>
+                <%
+            		}
+            		else{
+            			if (category.equals("공지사항")){
+                %>
+                <a href="notice_view.bo?id=<%=next%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">다음글</a>
+                <%
+            			}
+            			else{
+            	%>
+            	<a href="bulletin_view.bo?id=<%=next%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">다음글</a>
+            	<%
+            			}
+            		}
+            		if(category.equals("공지사항")){
+                %>
+                <a href="./notice.bo?page=<%=cupage %>&category=<%=category %>" class="btn btn-success col-2">목록</a>
+                <%
+            		}
+            		else{
+                %>
+                <a href="./bulletin.bo?page=<%=cupage %>&category=<%=category %>" class="btn btn-success col-2">목록</a>
+                <%
+            		}
+                %>
             </div>
         </div>
     </section>
     <jsp:include page="/footer.jsp"/>
 </body>
+<script type="text/javascript">
+	function nonext() {
+		alert("현재 페이지가 마지막 페이지 입니다.");
+	}
+</script>
 </html>

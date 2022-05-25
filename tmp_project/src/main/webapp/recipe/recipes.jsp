@@ -11,10 +11,18 @@
 	ArrayList<recipelist> rl = (ArrayList<recipelist>)request.getAttribute("food");
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 	String ct = request.getParameter("r_category");
-	request.setAttribute("foodprice", fp);
 	int cnt = 0;
+	int cupage = Integer.parseInt(request.getParameter("page"));
 	if(request.getAttribute("cnt")!=null){
 		cnt = (Integer)request.getAttribute("cnt");
+	}
+	String chk = request.getParameter("addchk");
+	if (chk != null){
+%>
+	<script type="text/javascript">
+		alert("상품을 카트에 추가했습니다.");
+	</script>
+<%
 	}
 %>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
@@ -70,7 +78,7 @@
            		<div class="col-3">
            			<div>
            				<a href="./recipe.re?id=<%=rp.getR_id()%>"><img src="../resources/images/<%=rp.getR_img() %>" alt="" class="col-12"></a>
-                        <a href="addCartIcon.ca?id=<%=rp.getR_id()%>" target='_blank'><i class="fa-solid fa-cart-shopping"></i></a>           				
+                        <a href="addCartIcon.ca?id=<%=rp.getR_id()%>&r_category=<%=ct%>&page=<%=cupage%>"><i class="fa-solid fa-cart-shopping"></i></a>           				
            			</div>
            			<a href="./recipe.jsp?id=<%=rp.getR_id()%>">
 	                    <h5><%=rp.getR_name()%></h5>
@@ -86,7 +94,7 @@
             </div>
             <div>
             	<%
-            		int cupage = Integer.parseInt(request.getParameter("page"));
+            		
             		if (cupage == 1){
             	%>
                 <p><b>&lt;</b>

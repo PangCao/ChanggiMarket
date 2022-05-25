@@ -13,15 +13,24 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%
+	request.setCharacterEncoding("utf-8");
 	String id = (String)session.getAttribute("userid");
+	String category = request.getParameter("category");
+	String sub_title = "";
+	if (category.equals("공지사항")) {
+		sub_title = "NOTICE";
+	}
+	else if (category.equals("게시판")) {
+		sub_title = "BULLETIN";
+	}
 %>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
 	<section class="bo_write">
         <div class="container">
-            <h5><small>NOTICE</small></h5>
-            <h3>공지사항</h3>
+            <h5><small><%=sub_title %></small></h5>
+            <h3><%=category%></h3>
             <p>* 필수 입력 사항</p>
             <hr>
             <form action="" method="post" enctype="multipart/form-data" name="boardForm">
@@ -76,11 +85,21 @@
 </script>
 <%
 	}
-	else{
+	else if (category.equals("공지사항")){
 %>
 <script type="text/javascript">
 	function subwrite() {
 		document.boardForm.action = "notice_write.bo";
+		document.boardForm.submit();
+	}
+</script>
+<%
+	}
+	else if (category.equals("게시판")){
+%>
+<script type="text/javascript">
+	function subwrite() {
+		document.boardForm.action = "bulletin_write.bo";
 		document.boardForm.submit();
 	}
 </script>
