@@ -33,8 +33,8 @@ public class CartController extends HttpServlet{
 		
 		if (command.equals("/recipe/addCart.ca")) {
 			dao.addCart(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/recipe/addCartClose.jsp");
-			rd.forward(request, response);
+			String id = request.getParameter("id");
+			response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipe.re?id="+id+"&add=true");
 		}
 		else if (command.equals("/recipe/goCart.ca")) {
 			dao.addCart(request);

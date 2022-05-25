@@ -7,9 +7,18 @@
 <html>
 <head>
 <%
+	String id = request.getParameter("id");
 	request.setCharacterEncoding("utf-8");
 	recipelist rp = (recipelist)request.getAttribute("sel_recipe");
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
+	String addchk = request.getParameter("add");
+	if (addchk != null) {
+%>
+	<script type="text/javascript">
+		alert("카트에 상품이 추가되었습니다.");
+	</script>
+<%
+	}
 %>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="../resources/css/style.css?ver=1.3">
@@ -138,8 +147,7 @@
                         %>
 	                        <script type="text/javascript">
 	                        	function addCart() {
-	                        		document.getElementById('cartForm').action = "addCart.ca?name=<%=rp.getR_name() %>&len=<%=foodlen%>&file=<%=rp.getR_img() %>";
-	                        		document.getElementById('cartForm').target = "_blank";
+	                        		document.getElementById('cartForm').action = "addCart.ca?name=<%=rp.getR_name() %>&len=<%=foodlen%>&file=<%=rp.getR_img() %>&id=<%=id%>";
 	                        		document.cartForm.submit();
 	                        	}
 	                        	function goCart() {

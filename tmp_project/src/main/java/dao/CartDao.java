@@ -127,7 +127,7 @@ public class CartDao {
 			dbconn = conn();
 			pstmt = dbconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			ArrayList<foodprice> foodprice = RecipeDao.getFoodprice();
+			ArrayList<foodprice> foodprice = new ArrayList<foodprice>();
 			while (rs.next()) {
 				foodprice fp = new foodprice();
 				fp.setF_name(rs.getString("f_name"));

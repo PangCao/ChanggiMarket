@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
@@ -7,10 +8,10 @@
 <html>
 <head>
 <%
-	request.setCharacterEncoding("utf-8");
 	ArrayList<recipelist> rl = (ArrayList<recipelist>)request.getAttribute("food");
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 	String ct = request.getParameter("r_category");
+	System.out.println(ct);
 	int cnt = 0;
 	int cupage = Integer.parseInt(request.getParameter("page"));
 	if(request.getAttribute("cnt")!=null){
@@ -78,7 +79,7 @@
            		<div class="col-3">
            			<div>
            				<a href="./recipe.re?id=<%=rp.getR_id()%>"><img src="../resources/images/<%=rp.getR_img() %>" alt="" class="col-12"></a>
-                        <a href="addCartIcon.ca?id=<%=rp.getR_id()%>&r_category=<%=ct%>&page=<%=cupage%>"><i class="fa-solid fa-cart-shopping"></i></a>           				
+                        <a href="addCartIcon.re?id=<%=rp.getR_id()%>&r_category=<%=ct%>&page=<%=cupage%>"><i class="fa-solid fa-cart-shopping"></i></a>           				
            			</div>
            			<a href="./recipe.jsp?id=<%=rp.getR_id()%>">
 	                    <h5><%=rp.getR_name()%></h5>

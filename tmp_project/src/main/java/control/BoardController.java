@@ -65,6 +65,24 @@ public class BoardController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher("/community/bulletin.bo");
 			rd.forward(request, response);
 		}
+		else if (command.equals("/community/one_qna.bo")) {
+			dao.one(request);
+			dao.onebopage(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/one_qna.jsp");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/one_write.bo")) {
+			dao.onewriter(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/one_qna.jsp");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/one_view.bo")) {
+			dao.oneview(request);
+			dao.onebopage(request);
+			String page = request.getParameter("page");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=1:1 ¹®ÀÇ&page="+page);
+			rd.forward(request, response);
+		}
 	}
-
+	
 }

@@ -23,6 +23,9 @@
 	else if (category.equals("게시판")) {
 		sub_title = "BULLETIN";
 	}
+	else if (category.equals("1:1 문의")) {
+		sub_title ="고객센터";
+	}
 %>
 </head>
 <body>
@@ -52,6 +55,9 @@
                         <textarea name="contents" id="contents" cols="30" rows="10" class="form-control" placeholder="내용을 입력해주세요." style="resize: none;"></textarea>
                     </div>
                 </div>
+                <%
+                	if(!category.equals("1:1 문의")){
+                %>
                 <div class="form-group row">
                     <label class="col-2">첨부파일&nbsp;<input type="button" id="filepulsbnt" value="+" class="btn btn-success ml-3" onclick="fileplus()"></label>
                     <div class="col-10 row">
@@ -64,6 +70,26 @@
                         <div id="preview"></div>
                     </div>
                 </div>
+                <%
+                	}
+                	else {
+                %>
+                <div class="form-group row">
+                    <label class="col-2">카테고리 선택 *</label>
+                    <div class="col-4">
+                        <select class="form-control" id="qnasel" name="qnasel">
+                        	<option value="" disabled selected>질문 선택</option>
+                        	<option value="상품교환">상품교환</option>
+                        	<option value="배송문의">배송문의</option>
+                        	<option value="구매취소">구매취소</option>
+                        	<option value="환불">환불</option>
+                        	<option value="기타">기타</option>
+                        </select>
+                    </div>
+                </div>
+                <%
+                	}
+                %>
                 <hr>
                 <div>
                     <input type="button" value="작성완료" class="btn btn-secondary col-2" onclick="subwrite()">
@@ -105,7 +131,22 @@
 </script>
 <%
 	}
+	else if (category.equals("1:1 문의")){
 %>
+<script type="text/javascript">
+	function subwrite() {
+		if (document.getElementById('qnasel').value == ""){
+			alert("문의 카테고리를 선택해주세요");
+			return false;
+		}
+		document.boardForm.action = "one_write.bo";
+		document.boardForm.submit();
+	}
+</script>
+<%
+	}
+%>
+
 <script type="text/javascript">
 	function fileplus() {
 		document.getElementById('file1').setAttribute("type","file");

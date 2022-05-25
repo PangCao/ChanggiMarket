@@ -15,12 +15,69 @@ import com.oreilly.servlet.*;
 import com.oreilly.servlet.multipart.*;
 
 import dto.Boardlist;
+import dto.oneqna;
 
 public class BoardDao {
 	private BoardDao() {};
 	private static BoardDao dao = new BoardDao();
 	public static BoardDao getDao() {
 		return  dao;
+	}
+	
+	public void one(HttpServletRequest request) {
+		String page = request.getParameter("page");
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			dbconn = conn();
+			String sql = "select * from one_qna";
+			pstmt = dbconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			ArrayList<oneqna> al = new ArrayList<oneqna>();
+			while(rs.next()) {
+				oneqna oq = new oneqna();
+				int id = rs.getInt("oq_id");
+				String title = rs.getString("oq_title");
+				String writer = rs.getString("oq_writer");
+				String content = rs.getString("oq_content");
+				String category = rs.getString("oq_category");
+				String date = rs.getString("oq_date");
+				int hit = rs.getInt("oq_hit");
+				String stat = rs.getString("oq_stat");
+				oq.setId(id);
+				oq.setTitle(title);
+				oq.setWriter(writer);
+				oq.setContent(content);
+				oq.setCategory(category);
+				oq.setDate(date);
+				oq.setHit(hit);
+				oq.setStat(stat);
+				
+				al.add(oq);
+			}
+			request.setAttribute("oneqnalist", al);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	
@@ -85,6 +142,67 @@ public class BoardDao {
 				
 		}
 	}
+	public void oneview(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt_sub = null;
+		
+		try {
+			dbconn = conn();		
+			
+			String sql = "select * from one_qna where oq_id=?";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Boardlist bl = new Boardlist();
+				String title = rs.getString("oq_title");
+				String writer = rs.getString("oq_writer");
+				String content = rs.getString("oq_content");
+				String date = rs.getString("oq_date");
+				int hit = rs.getInt("oq_hit");
+				bl.setId(id);
+				bl.setTitle(title);
+				bl.setWriter(writer);
+				bl.setContent(content);
+				bl.setDate(date);
+				bl.setHit(hit+1);
+				
+				sql = "update one_qna set oq_hit=? where oq_id=?";
+				pstmt_sub = dbconn.prepareStatement(sql);
+				pstmt_sub.setInt(1, hit+1);
+				pstmt_sub.setString(2, id);
+				pstmt_sub.executeUpdate();
+				request.setAttribute("viewInfo", bl);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt_sub != null) {
+					pstmt_sub.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void bulletinview(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		
@@ -177,6 +295,7 @@ public class BoardDao {
 				bl.setImg(img);
 				bl.setDate(date);
 				bl.setHit(hit+1);
+				
 				sql = "update notice set n_hit=? where n_id=?";
 				pstmt_sub = dbconn.prepareStatement(sql);
 				pstmt_sub.setInt(1, hit+1);
@@ -193,6 +312,40 @@ public class BoardDao {
 				if (pstmt_sub != null) {
 					pstmt_sub.close();
 				}
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void onebopage(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			dbconn = conn();
+			String sql = "select count(*) from one_qna";
+			pstmt = dbconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();
+			int page = rs.getInt(1);
+			request.setAttribute("totalpage", page);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
 				if (rs != null) {
 					rs.close();
 				}
@@ -400,6 +553,49 @@ public class BoardDao {
 			pstmt.setString(2, id);
 			pstmt.setString(3, contents);
 			pstmt.setString(4, filenames);
+			pstmt.setString(5, date);
+			pstmt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if(dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void onewriter(HttpServletRequest request) {
+
+		
+		String title = request.getParameter("title");
+		String id = request.getParameter("id");
+		String contents = request.getParameter("contents");
+		String category = request.getParameter("qnasel");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String date = format.format(Calendar.getInstance().getTime());
+		
+		
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "insert into one_qna (oq_title, oq_writer, oq_content, oq_category, oq_date) values (?,?,?,?,?)"; 
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			System.out.println(title);
+			pstmt.setString(1, title);
+			pstmt.setString(2, id);
+			pstmt.setString(3, contents);
+			pstmt.setString(4, category);
 			pstmt.setString(5, date);
 			pstmt.executeUpdate();
 		}

@@ -112,3 +112,18 @@ create table notice (
 
 drop table notice;
 select * from notice;
+
+create table one_qna (
+	oq_id int auto_increment,
+    oq_title varchar(50) not null,
+    oq_writer varchar(20) not null,
+    oq_content varchar(200) not null,
+    oq_category varchar(30),
+    oq_date date,
+    oq_hit int,
+    oq_stat varchar(30) default '문의 등록',
+    primary key(oq_id)
+)default charset=utf8mb4;
+drop table one_qna;
+
+select * from one_qna;
