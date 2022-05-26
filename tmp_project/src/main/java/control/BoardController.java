@@ -83,6 +83,24 @@ public class BoardController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=1:1 문의&page="+page);
 			rd.forward(request, response);
 		}
+		else if (command.equals("/community/review_write.bo")) {
+			dao.reviewwriter(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/recipe_review.jsp");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/review_view.bo")) {
+			dao.recipe_view(request);
+			dao.bulletinbopage(request);
+			String page = request.getParameter("page");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=나만의 레시피&page="+page);
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/review.bo")) {
+			dao.review(request);
+			dao.review_bopage(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/recipe_review.jsp");
+			rd.forward(request, response);
+		}
 	}
 	
 }

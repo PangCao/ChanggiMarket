@@ -37,7 +37,6 @@ public class RecipeController extends HttpServlet{
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
-		System.out.println(command);
 		if (command.equals("/recipe/recipes.re")) {
 			dao.recipes(request);
 			dao.price(request);

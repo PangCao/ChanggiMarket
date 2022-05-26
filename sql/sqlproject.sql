@@ -165,3 +165,17 @@ drop table one_qna;
 
 select * from one_qna;
 
+drop table r_review;
+create table r_review (
+	r_id int auto_increment,
+    r_title varchar(50) not null,
+    r_writer varchar(20) not null,
+    r_content varchar(200) not null,
+    r_date date,
+    r_img varchar(400),
+    r_hit int default 0,
+    r_like int default 0,
+    primary key(r_id)
+)default charset=utf8mb4;
+select * from r_review;
+

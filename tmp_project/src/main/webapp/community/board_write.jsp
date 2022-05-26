@@ -26,6 +26,9 @@
 	else if (category.equals("1:1 문의")) {
 		sub_title ="고객센터";
 	}
+	else if (category.equals("나만의 레시피")) {
+		sub_title ="Make It";
+	}
 %>
 </head>
 <body>
@@ -61,13 +64,19 @@
                 <div class="form-group row">
                     <label class="col-2">첨부파일&nbsp;<input type="button" id="filepulsbnt" value="+" class="btn btn-success ml-3" onclick="fileplus()"></label>
                     <div class="col-10 row">
-                        <input type="hidden" name="file1" id="file1" class="form-control col-6 mb-2" onchange="filecnt1()"> <input type="hidden" id="filechk1" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan1()">
-                        <input type="hidden" name="file2" id="file2" class="form-control col-6 mb-2" onchange="filecnt2()"><input type="hidden" id="filechk2" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan2()">
-                        <input type="hidden" name="file3" id="file3" class="form-control col-6 mb-2" onchange="filecnt3()"><input type="hidden" id="filechk3" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan3()">
-                        <input type="hidden" name="file4" id="file4" class="form-control col-6 mb-2" onchange="filecnt4()"><input type="hidden" id="filechk4" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan4()">
-                        <input type="hidden" name="file5" id="file5" class="form-control col-6 mb-2" onchange="filecnt5()"><input type="hidden" id="filechk5" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan5()">
+                        <input type="hidden" name="file1" id="file1" class="form-control col-6 mb-2" onchange="filecnt1(this)"> <input type="hidden" id="filechk1" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan1()">
+                        <input type="hidden" name="file2" id="file2" class="form-control col-6 mb-2" onchange="filecnt2(this)"><input type="hidden" id="filechk2" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan2()">
+                        <input type="hidden" name="file3" id="file3" class="form-control col-6 mb-2" onchange="filecnt3(this)"><input type="hidden" id="filechk3" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan3()">
+                        <input type="hidden" name="file4" id="file4" class="form-control col-6 mb-2" onchange="filecnt4(this)"><input type="hidden" id="filechk4" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan4()">
+                        <input type="hidden" name="file5" id="file5" class="form-control col-6 mb-2" onchange="filecnt5(this)"><input type="hidden" id="filechk5" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan5()">
                         <p class="col-12">10MB 이하의 이미지만 등록 가능합니다.(최대 5개)</p>
-                        <div id="preview"></div>
+                        <div class="row col-12">
+	                       <img class="col-2" style="height: 100px; width: auto;" id="preview1" />
+	                       <img class="col-2" style="height: 100px; width: auto;" id="preview2" />
+	                       <img class="col-2" style="height: 100px; width: auto;" id="preview3" />
+	                       <img class="col-2" style="height: 100px; width: auto;" id="preview4" />
+	                       <img class="col-2" style="height: 100px; width: auto;" id="preview5" />
+                        </div>
                     </div>
                 </div>
                 <%
@@ -146,21 +155,43 @@
 </script>
 <%
 	}
+	else if (category.equals("나만의 레시피")){
+%>
+<script type="text/javascript">
+	function subwrite() {
+		document.boardForm.action = "review_write.bo";
+		document.boardForm.submit();
+	}
+</script>
+<%
+	}
 %>
 
 <script type="text/javascript">
+	var reader = new FileReader();
 	function fileplus() {
 		document.getElementById('file1').setAttribute("type","file");
 		document.getElementById('filechk1').setAttribute("type","button");
 		document.getElementById('filechk1').disabled = false;
 	}
-	function filecnt1() {
+	
+	function filecnt1(input) {
 		if (document.getElementById('file1').value != ""){
 			document.getElementById('file2').setAttribute("type","file");
 			document.getElementById('filechk2').setAttribute("type","button");
 			document.getElementById('filechk1').disabled = false;
 		}
+		if (input.files && input.files[0]) {
+		   	
+		    reader.onload = function(e) {
+		    	document.getElementById('preview1').src = e.target.result;
+		    };
+		    	reader.readAsDataURL(input.files[0]);
+		  	} else {
+			document.getElementById('preview1').src = "";
+		}
 	}
+	
 	function filecan1() {
 		document.getElementById('file1').value = "";
 		document.getElementById('file1').setAttribute("type","hidden");
@@ -168,13 +199,23 @@
 		document.getElementById('filechk1').disabled = true;
 	}
 	
-	function filecnt2() {
+	function filecnt2(input) {
 		if (document.getElementById('file2').value != ""){
 			document.getElementById('file3').setAttribute("type","file");
 			document.getElementById('filechk3').setAttribute("type","button");
 			document.getElementById('filechk2').disabled = false;
 		}
+		if (input.files && input.files[0]) {
+		   	
+		    reader.onload = function(e) {
+		    	document.getElementById('preview2').src = e.target.result;
+		    };
+		    	reader.readAsDataURL(input.files[0]);
+		  	} else {
+			document.getElementById('preview2').src = "";
+		}
 	}
+	
 	function filecan2() {
 		document.getElementById('file2').value = "";
 		document.getElementById('file2').setAttribute("type","hidden");
@@ -182,13 +223,23 @@
 		document.getElementById('filechk2').disabled = true;
 	}
 	
-	function filecnt3() {
+	function filecnt3(input) {
 		if (document.getElementById('file3').value != ""){
 			document.getElementById('file4').setAttribute("type","file");
 			document.getElementById('filechk4').setAttribute("type","button");
 			document.getElementById('filechk3').disabled = false;
 		}
+		if (input.files && input.files[0]) {
+		   	
+		    reader.onload = function(e) {
+		    	document.getElementById('preview3').src = e.target.result;
+		    };
+		    	reader.readAsDataURL(input.files[0]);
+		  	} else {
+			document.getElementById('preview3').src = "";
+		}
 	}
+	
 	function filecan3() {
 		document.getElementById('file3').value = "";
 		document.getElementById('file3').setAttribute("type","hidden");
@@ -196,30 +247,50 @@
 		document.getElementById('filechk3').disabled = true;
 	}
 	
-	function filecnt4() {
+	function filecnt4(input) {
 		if (document.getElementById('file4').value != ""){
 			document.getElementById('file5').setAttribute("type","file");
 			document.getElementById('filechk5').setAttribute("type","button");
 			document.getElementById('filechk4').disabled = false;
 		}
+		if (input.files && input.files[0]) {
+		   	
+		    reader.onload = function(e) {
+		    	document.getElementById('preview4').src = e.target.result;
+		    };
+		    	reader.readAsDataURL(input.files[0]);
+		  	} else {
+			document.getElementById('preview4').src = "";
+		}
 	}
+	
 	function filecan4() {
 		document.getElementById('file4').value = "";
 		document.getElementById('file4').setAttribute("type","hidden");
 		document.getElementById('filechk4').setAttribute("type","hidden");
 		document.getElementById('filechk4').disabled = true;
 	}
-	function filecnt5() {
+	
+	function filecnt5(input) {
 		if (document.getElementById('file4').value != ""){
 			document.getElementById('filechk5').disabled = false;
 		}
+		if (input.files && input.files[0]) {
+		   	
+		    reader.onload = function(e) {
+		    	document.getElementById('preview5').src = e.target.result;
+		    };
+		    	reader.readAsDataURL(input.files[0]);
+		  	} else {
+			document.getElementById('preview5').src = "";
+		}
 	}
+	
 	function filecan5() {
 		document.getElementById('file5').value = "";
 		document.getElementById('file5').setAttribute("type","hidden");
 		document.getElementById('filechk5').setAttribute("type","hidden");
 		document.getElementById('filechk5').disabled = false;
-
 	}
 </script>
 </html>

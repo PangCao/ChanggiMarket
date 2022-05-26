@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="dto.Boardlist" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
+<%
+	ArrayList<Boardlist> al = (ArrayList<Boardlist>)request.getAttribute("review_list");
+	String cupage = request.getParameter("page");
+%>
 <title>Insert title here</title>
 </head>
 <body>
@@ -36,57 +42,28 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="row">
+            <%
+            	for(int i = 0; i < al.size(); i++) {
+            		Boardlist bl = al.get(i);
+            %>
                 <div class="col-3">
                     <div>
-                        <a href="#"><img src="../resources/images/main04.jpg" alt="" class="col-12"></a>
+                        <a href="review_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=나만의 레시피"><img src="../resources/images/<%=bl.getImg()[0] %>" alt="" class="col-12"></a>
                         <div>
-                            <a href="#"><i class="fa-solid fa-heart"></i><span> LIKE 31</span></a>
+                            <a href="#"><i class="fa-solid fa-heart"></i><span> LIKE <%=bl.getLike() %></span></a>
                         </div>
                     </div>
-                    <a href="#">
-                        <h5>된장찌개 레시피</h5>
-                        <p>작성자 : 임수진</p>
+                    <a href="review_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=나만의 레시피">
+                        <h5><%= bl.getTitle() %></h5>
+                        <p>작성자 : <%=bl.getWriter() %></p>
                     </a>
                 </div>
-                <div class="col-3">
-                    <div>
-                        <a href="#"><img src="../resources/images/main06.jpg" alt="" class="col-12"></a>
-                        <div>
-                            <a href="#"><i class="fa-solid fa-heart"></i><span> LIKE 31</span></a>
-                        </div>
-                    </div>
-                    <a href="#">
-                        <h5>된장찌개 레시피</h5>
-                        <p>작성자 : 임수진</p>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <div>
-                        <a href="#"><img src="../resources/images/main05.jpg" alt="" class="col-12"></a>
-                        <div>
-                            <a href="#"><i class="fa-solid fa-heart"></i><span> LIKE 31</span></a>
-                        </div>
-                    </div>
-                    <a href="#">
-                        <h5>된장찌개 레시피</h5>
-                        <p>작성자 : 임수진</p>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <div>
-                        <a href="#"><img src="../resources/images/main04.jpg" alt="" class="col-12"></a>
-                        <div>
-                            <a href="#"><i class="fa-solid fa-heart"></i><span> LIKE 31</span></a>
-                        </div>
-                    </div>
-                    <a href="#">
-                        <h5>된장찌개 레시피</h5>
-                        <p>작성자 : 임수진</p>
-                    </a>
-                </div>
+            <%
+            	}
+            %>
             </div>
             <div>
-                <a href="board_write.jsp" class="btn btn-secondary col-2">글쓰기</a>
+                <a href="./board_write.jsp?category=나만의 레시피" class="btn btn-secondary col-2">글쓰기</a>
             </div>
         </div>
     </section>

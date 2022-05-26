@@ -90,11 +90,16 @@
             	<a href="bulletin_view.bo?id=<%=next%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">다음글</a>
             	<%
             			}
-            			else {
+            			else if (category.equals("1:1 문의")){
             				
             	%>
             	<a href="one_view.bo?id=<%=next%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">다음글</a>
             	<%
+            			}
+            			else {
+        		%>
+   				<a href="review_view.bo?id=<%=next%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">다음글</a>
+        		<%
             			}
             		
             		}
@@ -108,9 +113,14 @@
                 <a href="./bulletin.bo?page=<%=cupage %>&category=<%=category %>" class="btn btn-success col-2">목록</a>
                 <%
             		}
-            		else {
+            		else if (category.equals("1:1 문의")){
                 %>
                 <a href="./one_qna.bo?page=<%=cupage %>&category=<%=category %>" class="btn btn-success col-2">목록</a>
+                <%
+            		}
+            		else {
+                %>
+                <a href="./review.bo?page=<%=cupage %>&category=<%=category %>" class="btn btn-success col-2">목록</a>
                 <%
             		}
                 %>
