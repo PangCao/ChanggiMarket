@@ -27,7 +27,7 @@
                     </div>
                     <ul>
                         <a href="./faq.jsp"><li>자주하는 질문 <span>&gt;</span></li></a>
-                        <a href="./one_qna.jsp"><li>1:1 문의<span>&gt;</span></li></a>
+                        <a href="./one_qna.bo?page=1"><li>1:1 문의<span>&gt;</span></li></a>
                     </ul>
                 </div>
                 <div class="col-9">

@@ -17,6 +17,23 @@
 <%
 	ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
 	customer cu = (customer)session.getAttribute("user");
+	if (al != null && al.size() > 0) {
+%>
+<script type="text/javascript">
+	function cartdel() {
+		if (confirm("장바구니의 상품을 모두 삭제하시겠습니까?")) {
+			location.href= "cartdel.ca";
+		}
+	}
+	function selectdel() {
+		if (confirm("선택하신 상품을 삭제하시겠습니까?")){
+			document.cartForm.action = "seldel.ca";
+			document.cartForm.submit();
+		}
+	}
+</script>
+<%
+	}
 %>
 </head>
 <body>
@@ -24,10 +41,10 @@
 	<section class="cart">
         <div class="container">
             <h3>장바구니</h3>
-            <form action="order.ca" method="post">
+            <form action="order.ca" method="post" name="cartForm">
                 <div>
-                    <input type="button" value="전체 선택" class="btn btn-success">
-                    <input type="button" value="선택 삭제" class="btn btn-danger">
+                    <input type="button" value="전체 삭제" class="btn btn-success" onclick="cartdel()">
+                    <input type="button" value="선택 삭제" class="btn btn-danger" onclick="selectdel()">
                 </div>
                 <table class="table text-center">
                     <tr>
@@ -49,7 +66,7 @@
                     			cartlist ca = al.get(i);
                     %>
                     	<tr>
-                        <td class="align-middle"><input type="checkbox" checked></td>
+                        <td class="align-middle"><input type="checkbox" name="foodid" checked value="<%=i%>"></td>
                         <td class="align-middle"><img src="../resources/images/<%=ca.getFilename() %>" alt="" class="col-12"></td>
                         <td class="align-middle"><%= ca.getFoodName() %></td>
                         <td class="align-middle">
@@ -62,7 +79,7 @@
                             		sum += Integer.valueOf(ca.getFoodprice()[j]) *Integer.valueOf(ca.getFoodunit()[j]);
                             %>
                             	<input type="hidden" name="singfoodlen<%=i %>" id="singfoodlen<%=i %>" value="<%=ca.getFoods().length %>">
-                            	<li><input type="checkbox" id="a<%=i %><%=j %>" class="col-1" checked><label for="a<%=i %><%=j %>" class="col-4"><%= ca.getFoods()[j] %></label><p class="col-4"><%=ca.getFoodprice()[j] %> 원</p><input type="number" value="<%=ca.getFoodunit()[j] %>" min="0" class="form-control col-2" id="f_num<%=i%><%=j%>" onclick="food_num<%=i%><%=j%>()"></li>
+                            	<li><label for="a<%=i %><%=j %>" class="col-4"><%= ca.getFoods()[j] %></label><p class="col-4"><%=ca.getFoodprice()[j] %> 원</p><input type="number" value="<%=ca.getFoodunit()[j] %>" min="0" class="form-control col-3" id="f_num<%=i%><%=j%>" onclick="food_num<%=i%><%=j%>()"></li>
                             	<input type="hidden" value="<%= ca.getFoods()[j] %>" name="singfoodname<%=i %><%=j %>" id="singfoodname<%=i %><%=j %>">
                             	<input type="hidden" value="<%=ca.getFoodprice()[j] %>" name="foodprice<%=i %><%=j %>" id="foodprice<%=i %><%=j %>">
                             	<input type="hidden" value="<%=ca.getFoodunit()[j] %>" name="foodunit<%=i %><%=j %>" id="foodunit<%=i %><%=j %>">
@@ -146,12 +163,23 @@
                             <p>결제 예정 금액 <span id="totalsum_ship_view"><%=totalsum+shipping %>원</span></p>
                             <input type="hidden" value="<%=totalsum+shipping %>" id="totalsum_ship" name="totalsum_ship">
                         </div>
-                        <input type="submit" class="btn btn-secondary col-12" value="주문 하기" >
+                        <input type="button" class="btn btn-secondary col-12" value="주문 하기" onclick="orderchk()">
                     </div>
                 </div>
             </form>
         </div>
     </section>
+    <script type="text/javascript">
+    	function orderchk() {
+    		if (document.getElementById('totalsum').value == 0) {
+				alert("주문하실 상품이 존재하지 않습니다.");
+				return;
+    		}
+    		else{
+    			document.cartForm.submit();
+    		}
+    	}
+    </script>
     <jsp:include page="/footer.jsp"/>
 </body>
 </html>

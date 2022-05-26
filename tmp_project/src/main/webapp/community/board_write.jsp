@@ -139,6 +139,7 @@
 			alert("문의 카테고리를 선택해주세요");
 			return false;
 		}
+		document.boardForm.encoding="application/x-www-form-urlencoded";
 		document.boardForm.action = "one_write.bo";
 		document.boardForm.submit();
 	}

@@ -11,21 +11,21 @@
 	ArrayList<recipelist> rl = (ArrayList<recipelist>)request.getAttribute("food");
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 	String ct = request.getParameter("r_category");
-	System.out.println(ct);
 	int cnt = 0;
 	int cupage = Integer.parseInt(request.getParameter("page"));
 	if(request.getAttribute("cnt")!=null){
 		cnt = (Integer)request.getAttribute("cnt");
 	}
-	String chk = request.getParameter("addchk");
-	if (chk != null){
+	String chk = request.getParameter("chk");
+	if (chk != null) {
 %>
 	<script type="text/javascript">
-		alert("상품을 카트에 추가했습니다.");
-	</script>
+		alert("상품을 장바구니에 추가하였습니다.");
+	</script>	
 <%
 	}
 %>
+
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="../resources/css/style.css?ver=1.4">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>

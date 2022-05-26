@@ -37,7 +37,7 @@ public class RecipeController extends HttpServlet{
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
-		
+		System.out.println(command);
 		if (command.equals("/recipe/recipes.re")) {
 			dao.recipes(request);
 			dao.price(request);
@@ -53,12 +53,12 @@ public class RecipeController extends HttpServlet{
 		}
 		else if (command.equals("/recipe/addCartIcon.re")) {
 			dao.price(request);
-			dao.addCartIcon(request);
+			dao.addCartIcon(request, response);
 			String id = request.getParameter("id");
 			String ct = request.getParameter("r_category");
 			ct = URLEncoder.encode(ct, "UTF-8");
 			String cupage = request.getParameter("page");
-			response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?addchk=true&id="+id+"&r_category="+ct+"&page="+cupage);
+			response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=true&id="+id+"&r_category="+ct+"&page="+cupage);
 		}
 	}
 	

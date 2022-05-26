@@ -51,6 +51,14 @@ public class CartController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher("/login/mypage.jsp");
 			rd.forward(request, response);
 		}
+		else if (command.equals("/cart/cartdel.ca")) {
+			dao.cartdel(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/cart/cart.jsp");
+		}
+		else if (command.equals("/cart/seldel.ca")) {
+			dao.seldel(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/cart/cart.jsp");
+		}
 	}
 	
 	

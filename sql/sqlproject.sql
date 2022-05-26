@@ -62,6 +62,8 @@ insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img)
 insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('국·탕·찌개·전골','북어야채국','깔끔하고 건강한 맛','북어(100g),양파(100g),감자(100g),당근(100g)','1,1,2,1','1.물을 보글보글 끓여주세요.<br>2.야채를 넣어주세요.<br>3.완성!!!', 'bs.jpg');
 insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('밥·죽','카레라이스','간단하고 맛있는 한끼식사','양파(100g),감자(100g),당근(100g),카레(100g)','1,2,1,1','1.야채를 볶아주세요.<br>2.물을 넣고 카레가루를 넣어주세요.<br>3.완성!!!', 'crice.jpg');
 
+drop table foodlist;
+
 create table foodlist (
 	f_name varchar(30) not null,
     f_price int,
@@ -77,9 +79,32 @@ insert into foodlist values ('김치(500g)', 8000);
 insert into foodlist values ('카레(100g)', 1200);
 insert into foodlist values ('북어(100g)', 4000);
 
+
+create table foodlist (
+	f_id int auto_increment,
+    f_main_category varchar(10) not null,
+    f_middle_category varchar(10) not null,
+    f_sub_category varchar(10) not null,
+    f_name varchar(50) not null unique,
+    f_price int,
+    primary key(f_id)
+)default charset=utf8mb4;
+-- main 01(농산) 02(축산) 03(수산) 04(가공)
+
+insert into foodlist (f_main_category, f_middle_category, f_sub_category, f_name, f_price)values ('01(농산)','02(채소류)','01(양파)','양파(100g)', 1000);
+insert into foodlist (f_main_category, f_middle_category, f_sub_category, f_name, f_price)values ('01(농산)','02(채소류)','02(감자)','감자(100g)', 1500);
+insert into foodlist (f_main_category, f_middle_category, f_sub_category, f_name, f_price)values ('01(농산)','02(채소류)','03(당근)','당근(100g)', 1800);
+insert into foodlist (f_main_category, f_middle_category, f_sub_category, f_name, f_price)values ('01(농산)','02(채소류)','04(오이)','오이(100g)', 900);
+insert into foodlist (f_main_category, f_middle_category, f_sub_category, f_name, f_price)values ('04(가공)','02(양념류)','01(된장)','된장(100g)', 2000);
+insert into foodlist (f_main_category, f_middle_category, f_sub_category, f_name, f_price)values ('04(가공)','01(김치류)','01(배추김치)','김치(500g)', 8000);
+insert into foodlist (f_main_category, f_middle_category, f_sub_category, f_name, f_price)values ('04(가공)','02(양념류)','02(카레)','카레(100g)', 1200);
+insert into foodlist (f_main_category, f_middle_category, f_sub_category, f_name, f_price)values ('03(수산)','01(생선)','01(북어)','북어(100g)', 4000);
+
+select * from foodlist;
+
+
 use changgimarket;
 select * from foodcustomerlist;
-
 select * from customer;
 
 
@@ -98,3 +123,45 @@ create table cusorder (
 )default charset=utf8mb4;
 
 select * from cusorder;
+
+drop table notice;
+
+create table notice (
+	n_num int auto_increment,
+    n_title varchar(50) not null,
+    n_writer varchar(20) not null,
+    n_content varchar(2000) not null,
+    n_img varchar(400),
+    n_date date,
+    n_hit int default 0,
+    primary key(n_num)
+)default charset=utf8mb4;
+
+drop table bulletin;
+
+create table bulletin (
+	b_num int auto_increment,
+    b_title varchar(50) not null,
+    b_writer varchar(20) not null,
+    b_content varchar(2000) not null,
+    b_img varchar(400),
+    b_date date,
+    b_hit int,
+    primary key(b_num)
+)default charset=utf8mb4;
+
+create table one_qna (
+	oq_id int auto_increment,
+    oq_title varchar(50) not null,
+    oq_writer varchar(20) not null,
+    oq_content varchar(200) not null,
+    oq_category varchar(30),
+    oq_date date,
+    oq_hit int default 0,
+    oq_stat varchar(30) default '문의 등록',
+    primary key(oq_id)
+)default charset=utf8mb4;
+drop table one_qna;
+
+select * from one_qna;
+

@@ -73,7 +73,7 @@ public class BoardController extends HttpServlet{
 		}
 		else if (command.equals("/community/one_write.bo")) {
 			dao.onewriter(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/one_qna.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/one_qna.bo");
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/one_view.bo")) {

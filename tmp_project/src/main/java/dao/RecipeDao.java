@@ -1,4 +1,6 @@
 package dao;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,6 +8,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
@@ -34,7 +37,7 @@ public class RecipeDao {
 		return conn;
 	}
 	
-	public void addCartIcon(HttpServletRequest request) {
+	public void addCartIcon(HttpServletRequest request, HttpServletResponse response) {
 		ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 		String id = request.getParameter("id");
 		Connection dbconn = null;
@@ -79,6 +82,7 @@ public class RecipeDao {
 				ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
 				al.add(cl);	
 			}
+
 		}
 		catch(Exception e) {
 			e.printStackTrace();

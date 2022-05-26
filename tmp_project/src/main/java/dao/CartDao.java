@@ -2,7 +2,6 @@ package dao;
 import dto.cartlist;
 import dto.foodprice;
 import dto.recipelist;
-import DB.dbconn;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,6 +20,27 @@ public class CartDao {
 	private static CartDao dao = new CartDao();
 	public static CartDao getDao() {
 		return  dao;
+	}
+	
+	public void seldel(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
+		String[] food = request.getParameterValues("foodid");
+		int[] foods = new int[food.length];
+		for (int j = 0; j < foods.length; j++) {
+			foods[j] = Integer.valueOf(food[j]);
+		}
+		int delcnt = 0; 
+		for (int i = 0; i < food.length; i++) {
+			al.remove(foods[i]-delcnt);
+			delcnt++;
+		}
+		
+	}
+	
+	public void cartdel(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("myCart");
 	}
 	
 	public void pagecnt(HttpServletRequest request) {

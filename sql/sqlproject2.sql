@@ -103,15 +103,27 @@ create table notice (
 	n_id int auto_increment,
     n_title varchar(50) not null,
     n_writer varchar(20) not null,
-    n_content varchar(200) not null,
+    n_content varchar(2000) not null,
     n_img varchar(400),
     n_date date,
-    n_hit int,
+    n_hit int default 0,
     primary key(n_id)
 )default charset=utf8mb4;
 
-drop table notice;
-select * from notice;
+drop table bulletin;
+
+create table bulletin (
+	b_id int auto_increment,
+    b_title varchar(50) not null,
+    b_writer varchar(20) not null,
+    b_content varchar(2000) not null,
+    b_img varchar(400),
+    b_date date,
+    b_hit int,
+    primary key(b_id)
+)default charset=utf8mb4;
+
+
 
 create table one_qna (
 	oq_id int auto_increment,
