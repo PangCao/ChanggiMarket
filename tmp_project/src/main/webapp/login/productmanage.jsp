@@ -4,7 +4,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/style.css?ver=1.2">
+<link rel="stylesheet" href="../resources/css/style.css?ver=1.5">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,20 +21,31 @@
                 <h3>상품 관리</h3>
                 <p><i class="fa-solid fa-house"></i>&nbsp;HOME > 상품관리</p>
             </div>
-            <hr>
+            <div>
+                <form action="" method="post" class="col-4">
+                    <input type="text" placeholder="찾으실 상품을 입력해주세요" class="form-control">
+                    <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                </form>
+            </div>
             <form action="" method="post">
                 <table class="table text-center">
                     <tr>
                         <th class="col-1">품번</th>
-                        <th class="col-3">
+                        <th class="col-6">
                             <div class="row">
-                                <select class="col-6 form-control">
+                                <select class="col-3 ml-2 form-control">
                                     <option value="" disabled selected style="display: none;">대분류</option>
                                     <option value="신선" >신선</option>
                                     <option value="가공" >가공</option>
                                     <option value="주류" >주류</option>
                                 </select>
-                                <select class="col-6 form-control">
+                                <select class="col-4 ml-2 mr-2 form-control">
+                                    <option value="" disabled selected style="display: none;">중분류</option>
+                                    <option value="양파" >양파</option>
+                                    <option value="감자" >감자</option>
+                                    <option value="양배추" >양배추</option>
+                                </select>
+                                <select class="col-4 form-control">
                                     <option value="" disabled selected style="display: none;">소분류</option>
                                     <option value="양파" >양파</option>
                                     <option value="감자" >감자</option>
@@ -42,25 +53,37 @@
                                 </select>
                             </div>
                         </th>
-                        <th class="col-3">
+                        <th class="col-2">
                             <div class="row">
-                                <label class="col-3">가격</label>
-                                <input type="text" class="col-8 form-control" placeholder="가격 입력">
-                            </div>
-                        </th>
-                        <th class="col-3">
-                            <div class="row">
-                                <label class="col-3">수량</label>
-                                <input type="text" class="col-8 form-control" placeholder="수량 입력">
+                                <input type="text" class="col-10 ml-1 form-control" placeholder="가격 입력">
                             </div>
                         </th>
                         <th class="col-2">
+                            <div class="row">
+                                <input type="text" class="col-10 form-control" placeholder="수량 입력">
+                            </div>
+                        </th>
+                        <th class="col-1">
                             <input type="button" name="" id="" value="추가" class="btn btn-success">
                         </th>
                     </tr>
                     <tr>
                         <td>1</td>
-                        <td>양파</td>
+                        <td class="row">
+                            <span class="col-5">010101</span>
+                            <span class="col-5">양파</span>
+                        </td>
+                        <td>4500원</td>
+                        <td>300pcs</td>
+                        <td>
+                            <input type="button" value="삭제" class="btn btn-danger">
+                        </td>
+                    </tr><tr>
+                        <td>1</td>
+                        <td class="row">
+                            <span class="col-5">010101</span>
+                            <span class="col-5">양파</span>
+                        </td>
                         <td>4500원</td>
                         <td>300pcs</td>
                         <td>
@@ -68,19 +91,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>2</td>
-                        <td>감자</td>
-                        <td>3000원</td>
-                        <td>50pcs</td>
-                        <td>
-                            <input type="button" value="삭제" class="btn btn-danger">
+                        <td>1</td>
+                        <td class="row">
+                            <span class="col-5">010101</span>
+                            <span class="col-5">양파</span>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>양배추</td>
-                        <td>2000원</td>
-                        <td>100pcs</td>
+                        <td>4500원</td>
+                        <td>300pcs</td>
                         <td>
                             <input type="button" value="삭제" class="btn btn-danger">
                         </td>

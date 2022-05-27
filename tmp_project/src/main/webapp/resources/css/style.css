@@ -1500,30 +1500,27 @@ body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div > input:checke
     display: flex;
     align-items: center;
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) {
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(2) {
     display: flex;
     justify-content: flex-end;
     margin-top: 30px;
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) > form{
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(2) > form{
     display: flex;
     align-items: center;   
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) > form > input{
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(2) > form > input{
     margin-right: -38px;
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) > form > a{
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(2) > form > a{
     z-index: 2;
     color: grey;
     border-left: 1px solid gray;
     padding-left: 10px;
 }
-body > .faq > div:nth-of-type(2) > div:nth-of-type(2)  {
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1)  {
     display: flex;
     justify-content: center;
-}
-body > .faq > div:nth-of-type(2) > div:nth-of-type(2) > p > a:nth-of-type(1){
-    color: red;
 }
 /*faq.jsp --------------------------------------------end*/
 
@@ -1829,3 +1826,44 @@ body > .o_complete > .container > h1{
 /*order_complete.jsp --------------------------start*/
 
 /*order_complete.jsp --------------------------end*/
+
+
+/*productmanage.jsp --------------------------start*/
+body > .a_product {
+    padding-top: 150px;
+    padding-bottom: 100px;
+    min-height: 80vh;
+}
+body > .a_product > div > div:nth-of-type(1) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+body > .a_product > div > div > div:nth-of-type(1) > p{
+    margin-bottom: 0;
+}
+body > .a_product > div > div:nth-of-type(2) > form {
+    display: flex;
+    align-items: center;
+}
+body > .a_product > div > div:nth-of-type(2) > form > input {
+    margin-right: -38px;
+}
+body > .a_product > div > div:nth-of-type(2) > form > a{ 
+    z-index: 2;
+    color: grey;
+    border-left: 1px solid gray;
+    padding-left: 10px;
+}
+body > .a_product > div > div:nth-of-type(2) { 
+    display: flex;
+    justify-content: right;
+    margin-bottom: 30px;
+}
+body > .a_product > div > form > div {
+    display: flex;
+    justify-content: right;
+}
+
+/*productmanage.jsp --------------------------end*/

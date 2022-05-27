@@ -27,7 +27,7 @@ public class BoardDao {
 	}
 	public void likeup(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String c_id = (String)session.getAttribute("user");
+		String c_id = (String)session.getAttribute("userid");
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -86,7 +86,7 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		HttpSession session = request.getSession();
-		String c_id = (String)session.getAttribute("user");
+		String c_id = (String)session.getAttribute("userid");
 		int r_id = Integer.valueOf(request.getParameter("id"));
 		int likechk = -1;
 		if (c_id != null) {

@@ -6,7 +6,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/style.css?ver=1.2">
+<link rel="stylesheet" href="../resources/css/style.css?ver=1.3">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
 	if (cupage == 1) {
 %>
 	<style type="text/css">
-		body > .faq > div:nth-of-type(2) > div:nth-of-type(2) > p > a.pagenum:nth-of-type(<%=cupage%>){
+		body > .faq > div:nth-of-type(2)  > div > div:nth-of-type(2) > div:nth-last-of-type(1) > p > a.pagenum:nth-of-type(<%=cupage%>){
 			color: red;
 		}
 	</style>
@@ -42,7 +42,7 @@
 	else {
 %>
 	<style type="text/css">
-		body > .faq > div:nth-of-type(2) > div:nth-of-type(2) > p > a.pagenum:nth-of-type(<%=cupage+1%>){
+		body > .faq > div:nth-of-type(2) >  div > div:nth-of-type(2) > div:nth-last-of-type(1) > p > a.pagenum:nth-of-type(<%=cupage+1%>){
 			color: red;
 		}
 	</style>
@@ -96,40 +96,41 @@
                             <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
                         </form>
                     </div>
+                    <div class="col-12">
+		                
+		                <%
+		     					if (cupage == 1){
+		            	%>
+		                <p><b>&lt;</b>
+		                <%
+		            			}
+		            			else {
+		           		%>
+		   		                 <p><a href="faq.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
+		           		
+		           		<%
+		            			}
+		                		int pagenum = (totalpage/10)+1;
+		                		for (int a = 0; a < pagenum; a++) {
+		                %>
+		                 	<a href="faq.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+		               	<%
+			                	}
+			                	if (pagenum == cupage) { 
+		               	%>
+		               		<b>&gt;</b></p>
+		               	<%
+			                	}
+			                	else {
+		               	%>
+		                <a href="faq.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+		                <%
+		                		}
+		                %>
+		            </div>
                 </div>
             </div>
-            <div class="col-12">
-                
-                <%
-     					if (cupage == 1){
-            	%>
-                <p><b>&lt;</b>
-                <%
-            			}
-            			else {
-           		%>
-   		                 <p><a href="bulletin.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
-           		
-           		<%
-            			}
-                		int pagenum = (totalpage/10)+1;
-                		for (int a = 0; a < pagenum; a++) {
-                %>
-                 	<a href="bulletin.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
-               	<%
-	                	}
-	                	if (pagenum == cupage) { 
-               	%>
-               		<b>&gt;</b></p>
-               	<%
-	                	}
-	                	else {
-               	%>
-                <a href="bulletin.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
-                <%
-                		}
-                %>
-            </div>
+            
         </div>
     </section>    
     <jsp:include page="/footer.jsp"/>

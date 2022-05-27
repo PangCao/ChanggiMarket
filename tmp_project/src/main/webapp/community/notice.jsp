@@ -83,7 +83,6 @@
                 		Boardlist bl = al.get(i);
                 %>
                 	<tr>
-                		
                 		<%
                 			if (category.equals("공지사항")){
                 		%>

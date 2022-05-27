@@ -62,22 +62,15 @@ insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img)
 insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('국·탕·찌개·전골','북어야채국','깔끔하고 건강한 맛','북어(100g),양파(100g),감자(100g),당근(100g)','1,1,2,1','1.물을 보글보글 끓여주세요.<br>2.야채를 넣어주세요.<br>3.완성!!!', 'bs.jpg');
 insert into recipe (r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('밥·죽','카레라이스','간단하고 맛있는 한끼식사','양파(100g),감자(100g),당근(100g),카레(100g)','1,2,1,1','1.야채를 볶아주세요.<br>2.물을 넣고 카레가루를 넣어주세요.<br>3.완성!!!', 'crice.jpg');
 
-drop table foodlist;
 
-create table foodlist (
-	f_name varchar(30) not null,
-    f_price int,
-    primary key(f_name)
+create table  foodbarcode(
+	fb_id int auto_increment,
+    fb_main varchar(20) not null unique,
+    fb_middle varchar(20) not null unique,
+    fb_sub varchar(20) not null unique,
+    primary key(fb_id)    
 )default charset=utf8mb4;
 
-insert into foodlist values ('양파(100g)', 1000);
-insert into foodlist values ('감자(100g)', 1500);
-insert into foodlist values ('당근(100g)', 1800);
-insert into foodlist values ('오이(100g)', 900);
-insert into foodlist values ('된장(100g)', 2000);
-insert into foodlist values ('김치(500g)', 8000);
-insert into foodlist values ('카레(100g)', 1200);
-insert into foodlist values ('북어(100g)', 4000);
 
 
 create table foodlist (
@@ -140,15 +133,18 @@ create table notice (
 drop table bulletin;
 
 create table bulletin (
-	b_num int auto_increment,
+	b_id int auto_increment,
     b_title varchar(50) not null,
     b_writer varchar(20) not null,
     b_content varchar(2000) not null,
     b_img varchar(400),
     b_date date,
-    b_hit int,
+    b_hit int default 0,
     primary key(b_num)
 )default charset=utf8mb4;
+
+alter table bulletin change b_num b_id int;
+select * from bulletin;
 
 create table one_qna (
 	oq_id int auto_increment,

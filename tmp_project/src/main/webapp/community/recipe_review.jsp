@@ -19,6 +19,7 @@
 %>
 <script type="text/javascript">
 	alert("이미 like를 주신 상품입니다.");
+	document.location.href="#p_move";
 </script>
 <%
 	}
@@ -92,7 +93,7 @@
             	for(int i = min; i < max; i++) {
             		Boardlist bl = al.get(i);
             %>
-                <div class="col-3">
+                <div class="col-3" id="p_move">
                     <div>
                         <a href="review_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=나만의 레시피"><img src="../resources/images/<%=bl.getImg()[0] %>" alt="" class="col-12"></a>
                         <div>
