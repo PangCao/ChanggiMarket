@@ -80,19 +80,18 @@ public class BoardController extends HttpServlet{
 			dao.oneview(request);
 			dao.onebopage(request);
 			String page = request.getParameter("page");
-			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=1:1 πÆ¿«&page="+page);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=1:1 Î¨∏Ïùò&page="+page);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/review_write.bo")) {
 			dao.reviewwriter(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/recipe_review.jsp");
-			rd.forward(request, response);
+			response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?page=1");
 		}
 		else if (command.equals("/community/review_view.bo")) {
 			dao.recipe_view(request);
-			dao.bulletinbopage(request);
+			dao.review_bopage(request);
 			String page = request.getParameter("page");
-			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=≥™∏∏¿« ∑πΩ√««&page="+page);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=ÎÇòÎßåÏùò Î†àÏãúÌîº&page="+page);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/review.bo")) {
@@ -100,6 +99,26 @@ public class BoardController extends HttpServlet{
 			dao.review_bopage(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/community/recipe_review.jsp");
 			rd.forward(request, response);
+		}
+		else if (command.equals("/community/faq.bo")) {
+			dao.faq(request);
+			dao.faq_bopage(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/faq.jsp");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/community/review_like.bo")) {
+			int likechk = dao.likechk(request);
+			String page = request.getParameter("page");
+			if (likechk == 1) {
+				response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?likechk=1&page="+page);
+			}
+			else if (likechk == -1) {
+				response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?likechk=-1&page="+page);
+			}
+			else {
+				dao.likeup(request);
+				response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?page="+page);
+			}
 		}
 	}
 	

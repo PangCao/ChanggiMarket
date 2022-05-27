@@ -57,14 +57,15 @@
                 </div>
             </div>
             <p style="white-space: normal;">
-            <%	
-            	for (int i = 0; i < bl.getImg().length; i++){
-            		if (!(bl.getImg()[i].equals("")) && bl.getImg()[i] != null){
+            <%	if (!category.equals("1:1 문의")){
+	            	for (int i = 0; i < bl.getImg().length; i++){
+	            		if (!(bl.getImg()[i].equals("")) && bl.getImg()[i] != null){
             %>
             	<img alt="" src="../resources/images/<%=bl.getImg()[i]%>" style="width:300px; height: 300px;">
             <%
-            		}
-            	}
+	            		}
+	            	}
+	            }
 			%>
             <%=bl.getContent() %></p>
             <hr>

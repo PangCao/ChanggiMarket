@@ -7,8 +7,10 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
 import com.oreilly.servlet.*;
@@ -22,6 +24,105 @@ public class BoardDao {
 	private static BoardDao dao = new BoardDao();
 	public static BoardDao getDao() {
 		return  dao;
+	}
+	public void likeup(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String c_id = (String)session.getAttribute("user");
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		PreparedStatement pstmt3 = null;
+		ResultSet rs = null;
+		int id = Integer.valueOf(request.getParameter("id"));
+		try {
+			String sql = "select r_like from r_review where r_id=?";
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			rs.next();
+			int like = rs.getInt("r_like") + 1;
+			
+			sql = "update r_review set r_like=? where r_id=?";
+			pstmt2 = dbconn.prepareStatement(sql);
+			pstmt2.setInt(1, like);
+			pstmt2.setInt(2, id);
+			pstmt2.executeUpdate();
+			
+			sql = "insert into likelist (c_id, r_id) values (?,?)";
+			pstmt3 = dbconn.prepareStatement(sql);
+			pstmt3.setString(1, c_id);
+			pstmt3.setInt(2, id);
+			pstmt3.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		} 
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt3 != null) {
+					pstmt3.close();
+				}
+				if (pstmt2 != null) {
+					pstmt2.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public int likechk(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		HttpSession session = request.getSession();
+		String c_id = (String)session.getAttribute("user");
+		int r_id = Integer.valueOf(request.getParameter("id"));
+		int likechk = -1;
+		if (c_id != null) {
+			try {
+				String sql = "select count(*) from likelist where c_id=? and r_id=?";
+				dbconn = conn();
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, c_id);
+				pstmt.setInt(2, r_id);
+				rs = pstmt.executeQuery();
+				
+				rs.next();
+				
+				likechk = rs.getInt(1);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					if (pstmt != null) {
+						pstmt.close();
+					}
+					if (dbconn != null) {
+						dbconn.close();
+					}
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return likechk;
 	}
 	
 	public void one(HttpServletRequest request) {
@@ -389,6 +490,40 @@ public class BoardDao {
 		}
 	}
 	
+	public void faq_bopage(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			dbconn = conn();
+				String sql = "select count(*) from faq";
+				pstmt = dbconn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			rs.next();
+			int page = rs.getInt(1);
+			request.setAttribute("totalpage", page);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void review_bopage(HttpServletRequest request) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
@@ -555,6 +690,52 @@ public class BoardDao {
 			}
 		}
 	}
+	
+	public void faq(HttpServletRequest request) {
+		String page = request.getParameter("page");
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Boardlist> al = new ArrayList<Boardlist>();
+		try {
+			dbconn = conn();
+			String sql = "select * from faq order by f_id desc";
+			pstmt = dbconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Boardlist bl = new Boardlist();
+				String id = rs.getString("f_id");
+				String title = rs.getString("f_title");
+				String content = rs.getString("f_content");
+				bl.setId(id);
+				bl.setTitle(title);
+				bl.setContent(content);
+				al.add(bl);
+			}
+			request.setAttribute("faqlist", al);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 	public void review(HttpServletRequest request) {
 		String page = request.getParameter("page");

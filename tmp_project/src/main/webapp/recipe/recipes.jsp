@@ -41,9 +41,9 @@
 	<section class="recipes">
         <div class="container">
             <div>
-                <div class="col-6">
+                <div class="col-8">
                     <h3 class="col-3"><%=ct%></h3>
-                    <a href="" class="btn btn-secondary col-4">레시피 등록</a>
+                    <a href="" class="btn btn-secondary col-3">레시피 등록</a>
                 </div>
                 <p><i class="fa-solid fa-house"></i>&nbsp;HOME > 레시피 > <%=ct %></p>
             </div>

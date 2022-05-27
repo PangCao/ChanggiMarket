@@ -181,8 +181,6 @@ public class RecipeDao {
 	}
 	
 	public void recipes(HttpServletRequest request) {
-
-		
 		int page = Integer.valueOf(request.getParameter("page"));
 		int min = (page-1)*20;
 		int max = page*20;

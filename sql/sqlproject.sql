@@ -165,6 +165,19 @@ drop table one_qna;
 
 select * from one_qna;
 
+create table faq (
+	f_id int auto_increment,
+    f_title varchar(50) not null,
+    f_content varchar(200) not null,
+    primary key(f_id)
+)default charset=utf8mb4;
+
+insert into faq (f_title, f_content) values ('자주하는 질문 1', '그에 대한 답변1');
+insert into faq (f_title, f_content) values ('자주하는 질문 2', '그에 대한 답변2');
+insert into faq (f_title, f_content) values ('자주하는 질문 3', '그에 대한 답변3');
+insert into faq (f_title, f_content) values ('자주하는 질문 4', '그에 대한 답변4');
+insert into faq (f_title, f_content) values ('자주하는 질문 5', '그에 대한 답변5');
+
 drop table r_review;
 create table r_review (
 	r_id int auto_increment,
@@ -179,3 +192,11 @@ create table r_review (
 )default charset=utf8mb4;
 select * from r_review;
 
+create table likelist (
+	l_num int auto_increment,
+    c_id varchar(20) not null,
+    r_id int not null,
+    primary key(l_num),
+    foreign key(c_id) references customer(c_id) on delete cascade,
+    foreign key(r_id) references r_review(r_id) on delete cascade
+)default charset=utf8mb4;

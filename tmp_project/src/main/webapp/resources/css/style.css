@@ -1500,29 +1500,29 @@ body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div > input:checke
     display: flex;
     align-items: center;
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(2) {
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) {
     display: flex;
     justify-content: flex-end;
     margin-top: 30px;
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(2) > form{
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) > form{
     display: flex;
     align-items: center;   
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(2) > form > input{
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) > form > input{
     margin-right: -38px;
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(2) > form > a{
+body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) > form > a{
     z-index: 2;
     color: grey;
     border-left: 1px solid gray;
     padding-left: 10px;
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) {
+body > .faq > div:nth-of-type(2) > div:nth-of-type(2)  {
     display: flex;
     justify-content: center;
 }
-body > .faq > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-last-of-type(1) > p > a:nth-of-type(1){
+body > .faq > div:nth-of-type(2) > div:nth-of-type(2) > p > a:nth-of-type(1){
     color: red;
 }
 /*faq.jsp --------------------------------------------end*/
@@ -1758,6 +1758,11 @@ body > .re_review > div:nth-of-type(2) > div:nth-of-type(3){
 body > .re_review > div:nth-of-type(2) > div:nth-of-type(4){
     display: flex;
     justify-content: flex-end;
+}
+
+body > .re_review > div:nth-of-type(2) > div:nth-last-of-type(1){
+	display: flex;
+	justify-content: center;
 }
 /*re_review.jsp ----------------------------------end*/
 

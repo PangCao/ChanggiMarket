@@ -61,7 +61,7 @@
                                 <a href="<c:url value='/community/notice.bo?page=1'/>"><li>공지사항</li></a>
                                 <a href="<c:url value='/community/bulletin.bo?page=1'/>"><li>게시판</li></a>
                                 <a href="<c:url value='/community/review.bo?page=1'/>"><li>나만의 레시피</li></a>
-                                <a href="<c:url value='/community/faq.jsp?page=1'/>"><li>고객센터</li></a>
+                                <a href="<c:url value='/community/faq.bo?page=1'/>"><li>고객센터</li></a>
                             </ul>
                         </li>
                     </ul>
@@ -85,8 +85,7 @@
                                 <a href="<c:url value='/community/notice.bo?page=1'/>"><li>공지사항</li></a>
                                 <a href="<c:url value='/community/bulletin.bo?page=1'/>"><li>게시판</li></a>
                                 <a href="<c:url value='/community/review.bo?page=1'/>"><li>나만의 레시피</li></a>
-                                <a href="<c:url value='/community/faq.jsp?page=1'/>"><li>고객센터</li></a>
-                                <a href="<c:url value='/community/faq.jsp?page=1'/>"><li>자주하는 질문</li></a>
+                                <a href="<c:url value='/community/faq.bo?page=1'/>"><li>자주하는 질문</li></a>
                                 <a href="<c:url value='/community/one_qna.bo?page=1'/>"><li>1:1 문의</li></a>
                             </ul>
                         </li>

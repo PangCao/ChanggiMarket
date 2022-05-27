@@ -6,7 +6,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/style.css?ver=1.3">
+<link rel="stylesheet" href="../resources/css/style.css?ver=1.5">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,8 +14,54 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <%
+	String likechk = request.getParameter("likechk");
+	if(likechk != null && likechk.equals("1")){
+%>
+<script type="text/javascript">
+	alert("이미 like를 주신 상품입니다.");
+</script>
+<%
+	}
+	else if (likechk != null && likechk.equals("-1")){		
+%>
+	<script type="text/javascript">
+		alert("like를 하기 위해서 로그인이 필요합니다.");
+		location.href="http://localhost:8080/tmp_project/login/login.jsp";
+	</script>
+<%
+	}
 	ArrayList<Boardlist> al = (ArrayList<Boardlist>)request.getAttribute("review_list");
-	String cupage = request.getParameter("page");
+	int cupage = 1;
+	if (request.getParameter("page") != null) {
+		cupage = Integer.valueOf(request.getParameter("page"));
+	}
+	int min = (cupage-1)*20;
+	int max = cupage*20;
+	int totalpage = 0;
+	if (request.getAttribute("totalpage") != null){
+		totalpage = (Integer)request.getAttribute("totalpage");
+	}
+	if (max > totalpage) {
+		max = totalpage;
+	}
+	if (cupage == 1) {
+%>
+	<style type="text/css">
+		body > .re_review > div:nth-of-type(2) > div:nth-last-of-type(1) > p > a.pagenum:nth-of-type(<%=cupage%>){
+    		color: red;
+		}
+	</style>
+<%
+	}
+	else {
+%>
+	<style type="text/css">
+		body > .re_review > div:nth-of-type(2) > div:nth-last-of-type(1) > p > a.pagenum:nth-of-type(<%=cupage+1%>){
+    		color: red;
+		}
+	</style>
+<%
+	}
 %>
 <title>Insert title here</title>
 </head>
@@ -43,14 +89,14 @@
             </div>
             <div class="row">
             <%
-            	for(int i = 0; i < al.size(); i++) {
+            	for(int i = min; i < max; i++) {
             		Boardlist bl = al.get(i);
             %>
                 <div class="col-3">
                     <div>
                         <a href="review_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=나만의 레시피"><img src="../resources/images/<%=bl.getImg()[0] %>" alt="" class="col-12"></a>
                         <div>
-                            <a href="#"><i class="fa-solid fa-heart"></i><span> LIKE <%=bl.getLike() %></span></a>
+                            <a href="review_like.bo?id=<%=bl.getId()%>&page=<%=cupage%>"><i class="fa-solid fa-heart"></i><span> LIKE <%=bl.getLike() %></span></a>
                         </div>
                     </div>
                     <a href="review_view.bo?id=<%=bl.getId()%>&page=<%=cupage%>&category=나만의 레시피">
@@ -64,6 +110,37 @@
             </div>
             <div>
                 <a href="./board_write.jsp?category=나만의 레시피" class="btn btn-secondary col-2">글쓰기</a>
+            </div>
+            <div class="col-12">
+                <%
+	            		if (cupage == 1){
+            	%>
+                <p><b>&lt;</b>
+                <%
+            			}
+            			else {
+           		%>
+   		                 <p><a href="review.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
+           		
+           		<%
+            			}
+                		int pagenum = ((totalpage-1)/20)+1;
+                		for (int a = 0; a < pagenum; a++) {
+                %>
+                 	<a href="review.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+               	<%
+	                	}
+	                	if (pagenum == cupage) { 
+               	%>
+               		<b>&gt;</b></p>
+               	<%
+	                	}
+	                	else {
+               	%>
+                <a href="review.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+                <%
+                		}
+				%>
             </div>
         </div>
     </section>

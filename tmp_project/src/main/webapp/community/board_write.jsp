@@ -64,11 +64,11 @@
                 <div class="form-group row">
                     <label class="col-2">첨부파일&nbsp;<input type="button" id="filepulsbnt" value="+" class="btn btn-success ml-3" onclick="fileplus()"></label>
                     <div class="col-10 row">
-                        <input type="hidden" name="file1" id="file1" class="form-control col-6 mb-2" onchange="filecnt1(this)"> <input type="hidden" id="filechk1" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan1()">
-                        <input type="hidden" name="file2" id="file2" class="form-control col-6 mb-2" onchange="filecnt2(this)"><input type="hidden" id="filechk2" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan2()">
-                        <input type="hidden" name="file3" id="file3" class="form-control col-6 mb-2" onchange="filecnt3(this)"><input type="hidden" id="filechk3" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan3()">
-                        <input type="hidden" name="file4" id="file4" class="form-control col-6 mb-2" onchange="filecnt4(this)"><input type="hidden" id="filechk4" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan4()">
-                        <input type="hidden" name="file5" id="file5" class="form-control col-6 mb-2" onchange="filecnt5(this)"><input type="hidden" id="filechk5" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan5()">
+                        <input type="hidden" name="file1" id="file1" class="form-control col-6 mb-2 files" onchange="filecnt1(this)"> <input type="hidden" id="filechk1" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan1()">
+                        <input type="hidden" name="file2" id="file2" class="form-control col-6 mb-2 files" onchange="filecnt2(this)"><input type="hidden" id="filechk2" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan2()">
+                        <input type="hidden" name="file3" id="file3" class="form-control col-6 mb-2 files" onchange="filecnt3(this)"><input type="hidden" id="filechk3" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan3()">
+                        <input type="hidden" name="file4" id="file4" class="form-control col-6 mb-2 files" onchange="filecnt4(this)"><input type="hidden" id="filechk4" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan4()">
+                        <input type="hidden" name="file5" id="file5" class="form-control col-6 mb-2 files" onchange="filecnt5(this)"><input type="hidden" id="filechk5" value="X" class="btn btn-danger ml-3 mb-2" disabled onclick="filecan5()">
                         <p class="col-12">10MB 이하의 이미지만 등록 가능합니다.(최대 5개)</p>
                         <div class="row col-12">
 	                       <img class="col-2" style="height: 100px; width: auto;" id="preview1" />
@@ -197,6 +197,10 @@
 		document.getElementById('file1').setAttribute("type","hidden");
 		document.getElementById('filechk1').setAttribute("type","hidden");
 		document.getElementById('filechk1').disabled = true;
+		document.getElementById('file1').value = "";
+		document.getElementById('preview1').src = "";
+    	reader.readAsDataURL(document.querySelectorAll('.files')[0].files[0]);
+
 	}
 	
 	function filecnt2(input) {
@@ -221,6 +225,9 @@
 		document.getElementById('file2').setAttribute("type","hidden");
 		document.getElementById('filechk2').setAttribute("type","hidden");
 		document.getElementById('filechk2').disabled = true;
+		document.getElementById('file2').value = "";
+		document.getElementById('preview2').src = "";
+    	reader.readAsDataURL(document.querySelectorAll('.files')[1].files[0]);
 	}
 	
 	function filecnt3(input) {
@@ -245,6 +252,7 @@
 		document.getElementById('file3').setAttribute("type","hidden");
 		document.getElementById('filechk3').setAttribute("type","hidden");
 		document.getElementById('filechk3').disabled = true;
+		document.getElementById('preview3').src = "";
 	}
 	
 	function filecnt4(input) {
@@ -269,6 +277,7 @@
 		document.getElementById('file4').setAttribute("type","hidden");
 		document.getElementById('filechk4').setAttribute("type","hidden");
 		document.getElementById('filechk4').disabled = true;
+		document.getElementById('preview4').src = "";
 	}
 	
 	function filecnt5(input) {
@@ -291,6 +300,7 @@
 		document.getElementById('file5').setAttribute("type","hidden");
 		document.getElementById('filechk5').setAttribute("type","hidden");
 		document.getElementById('filechk5').disabled = false;
+		document.getElementById('preview5').src = "";
 	}
 </script>
 </html>

@@ -64,7 +64,7 @@
                         <img src="../resources/images/logo_green.png" alt="" style="width: 35%;">
                     </div>
                     <ul>
-                        <a href="./faq.jsp"><li>자주하는 질문 <span>&gt;</span></li></a>
+                        <a href="./faq.bo?page=1"><li>자주하는 질문 <span>&gt;</span></li></a>
                         <a href="./one_qna.bo?page=1"><li>1:1 문의<span>&gt;</span></li></a>
                     </ul>
                 </div>
@@ -89,7 +89,7 @@
                         <tr>
                             <td><%=one.getDate() %></td>
                             <td><%=one.getCategory() %></td>
-                            <td><a href="one_qna_view.bo?category=1:1 문의&id=<%=one.getId()%>&page=<%=cupage%>"><%= one.getTitle() %></a></td>
+                            <td><a href="one_view.bo?category=1:1 문의&id=<%=one.getId()%>&page=<%=cupage%>"><%= one.getTitle() %></a></td>
                             <td><%=one.getWriter() %></td>
                             <td><%= one.getStat() %></td>
                         </tr>
@@ -102,36 +102,36 @@
                         <a href="./board_write.jsp?category=1:1 문의" class="btn btn-secondary col-3" >글쓰기</a>
                     </div>
                     <div class="col-12">
-                <%
-	            		if (cupage == 1){
-            	%>
-                <p><b>&lt;</b>
-                <%
-            			}
-            			else {
-           		%>
-   		                 <p><a href="one_qna.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
-           		
-           		<%
-            			}
-                		int pagenum = ((totalpage-1)/10)+1;
-                		for (int a = 0; a < pagenum; a++) {
-                %>
-                 	<a href="one_qna.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
-               	<%
-	                	}
-	                	if (pagenum == cupage) { 
-               	%>
-               		<b>&gt;</b></p>
-               	<%
-	                	}
-	                	else {
-               	%>
-                <a href="one_qna.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
-                <%
-                		}
-				%>
-            	</div>
+	                <%
+		            		if (cupage == 1){
+	            	%>
+	                <p><b>&lt;</b>
+	                <%
+	            			}
+	            			else {
+	           		%>
+	   		                 <p><a href="one_qna.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
+	           		
+	           		<%
+	            			}
+	                		int pagenum = ((totalpage-1)/10)+1;
+	                		for (int a = 0; a < pagenum; a++) {
+	                %>
+	                 	<a href="one_qna.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+	               	<%
+		                	}
+		                	if (pagenum == cupage) { 
+	               	%>
+	               		<b>&gt;</b></p>
+	               	<%
+		                	}
+		                	else {
+	               	%>
+	                <a href="one_qna.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+	                <%
+	                		}
+					%>
+	            	</div>
                 </div>
             </div>
         </div>
