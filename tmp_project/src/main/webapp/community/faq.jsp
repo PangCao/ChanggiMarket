@@ -16,6 +16,7 @@
 <title>Insert title here</title>
 </head>
 <%
+	String search_title = request.getParameter("search_title");
 	ArrayList<Boardlist> al = (ArrayList<Boardlist>)request.getAttribute("faqlist");
 	int cupage = 1;
 	if (request.getParameter("page") != null) {
@@ -91,9 +92,9 @@
 		            	}
                     %>
                     <div>
-                        <form action="" method="post" class="col-5">
-                            <input type="text" placeholder="검색어를 입력해주세요." class="form-control">
-                            <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <form action="faq.bo" method="post" class="col-5">
+                            <input type="text" placeholder="검색어를 입력해주세요." class="form-control" id="search_title" name="search_title">
+                            <a onclick="submit()"><i class="fa-solid fa-magnifying-glass"></i></a>
                         </form>
                     </div>
                     <div class="col-12">
@@ -106,14 +107,14 @@
 		            			}
 		            			else {
 		           		%>
-		   		                 <p><a href="faq.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
+		   		                 <p><a href="faq.bo?page=<%=cupage-1%>&search_title=<%=search_title%>"><b>&lt;</b></a>
 		           		
 		           		<%
 		            			}
 		                		int pagenum = (totalpage/10)+1;
 		                		for (int a = 0; a < pagenum; a++) {
 		                %>
-		                 	<a href="faq.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+		                 	<a href="faq.bo?page=<%=a+1%>&search_title=<%=search_title%>" class="pagenum"><%=a+1%></a>
 		               	<%
 			                	}
 			                	if (pagenum == cupage) { 
@@ -123,7 +124,7 @@
 			                	}
 			                	else {
 		               	%>
-		                <a href="faq.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+		                <a href="faq.bo?page=<%=cupage+1%>&search_title=<%=search_title%>" class="pagenum"><b>&gt;</b></a></p>
 		                <%
 		                		}
 		                %>

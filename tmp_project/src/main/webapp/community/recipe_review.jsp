@@ -6,7 +6,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/style.css?ver=1.5">
+<link rel="stylesheet" href="../resources/css/style.css?ver=2.0">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <%
+	request.setCharacterEncoding("utf-8");
+	response.setContentType("text/html; charset=UTF-8");
 	String likechk = request.getParameter("likechk");
 	if(likechk != null && likechk.equals("1")){
 %>
@@ -31,6 +33,14 @@
 	</script>
 <%
 	}
+	else if(likechk != null && likechk.equals("2")){
+%>
+	<script type="text/javascript">
+		alert("판매자 아이디로는 like를 주실수 없습니다.");
+	</script>
+<%	
+	}
+	String search_title = request.getParameter("search_title");
 	ArrayList<Boardlist> al = (ArrayList<Boardlist>)request.getAttribute("review_list");
 	int cupage = 1;
 	if (request.getParameter("page") != null) {
@@ -85,8 +95,10 @@
                 </div>
             </div>
             <div>
-                <input type="text" class="form-control col-4" placeholder="검색어를 입력해주세요.">
-                <i class="fa-solid fa-magnifying-glass"></i>
+	            <form action="review.bo?page=<%=cupage%>" method="post" name="searchForm" class="col-4">
+	                <input type="text" class="form-control col-12" placeholder="검색어를 입력해주세요." name="search_title">
+	                <i class="fa-solid fa-magnifying-glass"></i>
+                </form>
             </div>
             <div class="row">
             <%
@@ -121,14 +133,14 @@
             			}
             			else {
            		%>
-   		                 <p><a href="review.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
+   		                 <p><a href="review.bo?page=<%=cupage-1%>&search_title=<%=search_title%>"><b>&lt;</b></a>
            		
            		<%
             			}
                 		int pagenum = ((totalpage-1)/20)+1;
                 		for (int a = 0; a < pagenum; a++) {
                 %>
-                 	<a href="review.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+                 	<a href="review.bo?page=<%=a+1%>&search_title=<%=search_title%>" class="pagenum"><%=a+1%></a>
                	<%
 	                	}
 	                	if (pagenum == cupage) { 
@@ -138,7 +150,7 @@
 	                	}
 	                	else {
                	%>
-                <a href="review.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+                <a href="review.bo?page=<%=cupage+1%>&search_title=<%=search_title%>" class="pagenum"><b>&gt;</b></a></p>
                 <%
                 		}
 				%>

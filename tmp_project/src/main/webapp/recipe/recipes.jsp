@@ -8,21 +8,47 @@
 <html>
 <head>
 <%
+	String search_title = request.getParameter("search_title");
 	ArrayList<recipelist> rl = (ArrayList<recipelist>)request.getAttribute("food");
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 	String ct = request.getParameter("r_category");
 	int cnt = 0;
-	int cupage = Integer.parseInt(request.getParameter("page"));
+	int cupage = 1;
+	if (request.getParameter("page") != null) {
+		cupage = Integer.parseInt(request.getParameter("page"));
+	}
 	if(request.getAttribute("cnt")!=null){
 		cnt = (Integer)request.getAttribute("cnt");
 	}
+	int min = (cupage - 1) *20;
+	int max = cupage * 20;
+	if (max > cnt) {
+		max = cnt;
+	}
 	String chk = request.getParameter("chk");
-	if (chk != null) {
+	if (chk != null){
+		if (chk.equals("1")) {
 %>
 	<script type="text/javascript">
 		alert("상품을 장바구니에 추가하였습니다.");
 	</script>	
 <%
+		}
+		else if (chk.equals("2")){
+%>
+	<script type="text/javascript">
+		alert("판매자 아이디로는 상품을 구매하실 수 없습니다.");
+	</script>
+<%
+		}
+		else if (chk.equals("0")){
+%>
+	<script type="text/javascript">
+		alert("장바구니에 담기 전에 로그인을 해주세요");
+		location.href="http://localhost:8080/tmp_project/login/login.jsp";
+	</script>	
+<%
+		}
 	}
 %>
 
@@ -42,8 +68,8 @@
         <div class="container">
             <div>
                 <div class="col-8">
-                    <h3 class="col-3"><%=ct%></h3>
                     <a href="" class="btn btn-secondary col-3">레시피 등록</a>
+                    <h4 class="col-6"><%=ct%></h4>
                 </div>
                 <p><i class="fa-solid fa-house"></i>&nbsp;HOME > 레시피 > <%=ct %></p>
             </div>
@@ -52,15 +78,15 @@
                 <p>
                     <a href="#">신상품순</a> | <a href="#">판매량순</a> | <a href="#">낮은가격순</a> | <a href="#">높은가격순</a>
                 </p>
-                <form action="" method="post" class="col-4">
-                    <input type="text" placeholder="검색어를 입력해주세요." class="form-control">
-                    <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <form action="recipes.re?r_category=<%=ct%>&page=<%=cupage%>" method="post" class="col-4">
+                    <input type="text" placeholder="검색어를 입력해주세요." class="form-control" name="search_title">
+                    <a><i class="fa-solid fa-magnifying-glass"></i></a>
                 </form>
             </div>
             <div class="row">
            	<%
 				
-           		for (int i = 0; i <rl.size(); i++) {
+           		for (int i = min; i <max; i++) {
            			int price = 0;
            			recipelist rp = rl.get(i);           			
            			if(rp.getR_category().equals(ct)){
@@ -81,7 +107,7 @@
            				<a href="./recipe.re?id=<%=rp.getR_id()%>"><img src="../resources/images/<%=rp.getR_img() %>" alt="" class="col-12"></a>
                         <a href="addCartIcon.re?id=<%=rp.getR_id()%>&r_category=<%=ct%>&page=<%=cupage%>"><i class="fa-solid fa-cart-shopping"></i></a>           				
            			</div>
-           			<a href="./recipe.jsp?id=<%=rp.getR_id()%>">
+           			<a href="./recipe.re?id=<%=rp.getR_id()%>">
 	                    <h5><%=rp.getR_name()%></h5>
 	                    <p>0% <small> <%=price %>원</small></p>
 	                    <h5><%=price%>원</h5>
@@ -103,14 +129,14 @@
             		}
             		else {
            		%>
-   		                 <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage-1%>"><b>&gt;</b></a></p>
+   		                 <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage-1%>&search_title=<%=search_title%>"><b>&gt;</b></a></p>
            		
            		<%
             			}
                 	int pagenum = (cnt/20)+1;
                 	for (int a = 0; a < pagenum; a++) {
                 %>
-                 	<a href="./recipes.re?r_category=<%=ct %>&page=<%=a+1%>"><%=a+1%></a>
+                 	<a href="./recipes.re?r_category=<%=ct %>&page=<%=a+1%>&search_title=<%=search_title%>"><%=a+1%></a>
                	<%
                 	}
                 	if (pagenum == cupage) { 
@@ -120,7 +146,7 @@
                 	}
                 	else {
                	%>
-                <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage+1%>"><b>&gt;</b></a></p>
+                <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage+1%>&search_title=<%=search_title%>"><b>&gt;</b></a></p>
                 <%
                 	}
                 %>

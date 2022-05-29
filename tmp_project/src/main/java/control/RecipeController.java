@@ -37,11 +37,14 @@ public class RecipeController extends HttpServlet{
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
+		
+		String search_title = request.getParameter("search_title");
+		
 		if (command.equals("/recipe/recipes.re")) {
-			dao.recipes(request);
+			dao.recipes(request, search_title);
 			dao.price(request);
-			dao.count(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.jsp");
+			dao.count(request, search_title);
+			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.jsp?search_title="+search_title);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/recipe/recipe.re")) {
@@ -51,13 +54,22 @@ public class RecipeController extends HttpServlet{
 			rd.forward(request, response);
 		}
 		else if (command.equals("/recipe/addCartIcon.re")) {
-			dao.price(request);
-			dao.addCartIcon(request, response);
+			int userchk = dao.userchk(request);
 			String id = request.getParameter("id");
 			String ct = request.getParameter("r_category");
 			ct = URLEncoder.encode(ct, "UTF-8");
 			String cupage = request.getParameter("page");
-			response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=true&id="+id+"&r_category="+ct+"&page="+cupage);
+			if (userchk == 1) {
+				dao.price(request);
+				dao.addCartIcon(request, response);
+				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=1&id="+id+"&r_category="+ct+"&page="+cupage);
+			}
+			else if (userchk == 2) {
+				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=2&id="+id+"&r_category="+ct+"&page="+cupage);
+			}
+			else if (userchk == 0) {
+				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=0&id="+id+"&r_category="+ct+"&page="+cupage);
+			}
 		}
 	}
 	

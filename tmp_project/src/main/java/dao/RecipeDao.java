@@ -36,7 +36,20 @@ public class RecipeDao {
 		}
 		return conn;
 	}
-	
+	public int userchk(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String user = (String)session.getAttribute("userid");
+		String seller = (String)session.getAttribute("seller");
+		int chk = 0;
+		if (user != null) {
+			chk = 1;
+		}
+		else if (seller != null) {
+			chk = 2;
+		}
+		return chk;
+		
+	}
 	public void addCartIcon(HttpServletRequest request, HttpServletResponse response) {
 		ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 		String id = request.getParameter("id");
@@ -147,13 +160,19 @@ public class RecipeDao {
 			}
 		}
 	}
-	public void count(HttpServletRequest request) {
+	public void count(HttpServletRequest request, String search_title) {
 		Connection dbconn = null;
-		String sql = "select count(*) from recipe";
+		String sql = "";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select count(*) from recipe";
+			}
+			else {
+				sql = "select count(*) from recipe where r_name like '%"+search_title+"%'";
+			}
 			dbconn = conn();
 			pstmt = dbconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -161,7 +180,7 @@ public class RecipeDao {
 			int count = rs.getInt(1);
 			request.setAttribute("cnt", count);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		finally {
 			try {
@@ -180,34 +199,35 @@ public class RecipeDao {
 		}
 	}
 	
-	public void recipes(HttpServletRequest request) {
-		int page = Integer.valueOf(request.getParameter("page"));
-		int min = (page-1)*20;
-		int max = page*20;
+	public void recipes(HttpServletRequest request, String search_title) {
 		Connection dbconn = null;
-		String sql = "select * from recipe where r_id >= ? order by r_id desc limit "+max;
+		String sql = "";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+		ArrayList<recipelist> fl = new ArrayList<recipelist>();
+
 		try {
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select * from recipe";
+			}
+			else {
+				sql = "select * from recipe where r_name like '%"+search_title+"%'";
+			}
 			dbconn = conn();
 			pstmt = dbconn.prepareStatement(sql);
-			pstmt.setInt(1, min);
 			rs = pstmt.executeQuery();
-			ArrayList<recipelist> fl = new ArrayList<recipelist>();
-			for (int i = 0; i <= 20; i++) {
-				if(rs.next()) {
-					recipelist rp = new recipelist();
-					rp.setR_id(rs.getInt("r_id"));
-					rp.setR_category(rs.getString("r_category"));
-					rp.setR_name(rs.getString("r_name"));
-					rp.setR_desc(rs.getString("r_desc"));
-					rp.setR_product(rs.getString("r_product"));
-					rp.setR_unit(rs.getString("r_unit"));
-					rp.setR_tip(rs.getString("r_tip"));
-					rp.setR_img(rs.getString("r_img"));
-					fl.add(rp);				
-				}
+
+			while(rs.next()) {
+				recipelist rp = new recipelist();
+				rp.setR_id(rs.getInt("r_id"));
+				rp.setR_category(rs.getString("r_category"));
+				rp.setR_name(rs.getString("r_name"));
+				rp.setR_desc(rs.getString("r_desc"));
+				rp.setR_product(rs.getString("r_product"));
+				rp.setR_unit(rs.getString("r_unit"));
+				rp.setR_tip(rs.getString("r_tip"));
+				rp.setR_img(rs.getString("r_img"));
+				fl.add(rp);				
 			}
 			request.setAttribute("food", fl);
 			

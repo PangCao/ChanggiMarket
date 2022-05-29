@@ -21,7 +21,7 @@
                     	else if (session.getAttribute("user") != null){
                     %>                  
                     <ul>
-                        <a href="<c:url value='/login/processlogout.jsp'/>"><li>로그아웃</li></a>
+                        <a href="<c:url value='/login/logout.lo'/>"><li>로그아웃</li></a>
                         <a href="<c:url value='/login/mypage.ca?page=1'/>"><li>마이페이지</li></a>
                         <a href="<c:url value='/cart/cart.jsp'/>"><li>장바구니</li></a>
                     </ul>
@@ -30,8 +30,9 @@
                     	else if (session.getAttribute("seller") != null ){
                     %>
                     <ul>
-                    	<a href="<c:url value='/login/processlogout.jsp'/>"><li>로그아웃</li></a>
+                    	<a href="<c:url value='/login/logout.lo'/>"><li>로그아웃</li></a>
                         <a href="<c:url value='/login/store_management.jsp'/>"><li>점포관리</li></a>
+                        <a href="<c:url value='/login/productmanage.sel?page=1'/>"><li>상품등록</li></a>
                     </ul>
                     <%
                     	}

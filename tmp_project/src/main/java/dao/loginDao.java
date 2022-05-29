@@ -16,7 +16,12 @@ public class loginDao {
 	private static loginDao dao = new loginDao();
 	public static loginDao getDao() {
 		return dao;
-	} 
+	}
+	
+	public void logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+	}
 	
 	public int checkId(HttpServletRequest request) {
 		Connection dbconn = null;
@@ -236,7 +241,7 @@ public class loginDao {
 			pstmt.setString(2, pw);
 			rt = pstmt.executeQuery();
 			String sqlans =null;
-			System.out.println("¿©±â");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½");
 			System.out.println(id);
 			if (rt.next()) {
 				customer dto = new customer();
@@ -272,7 +277,7 @@ public class loginDao {
 			
 		}
 		catch (Exception e) {
-			System.out.println("¿©±â2");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½2");
 			e.printStackTrace();
 		}
 		finally {

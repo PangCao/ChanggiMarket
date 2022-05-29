@@ -1410,7 +1410,7 @@ body > .notice > div:nth-of-type(2) > div:nth-of-type(2) > form > input{
 }
 
 body > .notice > div:nth-of-type(2) > div:nth-of-type(2) > form > a{
-    z-index: 2;
+    z-index: 4;
     color: grey;
     border-left: 1px solid gray;
     padding-left: 10px;
@@ -1697,16 +1697,20 @@ body > .re_review > div:nth-of-type(2) > div:nth-of-type(1) > div > img{
 body > .re_review > div:nth-of-type(2) > div:nth-of-type(1) {
     margin-bottom: 50px;
 }
-body > .re_review > div:nth-of-type(2) > div:nth-of-type(2) {
+body > .re_review > div:nth-of-type(2) > div:nth-of-type(2){
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin-bottom: 80px;
 }
-body > .re_review > div:nth-of-type(2) > div:nth-of-type(2) > input{
+body > .re_review > div:nth-of-type(2) > div:nth-of-type(2) > form{
+    display: flex;
+    align-items: center;
+}
+body > .re_review > div:nth-of-type(2) > div:nth-of-type(2) > form > input{
     margin-right: -38px;
 }
-body > .re_review > div:nth-of-type(2) > div:nth-of-type(2) > i {
+body > .re_review > div:nth-of-type(2) > div:nth-of-type(2) > form > i {
     z-index: 2;
     border-left: 1px solid gray;
     padding-left: 10px;
@@ -1843,6 +1847,27 @@ body > .a_product > div > div:nth-of-type(1) {
 body > .a_product > div > div > div:nth-of-type(1) > p{
     margin-bottom: 0;
 }
+body > .a_product > div> form > table > tbody > tr > th > #foodcate{
+    text-align: center;
+    border: none;
+    background-color: transparent;
+    cursor: auto;
+    outline: none;
+    box-shadow: none;
+}
+body > .a_product > div> form > table > tbody > tr > .foodsearch > div {
+    display: flex;
+    align-items: center;
+}
+body > .a_product > div> form > table > tbody > tr > .foodsearch  > div > input{
+    margin-right : -38px;
+}
+body > .a_product > div> form > table > tbody > tr > .foodsearch  > div > a{
+    z-index: 2;
+    color: gray;
+    border-left: 1px solid gray;
+    padding-left: 10px;
+}
 body > .a_product > div > div:nth-of-type(2) > form {
     display: flex;
     align-items: center;
@@ -1865,5 +1890,8 @@ body > .a_product > div > form > div {
     display: flex;
     justify-content: right;
 }
-
+body > .a_product > div > div:nth-last-of-type(1) {
+	display: flex;
+	justify-content: center;
+} 
 /*productmanage.jsp --------------------------end*/

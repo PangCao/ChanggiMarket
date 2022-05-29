@@ -56,6 +56,10 @@ public class LoginController extends HttpServlet{
 		else if (command.equals("/login/idchk.lo")) {
 			
 		}
+		else if (command.equals("/login/logout.lo")) {
+			dao.logout(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/index.jsp");			
+		}
 	}
 
 		

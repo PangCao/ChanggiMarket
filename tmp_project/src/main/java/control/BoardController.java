@@ -23,11 +23,12 @@ public class BoardController extends HttpServlet{
 		String context_p = request.getContextPath();
 		String command = uri.substring(context_p.length());
 		BoardDao dao = BoardDao.getDao();
-		
-		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
+
 		
+		
+		String search_title = request.getParameter("search_title");
 		
 		if (command.equals("/community/notice_write.bo")) {
 			dao.noticewriter(request);
@@ -35,27 +36,27 @@ public class BoardController extends HttpServlet{
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/notice.bo")) {
-			dao.notice(request);
-			dao.bopage(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.jsp?category=notice");
+			dao.notice(request, search_title);
+			dao.bopage(request, search_title);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.jsp?category=notice&search_title="+search_title);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/notice_view.bo")) {
 			dao.noticeview(request);
-			dao.bopage(request);
+			dao.bopage(request, search_title);
 			String page = request.getParameter("page");
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=notice&page="+page);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/bulletin.bo")) {
-			dao.bulletin(request);
-			dao.bulletinbopage(request);			
-			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.jsp?category=bulletin");
+			dao.bulletin(request, search_title);
+			dao.bulletinbopage(request, search_title);			
+			RequestDispatcher rd = request.getRequestDispatcher("/community/notice.jsp?category=bulletin&search_title="+search_title);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/bulletin_view.bo")) {
 			dao.bulletinview(request);
-			dao.bulletinbopage(request);
+			dao.bulletinbopage(request, search_title);
 			String page = request.getParameter("page");
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=bulletin&page="+page);
 			rd.forward(request, response);
@@ -89,21 +90,22 @@ public class BoardController extends HttpServlet{
 		}
 		else if (command.equals("/community/review_view.bo")) {
 			dao.recipe_view(request);
-			dao.review_bopage(request);
+			dao.review_bopage(request, search_title);
 			String page = request.getParameter("page");
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=나만의 레시피&page="+page);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/review.bo")) {
-			dao.review(request);
-			dao.review_bopage(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/recipe_review.jsp");
+			dao.review(request, search_title);
+			dao.review_bopage(request, search_title);
+			String page = request.getParameter("page");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/recipe_review.jsp?page="+page+"&search_title="+search_title);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/faq.bo")) {
-			dao.faq(request);
-			dao.faq_bopage(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/faq.jsp");
+			dao.faq(request, search_title);
+			dao.faq_bopage(request, search_title);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/faq.jsp?search_title="+search_title);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/review_like.bo")) {
@@ -114,6 +116,9 @@ public class BoardController extends HttpServlet{
 			}
 			else if (likechk == -1) {
 				response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?likechk=-1&page="+page);
+			}
+			else if (likechk == 2) {
+				response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?likechk=2&page="+page);
 			}
 			else {
 				dao.likeup(request);

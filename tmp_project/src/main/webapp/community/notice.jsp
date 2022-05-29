@@ -15,6 +15,7 @@
 <meta charset="UTF-8">
 <%
 	request.setCharacterEncoding("utf-8");
+	String search_title = request.getParameter("search_title");
 	String category = request.getParameter("category");
 	if (category.equals("notice")) {
 		category = "공지사항";
@@ -107,10 +108,24 @@
             </table>
             <div>
                 <a href="./board_write.jsp?category=<%=category %>" class="btn btn-secondary col-2">글쓰기</a>
-                <form action="" method="post" class="col-4">
-                    <input type="text" placeholder="검색어를 입력해주세요." class="form-control">
-                    <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+                <%
+                	if (category.equals("공지사항")){
+                %>
+                <form action="notice.bo" method="post" class="col-4" name="searchForm">
+                    <input type="text" placeholder="검색어를 입력해주세요." class="form-control" name="search_title" id="search_title">
+                    <a><i class="fa-solid fa-magnifying-glass"></i></a>
                 </form>
+                <%
+                	}
+                	else {
+                %>
+                <form action="bulletin.bo" method="post" class="col-4" name="searchForm">
+                    <input type="text" placeholder="검색어를 입력해주세요." class="form-control" name="search_title" id="search_title">
+                    <a><i class="fa-solid fa-magnifying-glass"></i></a>
+                </form>
+                <%
+                	}
+                %>
             </div>
             <div class="col-12">
                 <%
@@ -122,14 +137,14 @@
             			}
             			else {
            		%>
-   		                 <p><a href="notice.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
+   		                 <p><a href="notice.bo?page=<%=cupage-1%>&search_title=<%=search_title%>"><b>&lt;</b></a>
            		
            		<%
             			}
                 		int pagenum = ((totalpage-1)/10)+1;
                 		for (int a = 0; a < pagenum; a++) {
                 %>
-                 	<a href="notice.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+                 	<a href="notice.bo?page=<%=a+1%>&search_title=<%=search_title%>" class="pagenum"><%=a+1%></a>
                	<%
 	                	}
 	                	if (pagenum == cupage) { 
@@ -139,7 +154,7 @@
 	                	}
 	                	else {
                	%>
-                <a href="notice.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+                <a href="notice.bo?page=<%=cupage+1%>&search_title=<%=search_title%>" class="pagenum"><b>&gt;</b></a></p>
                 <%
                 		}
                 	}
@@ -151,14 +166,14 @@
             			}
             			else {
            		%>
-   		                 <p><a href="bulletin.bo?page=<%=cupage-1%>"><b>&lt;</b></a>
+   		                 <p><a href="bulletin.bo?page=<%=cupage-1%>&search_title=<%=search_title%>"><b>&lt;</b></a>
            		
            		<%
             			}
                 		int pagenum = (totalpage/10)+1;
                 		for (int a = 0; a < pagenum; a++) {
                 %>
-                 	<a href="bulletin.bo?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+                 	<a href="bulletin.bo?page=<%=a+1%>&search_title=<%=search_title%>" class="pagenum"><%=a+1%></a>
                	<%
 	                	}
 	                	if (pagenum == cupage) { 
@@ -168,13 +183,12 @@
 	                	}
 	                	else {
                	%>
-                <a href="bulletin.bo?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+                <a href="bulletin.bo?page=<%=cupage+1%>&search_title=<%=search_title%>" class="pagenum"><b>&gt;</b></a></p>
                 <%
                 		}
-	                        	
 	                }
                 %>
-            	</div>
+           	</div>
         </div>
     </section>
     <jsp:include page="/footer.jsp"/>

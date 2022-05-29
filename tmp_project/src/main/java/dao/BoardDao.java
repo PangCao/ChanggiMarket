@@ -87,6 +87,8 @@ public class BoardDao {
 		ResultSet rs = null;
 		HttpSession session = request.getSession();
 		String c_id = (String)session.getAttribute("userid");
+		String s_id = (String)session.getAttribute("seller");
+		
 		int r_id = Integer.valueOf(request.getParameter("id"));
 		int likechk = -1;
 		if (c_id != null) {
@@ -121,6 +123,9 @@ public class BoardDao {
 					e.printStackTrace();
 				}
 			}
+		}
+		else if (s_id != null) {
+			likechk = 2;
 		}
 		return likechk;
 	}
@@ -182,26 +187,24 @@ public class BoardDao {
 	}
 	
 	
-	public void bulletin(HttpServletRequest request) {
+	public void bulletin(HttpServletRequest request, String search_title) {
 		String page = request.getParameter("page");
-		String search = request.getParameter("search");
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Boardlist> al = new ArrayList<Boardlist>();
+		String sql = "";
 		try {
 			dbconn = conn();
-			if (search == null || search.equals("")) {
-				String sql = "select * from bulletin order by b_id desc";
-				pstmt = dbconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select * from bulletin order by b_id desc";
 			}
 			else {
-				String sql = "select * from bulletin where title=? order by b_id desc";
-				pstmt = dbconn.prepareStatement(sql);
-				pstmt.setString(1, search);
-				rs = pstmt.executeQuery();
+				sql = "select * from bulletin where b_title like '%"+search_title+"%' order by b_id desc";
 			}
+				pstmt = dbconn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
 				Boardlist bl = new Boardlist();
 				String id = rs.getString("b_id");
@@ -490,15 +493,21 @@ public class BoardDao {
 		}
 	}
 	
-	public void faq_bopage(HttpServletRequest request) {
+	public void faq_bopage(HttpServletRequest request, String search_title) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		String sql = "";
 		try {
 			dbconn = conn();
-				String sql = "select count(*) from faq";
-				pstmt = dbconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+			if ( search_title == null ||search_title.equals("") || search_title.equals("null")) {
+				sql = "select count(*) from faq";
+			}
+			else {
+				sql ="select count(*) from fap where f_title '&"+search_title+"&'";
+			}
+			pstmt = dbconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
 			rs.next();
 			int page = rs.getInt(1);
 			request.setAttribute("totalpage", page);
@@ -524,25 +533,22 @@ public class BoardDao {
 		}
 	}
 	
-	public void review_bopage(HttpServletRequest request) {
+	public void review_bopage(HttpServletRequest request, String search_title) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String search = request.getParameter("search");
-		
+		String sql = "";
 		try {
 			dbconn = conn();
-			if (search == null || search.equals("")) {
-				String sql = "select count(*) from r_review";
-				pstmt = dbconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select count(*) from r_review";
 			}
 			else {
-				String sql = "select count(*) from r_review where r_title=?";
-				pstmt = dbconn.prepareStatement(sql);
-				pstmt.setString(1, search);
-				rs = pstmt.executeQuery();
+				sql = "select count(*) from r_review where r_title like '%"+search_title+"%'";
 			}
+				pstmt = dbconn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			
 			rs.next();
 			int page = rs.getInt(1);
 			request.setAttribute("totalpage", page);
@@ -603,25 +609,22 @@ public class BoardDao {
 		}
 	}
 	
-	public void bulletinbopage(HttpServletRequest request) {
+	public void bulletinbopage(HttpServletRequest request, String search_title) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String search = request.getParameter("search");
-		
+		String sql = "";
 		try {
 			dbconn = conn();
-			if (search == null || search.equals("")) {
-				String sql = "select count(*) from bulletin";
-				pstmt = dbconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select count(*) from bulletin";
 			}
 			else {
-				String sql = "select count(*) from bulletin where b_title=?";
-				pstmt = dbconn.prepareStatement(sql);
-				pstmt.setString(1, search);
-				rs = pstmt.executeQuery();
+				sql = "select count(*) from bulletin where b_title like '%"+search_title+"%'";
 			}
+				pstmt = dbconn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			
 			rs.next();
 			int page = rs.getInt(1);
 			request.setAttribute("totalpage", page);
@@ -647,25 +650,21 @@ public class BoardDao {
 		}
 	}
 	
-	public void bopage(HttpServletRequest request) {
+	public void bopage(HttpServletRequest request, String search_title) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String search = request.getParameter("search");
-		
+		String sql = "";
 		try {
 			dbconn = conn();
-			if (search == null || search.equals("")) {
-				String sql = "select count(*) from notice";
-				pstmt = dbconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select count(*) from notice";
 			}
 			else {
-				String sql = "select count(*) from notice where n_title=?";
-				pstmt = dbconn.prepareStatement(sql);
-				pstmt.setString(1, search);
-				rs = pstmt.executeQuery();
+				sql = "select count(*) from notice where n_title like '%"+search_title+"%'";
 			}
+				pstmt = dbconn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
 			rs.next();
 			int page = rs.getInt(1);
 			request.setAttribute("totalpage", page);
@@ -691,7 +690,8 @@ public class BoardDao {
 		}
 	}
 	
-	public void faq(HttpServletRequest request) {
+	public void faq(HttpServletRequest request, String search_title) {
+		String sql = "";
 		String page = request.getParameter("page");
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
@@ -699,7 +699,12 @@ public class BoardDao {
 		ArrayList<Boardlist> al = new ArrayList<Boardlist>();
 		try {
 			dbconn = conn();
-			String sql = "select * from faq order by f_id desc";
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select * from faq order by f_id desc";
+			}
+			else {
+				sql = "select * from faq where f_title like '%"+search_title+"%' order by f_id desc";
+			} 
 			pstmt = dbconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -737,26 +742,23 @@ public class BoardDao {
 	}
 	
 	
-	public void review(HttpServletRequest request) {
-		String page = request.getParameter("page");
-		String search = request.getParameter("search");
+	public void review(HttpServletRequest request, String search_title) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Boardlist> al = new ArrayList<Boardlist>();
+		String sql = "";
 		try {
 			dbconn = conn();
-			if (search == null || search.equals("")) {
-				String sql = "select * from r_review order by r_id desc";
-				pstmt = dbconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select * from r_review order by r_id desc";
 			}
 			else {
-				String sql = "select * from r_review where r_title=? order by r_id desc";
-				pstmt = dbconn.prepareStatement(sql);
-				pstmt.setString(1, search);
-				rs = pstmt.executeQuery();
+				sql = "select * from r_review where r_title like '%"+search_title+"%' order by r_id desc";
 			}
+				pstmt = dbconn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
 				Boardlist bl = new Boardlist();
 				String id = rs.getString("r_id");
@@ -801,26 +803,23 @@ public class BoardDao {
 		}
 	}
 	
-	public void notice(HttpServletRequest request) {
-		String page = request.getParameter("page");
-		String search = request.getParameter("search");
+	public void notice(HttpServletRequest request, String search_title) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Boardlist> al = new ArrayList<Boardlist>();
+		String sql = "";
 		try {
 			dbconn = conn();
-			if (search == null || search.equals("")) {
-				String sql = "select * from notice order by n_id desc";
-				pstmt = dbconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
+			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
+				sql = "select * from notice order by n_id desc";
 			}
 			else {
-				String sql = "select * from notice where n_title=? order by n_id desc";
-				pstmt = dbconn.prepareStatement(sql);
-				pstmt.setString(1, search);
-				rs = pstmt.executeQuery();
+				sql = "select * from notice where n_title like '%"+search_title+"%' order by n_id desc";
 			}
+				pstmt = dbconn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
 				Boardlist bl = new Boardlist();
 				String id = rs.getString("n_id");
