@@ -71,6 +71,11 @@ public class RecipeController extends HttpServlet{
 				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=0&id="+id+"&r_category="+ct+"&page="+cupage);
 			}
 		}
+		else if (command.equals("/recipe/foodsearch.re")) {
+			dao.searchfood(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/recipe/foodsel.jsp");
+			rd.forward(request, response);
+		}
 	}
 	
 }

@@ -1,6 +1,5 @@
 package dao;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,12 +14,61 @@ import com.mysql.jdbc.Connection;
 
 import dto.recipelist;
 import dto.cartlist;
+import dto.foodmanage;
 import dto.foodprice;
 public class RecipeDao {
 	private static RecipeDao rd = new RecipeDao();
 	
 	public static RecipeDao getDao() {
 		return rd;
+	}
+	
+	public void searchfood(HttpServletRequest request) {
+		ArrayList<foodmanage> alf = new ArrayList<foodmanage>();
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String name = request.getParameter("search");
+		String sql = "";
+		try {
+			dbconn = conn();
+			if (name == null || name.equals("") || name.equals("null")) {
+				sql = "select * from foodlist";
+			}
+			else {
+				sql = "select * from foodlist where f_name like '%"+name+"%'";
+			}
+			pstmt = dbconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				foodmanage fm = new foodmanage();
+				fm.setF_code(String.valueOf(rs.getInt("f_id")));
+				fm.setF_code(rs.getString("f_category"));
+				fm.setF_name(rs.getString("f_name"));
+				fm.setF_price(rs.getInt("f_price"));
+				fm.setF_unit(rs.getInt("f_unit"));
+				alf.add(fm);
+			}
+			request.setAttribute("foodlist", alf);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public Connection conn() {

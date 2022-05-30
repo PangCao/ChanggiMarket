@@ -1895,3 +1895,12 @@ body > .a_product > div > div:nth-last-of-type(1) {
 	justify-content: center;
 } 
 /*productmanage.jsp --------------------------end*/
+
+/*addrecipe.jsp --------------------------start*/
+
+body > .recipe_add {
+	padding-top : 120px;
+	padding-bottom : 100px;
+	min-height : 80vh;
+}
+/*addrecipe.jsp --------------------------end*/
