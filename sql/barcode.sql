@@ -6,6 +6,8 @@ create table  foodbarcode(
     primary key(fb_id)    
 )default charset=utf8mb4;
 
+
+
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(곡류)','01(쌀)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(곡류)','02(보리)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(곡류)','03(현미)');
@@ -14,7 +16,7 @@ insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(�
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(곡류)','06(작두콩)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(곡류)','07(잡곡)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(곡류)','08(찹쌀)');
-insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(곡류)','09(기타)');
+insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '01(곡류)','09(기타 곡류)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '02(채소류)','01(양파)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '02(채소류)','02(감자)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('01(농산)', '02(채소류)','03(당근)');
@@ -63,7 +65,7 @@ insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '01(�
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '01(생선류)','09(장어)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '01(생선류)','10(노래미)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '01(생선류)','11(고등어)');
-insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '01(생선류)','12(기타)');
+insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '01(생선류)','12(기타 생선류)');
 
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '02(패류)','01(바지락)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '02(패류)','02(가리비)');
@@ -74,7 +76,7 @@ insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '02(�
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '02(패류)','07(개조개)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '02(패류)','08(굴)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '02(패류)','09(전복)');
-insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '02(패류)','10(기타)');
+insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '02(패류)','10(기타 패류)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '03(해산물)','01(멍게)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '03(해산물)','02(해삼)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('03(수산)', '03(해산물)','03(성게)');
@@ -101,7 +103,7 @@ insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '02(�
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '02(양념류)','07(케첩)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '02(양념류)','08(설탕)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '02(양념류)','09(소금)');
-insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '02(양념류)','10(기타)');
+insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '02(양념류)','10(기타 가공류)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '03(면류)','01(라면)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '03(면류)','02(국수)');
 insert into foodbarcode(fb_main, fb_middle, fb_sub) values ('04(가공)', '03(면류)','03(파스타)');

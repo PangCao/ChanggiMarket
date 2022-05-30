@@ -17,6 +17,38 @@ public class SellDao {
 		return dao;
 	} 
 	
+	public void delfood(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		int num = Integer.valueOf(request.getParameter("num"));
+		String idsql = "fooddel"+num;
+		int id = Integer.valueOf(request.getParameter(idsql));
+		try {
+			String sql = "delete from foodlist where f_id = ?";
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}	
+	
 	public void totalpage(HttpServletRequest request, String foodname) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
@@ -70,6 +102,7 @@ public class SellDao {
 			
 			while (rs.next()) {
 				foodmanage fm = new foodmanage();
+				fm.setF_id(String.valueOf(rs.getInt("f_id")));
 				fm.setF_code(rs.getString("f_category"));
 				fm.setF_name(rs.getString("f_name"));
 				fm.setF_price(rs.getInt("f_price"));
@@ -97,6 +130,36 @@ public class SellDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public int addchk(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int chk = 0;
+		String name = request.getParameter("name");
+		
+		try {
+			dbconn = conn();
+			String sql = "select count(*) from foodlist where f_name=?";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			rs.next();
+			chk = rs.getInt(1);
+					
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return chk;
 	}
 	
 	public void addfood(HttpServletRequest request) {

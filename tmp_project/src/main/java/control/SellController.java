@@ -42,9 +42,19 @@ public class SellController extends HttpServlet{
 			rd.forward(request, response);
 		}
 		else if(command.equals("/login/addfood.sel")) {
-			dao.addfood(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/login/productmanage.sel");
-			rd.forward(request, response);
+			int chk = dao.addchk(request);
+			if (chk == 0) {
+				dao.addfood(request);
+				RequestDispatcher rd = request.getRequestDispatcher("/login/productmanage.sel");
+				rd.forward(request, response);
+			}
+			else {
+				response.sendRedirect("http://localhost:8080/tmp_project/login/productmanage.sel?addchk=1");
+			}
+		}
+		else if(command.equals("/login/delfood.sel")) {
+			dao.delfood(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/login/productmanage.sel");
 		}		
 	}
 	

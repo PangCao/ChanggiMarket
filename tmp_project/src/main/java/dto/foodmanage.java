@@ -5,11 +5,18 @@ import java.io.Serializable;
 public class foodmanage implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+	private String f_id;
 	private String f_code;
 	private String f_name;
 	private int f_price;
 	private int f_unit;
+	
+	public String getF_id() {
+		return f_id;
+	}
+	public void setF_id(String f_id) {
+		this.f_id = f_id;
+	}
 	public String getF_code() {
 		return f_code;
 	}

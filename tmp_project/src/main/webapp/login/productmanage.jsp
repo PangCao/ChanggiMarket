@@ -36,6 +36,7 @@
 </script>
 <title>Insert title here</title>
 <%
+	String addchk = request.getParameter("addchk");
 	ArrayList<foodmanage> alf = (ArrayList<foodmanage>)request.getAttribute("foodmanage");
 	int cupage = 1;
 	if (request.getParameter("page") != null) {
@@ -66,6 +67,13 @@
     		color: red;
 		}
 	</style>
+<%
+	}
+	if (addchk != null && addchk.equals("1")){
+%>
+	<script type="text/javascript">
+		alert("이미 존재하는 상품입니다.");
+	</script>
 <%
 	}
 %>
@@ -161,9 +169,16 @@
 	                        <td><%=fm.getF_price() %>원</td>
 	                        <td><%=fm.getF_unit() %>pcs</td>
 	                        <td>
-	                            <input type="button" value="삭제" class="btn btn-danger">
+	                            <input type="button" value="삭제" class="btn btn-danger" onclick="fooddelete<%=i%>()">
+	                            <input type="hidden" name="fooddel<%=i %>" id="fooddel<%=i %>" value="<%=fm.getF_id()%>">
 	                        </td>
 	                    </tr>
+	                    <script type="text/javascript">
+							function fooddelete<%=i%>() {
+								document.addfoodForm.action = "delfood.sel?num=<%=i%>";
+								document.addfoodForm.submit();
+							}
+						</script>
                     <%
                     	}
                     %>
