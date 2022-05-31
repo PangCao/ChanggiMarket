@@ -7,10 +7,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <%
+	String id = (String)session.getAttribute("userid");
+	if (id != null) {
+%>
+	<script type="text/javascript">
+		function addrecipe() {
+			location.href="addrecipe.jsp";
+		}
+	</script>
+<%
+	}
+	else {
+%>
+	<script type="text/javascript">
+		function addrecipe() {
+			alert("로그인을 하신 후에 레시피를 등록하실 수 있습니다.");
+		}
+	</script>	
+<%
+	}
 	String search_title = request.getParameter("search_title");
 	ArrayList<recipelist> rl = (ArrayList<recipelist>)request.getAttribute("food");
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
+	
 	String ct = request.getParameter("r_category");
 	int cnt = 0;
 	int cupage = 1;
@@ -60,6 +81,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -68,7 +90,7 @@
         <div class="container">
             <div>
                 <div class="col-8">
-                    <a href="" class="btn btn-secondary col-3">레시피 등록</a>
+                    <input type="button" class="btn btn-secondary col-3" value="레시피 등록" onclick="addrecipe()">
                     <h4 class="col-6"><%=ct%></h4>
                 </div>
                 <p><i class="fa-solid fa-house"></i>&nbsp;HOME > 레시피 > <%=ct %></p>

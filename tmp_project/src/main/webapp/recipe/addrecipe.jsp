@@ -4,7 +4,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="../resources/css/style.css?ver=1.4">
+<link rel="stylesheet" href="../resources/css/style.css?ver=1.5">
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,9 +19,11 @@
         <div class="container">
             <h3>레시피 등록</h3>
             <hr>
+            <input type="hidden" id="inputcnt" value="0">
+            <input type="hidden" id="suminput" value="0">
             <form action="" class="row" method="post" enctype="multipart/form-data">
                 <div class="col-6">
-                    <img src="" alt="" style="border: 1px solid black; width: 100%; height: 500px;" id="preview">
+                    <img src="" alt="" style="width: 100%; height: 500px;" id="preview">
                     <input type="file" class="form-control mt-3" onchange="addimg(this)">
                 </div>
                 <div class="col-6">
@@ -33,31 +35,46 @@
                         <label class="col-4">레시피 한줄 설명</label>
                         <input type="text" class="col-8 form-control">
                     </div>
-                    <table class="table col-12" id="filed">
-                        <tr class="row text-center">
-                            <th class="col-3">상품명</th>
-                            <th class="col-3">갯수</th>
-                            <th class="col-3">상품가격</th>
-                            <th class="col-3"></th>
-                        </tr>
-                        <tr class="row text-center" id="pre_set" style="display: none;">
-                            <td class="f_name">
-                            	<input type="hidden" class="f_name_in">
-                            </td>
-                            <td class="f_unit">
-                            	<input type="number" value="1" min="0" name="f_unit">
-                            	<input type="hidden" class="f_unit_in" value="1">
-                            </td>
-                            <td class="f_price">
-                            	<input type="hidden" class="f_price_in">
-                            </td>
-                            <input type="hidden" name="f_name_in">
-                            <td class="f_del"><input type="button" class="btn btn-danger" id="f_delete" value="삭제" onclick="remove_input(this)"></td>
-                        </tr>
+                    <div class="row d-flex align-items-center form-group">
+                    	<label class="col-4">카테고리</label>
+                    	<select class="form-control col-8" name="catesel" id="catesel">
+                    		<option value="" disabled selected style="display: none">카테고리 선택</option>
+                    		<option value="밥·죽">밥/죽</option>
+                    		<option value="국·탕·찌개·전골">국/탕/찌개/전골</option>
+                    		<option value="면">면</option>
+                    		<option value="찜·조림">찜/조림</option>
+                    		<option value="구이">구이</option>
+                    		<option value="튀김">튀김</option>
+                    		<option value="나물">나물</option>
+                    		<option value="기타">기타</option>
+                    	</select>
+                    </div>
+                    <table class="table col-12">
+                    	<tbody id="field">
+	                        <tr class="text-center">
+	                            <th class="col-3">상품명</th>
+	                            <th class="col-3">갯수</th>
+	                            <th class="col-3">상품가격</th>
+	                            <th class="col-3">삭제</th>
+	                        </tr>
+	                        <tr class="text-center" id="pre_set" style="display: none;">
+	                            <input type="hidden" class="f_name_in">
+	                            <input type="hidden" class="f_price_in" >
+	                            <input type="hidden" class="f_unit_in" >
+	                            <td class="f_name col-3 text-center"></td>
+	                            <td class="f_unit col-3 text-center">
+	                            	<input type="number" value="1" min="0" name="f_unit" class="form-control f_unit" onchange="chgprice(this)">                           
+	                            </td>
+	                            <td class="f_price col-3 text-center"></td class="col-3 text-center">
+	                            <td class="f_del col-3 text-center">
+	                            	<input type="button" class="btn btn-danger" id="f_delete" value="삭제" onclick="remove_input(this)">
+	                            </td>
+	                        </tr>
+                        </tbody>
                     </table>
                     <div class="row">
                         <p class="col-6 text-center"><b>합계</b></p>
-                        <p class="col-6 text-right"><b>7000원</b></p>
+                        <p class="col-6 text-right"><b id="f_sum">0원</b></p>
                     </div>
                     <div class="row d-flex align-items-center form-group justify-content-end">
                         <input type="text" class="col-6 form-control" id="foodsearch">
@@ -69,7 +86,7 @@
                     <textarea name="" id="" rows="20" class="col-12 form-control" style="resize: none;" placeholder="나만의 레시피를 등록해주세요."></textarea>
                 </div>
                 <div class="col-12 d-flex justify-content-end mt-3">
-                    <input type="submit" value="등록" class="btn btn-success col-2">
+                    <input type="button" value="등록" class="btn btn-success col-2" onclick="">
                 </div>
             </form>
             </div>
@@ -78,6 +95,24 @@
     <jsp:include page="/footer.jsp"/>
 </body>
 <script type="text/javascript">
+	function chgprice(obj) {
+		var id = obj.id;
+		var foodprice = document.getElementById('f_price_'+id).value;
+		var foodunit = obj.value;
+		document.getElementById('f_unit_'+id).value = foodunit;
+		var sumvalue = document.getElementById('suminput').value;
+		document.getElementById('ft_price_'+id).innerHTML = (Number(foodprice)* Number(foodunit)) + " 원";
+		
+		const setunit = document.getElementsByClassName('f_unit_in');
+		const setprice = document.getElementsByClassName('f_price_in');
+		var total = 0;
+		for (let i = 1; i < setprice.length; i++) {
+			total = Number(total) + (Number(setprice[i].value) * Number(setunit[i].value));
+		}
+		
+		document.getElementById('f_sum').innerHTML = total + " 원";
+	}
+	
 	var reader = new FileReader();
 	function addimg(input) {
 		if (input.files && input.files[0]) {
@@ -90,6 +125,7 @@
 			document.getElementById('preview').src = "";
 		}
 	}
+	
 	function food_search() {
 		var popupwidth = 800;
 		var popupheight = 500;
@@ -97,8 +133,17 @@
 		var popy = (window.screen.height / 2) - (popupheight / 2);
 		window.open("foodsearch.re?search="+document.getElementById('foodsearch').value ,"searchPop","status=no, width="+popupwidth+", height="+popupheight+",left="+popx+",top="+popy);
 	}
+	
 	function remove_input(obj) {
-		document.getElementById('filed').removeChild(obj.parentNode);
+		document.getElementById('field').removeChild(obj.parentNode.parentNode);
+		const setunit = document.getElementsByClassName('f_unit_in');
+		const setprice = document.getElementsByClassName('f_price_in');
+		var total = 0;
+		for (let i = 1; i < setprice.length; i++) {
+			total = Number(total) + (Number(setprice[i].value) * Number(setunit[i].value));
+		}
+		
+		document.getElementById('f_sum').innerHTML = total + " 원";
 	}
 </script>
 </html>
