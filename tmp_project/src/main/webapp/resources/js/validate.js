@@ -1,8 +1,10 @@
 function validate() {
+    var idchkbul = document.getElementById('idchkbul');
     var id = document.getElementById('id');
     var pw = document.getElementById('pw');
     var pwre = document.getElementById('pwre');
     var name = document.getElementById('name');
+    var mailchkbul = document.getElementById('emailchkbul');
     var mail = document.getElementById('mail');
     var phone = document.getElementById('phone');
     var addr = document.getElementById('sample6_address');
@@ -11,8 +13,8 @@ function validate() {
     var ch3 = document.getElementById('ch3');
     var ch5 = document.getElementById('ch5');
 
-    if (id.value == "") {
-        alert("[아이디]\n아이디를 입력해주세요.");
+    if (idchkbul.value == "") {
+		alert("[아이디]\n아이디 중복체크를 해주세요.");
         id.focus;
         id.select;
         return false;
@@ -42,16 +44,13 @@ function validate() {
         return false;
     }
 
-    if (mail.value == "") {
-        alert("[이메일]\n이메일을 입력해주세요.");
+    if (mailchkbul.value == "") {
+        alert("[이메일]\n이메일 중복체크를 해주세요.");
         mail.focus;
         mail.select;
         return false;
     }
 
-    else if (!check(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/, mail, "[이메일]\n\'아이디@이메일주소\'의 형식으로 입력해주세요.")) {
-            return false;
-    }
 
     if (phone.value == "") {
         alert("[휴대전화]\n휴대전화를 입력해주세요.");

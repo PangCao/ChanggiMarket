@@ -29,6 +29,7 @@
 <%
 	}
 	String search_title = request.getParameter("search_title");
+	String order = request.getParameter("order");
 	ArrayList<recipelist> rl = (ArrayList<recipelist>)request.getAttribute("food");
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 	
@@ -98,7 +99,7 @@
             <hr>
             <div>
                 <p>
-                    <a href="#">신상품순</a> | <a href="#">판매량순</a> | <a href="#">낮은가격순</a> | <a href="#">높은가격순</a>
+                    <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=new">신상품순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=sell">판매량순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=rowprice">낮은가격순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=highprice">높은가격순</a>
                 </p>
                 <form action="recipes.re?r_category=<%=ct%>&page=<%=cupage%>" method="post" class="col-4">
                     <input type="text" placeholder="검색어를 입력해주세요." class="form-control" name="search_title">
@@ -151,14 +152,14 @@
             		}
             		else {
            		%>
-   		                 <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage-1%>&search_title=<%=search_title%>"><b>&gt;</b></a></p>
+   		                 <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage-1%>&search_title=<%=search_title%>&order=<%=order%>"><b>&gt;</b></a></p>
            		
            		<%
             			}
                 	int pagenum = (cnt/20)+1;
                 	for (int a = 0; a < pagenum; a++) {
                 %>
-                 	<a href="./recipes.re?r_category=<%=ct %>&page=<%=a+1%>&search_title=<%=search_title%>"><%=a+1%></a>
+                 	<a href="./recipes.re?r_category=<%=ct %>&page=<%=a+1%>&search_title=<%=search_title%>&order=<%=order%>"><%=a+1%></a>
                	<%
                 	}
                 	if (pagenum == cupage) { 
@@ -168,7 +169,7 @@
                 	}
                 	else {
                	%>
-                <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage+1%>&search_title=<%=search_title%>"><b>&gt;</b></a></p>
+                <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage+1%>&search_title=<%=search_title%>&order=<%=order%>"><b>&gt;</b></a></p>
                 <%
                 	}
                 %>

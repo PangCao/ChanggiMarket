@@ -42,6 +42,7 @@ public class CartController extends HttpServlet{
 		}
 		else if (command.equals("/cart/order.ca")) {
 			dao.order(request);
+			dao.sellcnt(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/cart/order_complete.jsp");
 			rd.forward(request, response);
 		}

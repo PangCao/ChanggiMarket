@@ -125,6 +125,27 @@ public class BoardController extends HttpServlet{
 				response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?page="+page);
 			}
 		}
+		else if (command.equals("/community/delnoview.bo")) {
+			dao.delnoview(request);
+			String page = request.getParameter("page");
+			String cate = request.getParameter("category");
+			if (cate.equals("나만의 레시피")) {
+				RequestDispatcher rd = request.getRequestDispatcher("/community/review.bo?page="+page+"&category="+cate);
+				rd.forward(request, response);
+			}
+			else if (cate.equals("게시판")) {
+				RequestDispatcher rd = request.getRequestDispatcher("/community/bulletin.bo?page="+page+"&category="+cate);
+				rd.forward(request, response);
+			}
+			else if (cate.equals("공지사항")) {
+				RequestDispatcher rd = request.getRequestDispatcher("/community/notice.bo?page="+page+"&category="+cate);
+				rd.forward(request, response);
+			}
+			else if (cate.equals("1:1 문의")) {
+				RequestDispatcher rd = request.getRequestDispatcher("/community/one_qnasdf.bo?page="+page+"&category="+cate);
+				rd.forward(request, response);
+			}
+		}
 	}
 	
 }

@@ -41,10 +41,22 @@ public class RecipeController extends HttpServlet{
 		String search_title = request.getParameter("search_title");
 		
 		if (command.equals("/recipe/recipes.re")) {
+			String order = request.getParameter("order");
 			dao.recipes(request, search_title);
 			dao.price(request);
+			if (order != null) {
+				if (order.equals("rowprice") || order.equals("highprice")) {
+					dao.orderprice(request);
+				}
+			}
 			dao.count(request, search_title);
-			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.jsp?search_title="+search_title);
+			RequestDispatcher rd = null;
+			if (order != null) {
+				rd = request.getRequestDispatcher("/recipe/recipes.jsp?search_title="+search_title+"&order="+order);
+			} 
+			else {
+				rd = request.getRequestDispatcher("/recipe/recipes.jsp?search_title="+search_title);
+			}
 			rd.forward(request, response);
 		}
 		else if (command.equals("/recipe/recipe.re")) {
@@ -74,6 +86,16 @@ public class RecipeController extends HttpServlet{
 		else if (command.equals("/recipe/foodsearch.re")) {
 			dao.searchfood(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/recipe/foodsel.jsp");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/recipe/addrecipe.re")) {
+			dao.addrecipe(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.re?r_category=밥·죽&page=1");
+			rd.forward(request, response);
+		}
+		else if (command.equals("/recipe/delrecipe.re")) {
+			dao.delrecipe(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.re?r_category=밥·죽&page=1");
 			rd.forward(request, response);
 		}
 	}

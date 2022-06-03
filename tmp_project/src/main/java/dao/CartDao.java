@@ -202,6 +202,18 @@ public class CartDao {
 		al.add(cl);
 	}
 	
+	public void sellcnt(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		
+		
+		
+		session.removeAttribute("myCart");
+
+	}
+	
 	public void order(HttpServletRequest request) {
 		HttpSession session = request.getSession();	
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -273,8 +285,6 @@ public class CartDao {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			
-			session.removeAttribute("myCart");
 		}
 	}
 	

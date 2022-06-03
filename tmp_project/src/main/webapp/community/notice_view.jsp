@@ -15,6 +15,8 @@
 <title>Insert title here</title>
 <%
 	Boardlist bl = (Boardlist)request.getAttribute("viewInfo");
+	String userid = (String)session.getAttribute("userid");
+	String writer = bl.getWriter();
  	int cupage = Integer.valueOf(request.getParameter("page"));
  	int id = Integer.valueOf(request.getParameter("id"));
  	int next = id - 1;
@@ -124,13 +126,24 @@
                 <a href="./review.bo?page=<%=cupage %>&category=<%=category %>" class="btn btn-success col-2">목록</a>
                 <%
             		}
+            		if (userid.equals(writer)){
                 %>
+                <input type="button" onclick="delnoview()" class="btn btn-danger col-2" value="삭제">
+                <%
+            		}
+                %>
+                
             </div>
         </div>
     </section>
     <jsp:include page="/footer.jsp"/>
 </body>
 <script type="text/javascript">
+	function delnoview() {
+		if (confirm("게시물을 삭제하시겠습니까?")){
+			location.href="delnoview.bo?id=<%=bl.getId()%>&page=<%=cupage %>&category=<%=category %>";
+		}
+	}
 	function nonext() {
 		alert("현재 페이지가 마지막 페이지 입니다.");
 	}

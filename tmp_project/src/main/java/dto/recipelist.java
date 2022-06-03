@@ -4,6 +4,7 @@ public class recipelist implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private int r_id;
+	private String r_writer;
 	private String r_category;
 	private String r_name;
 	private String r_desc;
@@ -11,6 +12,13 @@ public class recipelist implements Serializable{
 	private String r_unit;
 	private String r_tip;
 	private String r_img;
+	
+	public String getR_writer() {
+		return r_writer;
+	}
+	public void setR_writer(String r_writer) {
+		this.r_writer = r_writer;
+	}
 	public int getR_id() {
 		return r_id;
 	}

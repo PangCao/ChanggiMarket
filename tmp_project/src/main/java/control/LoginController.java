@@ -35,13 +35,23 @@ public class LoginController extends HttpServlet{
 		
 		if (command.equals("/login/signup.lo")) {
 			dao.signup(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/login/login.jsp");
-			rd.forward(request, response);
+			response.sendRedirect("http://localhost:8080/tmp_project/login/login.jsp?signup=1");
+		}
+		else if (command.equals("/login/idchk.lo")) {
+			int chkresult = dao.idchk(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/login/idmailchk.jsp?idchk="+chkresult);
+		}
+		else if (command.equals("/login/emailchk.lo")) {
+			int chkresult = dao.emailchk(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/login/idmailchk.jsp?emailchk="+chkresult);
+		}
+		else if (command.equals("/login/sellnumchk.lo")) {
+			int chkresult = dao.sellnumchk(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/login/idmailchk.jsp?sellnumchk="+chkresult);
 		}
 		else if (command.equals("/login/seller_signup.lo")) {
 			dao.seller_signup(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/login/login.jsp");
-			rd.forward(request, response);
+			response.sendRedirect("http://localhost:8080/tmp_project/login/login.jsp?signup=1");
 		}
 		else if (command.equals("/login/login.lo")) {
 			boolean ans = dao.login(request);
@@ -53,15 +63,9 @@ public class LoginController extends HttpServlet{
 				response.sendRedirect("/tmp_project/login/login.jsp?error=1");
 			}
 		}
-		else if (command.equals("/login/idchk.lo")) {
-			
-		}
 		else if (command.equals("/login/logout.lo")) {
 			dao.logout(request);
 			response.sendRedirect("http://localhost:8080/tmp_project/index.jsp");			
 		}
 	}
-
-		
-
 }

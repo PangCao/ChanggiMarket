@@ -11,6 +11,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
+<%
+	String signup = request.getParameter("signup");
+	if (signup != null){
+%>
+	<script type="text/javascript">
+		alert("ChanggiFood에 회원가입이 되었습니다.");
+	</script>
+<%
+	}
+%>
 <title>로그인</title>
 </head>
 <body>

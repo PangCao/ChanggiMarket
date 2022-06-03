@@ -5,7 +5,7 @@
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="../resources/css/style.css?ver=1.4">
-<script type="text/javascript" src="../resources/js/validate.js?ver=1.3"></script>
+<script type="text/javascript" src="../resources/js/validate.js?ver=1.4"></script>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://kit.fontawesome.com/42c64699fb.js" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,16 @@
                     <div class="form-group row">
                         <label class="col-3">아이디 <span>*</span></label>
                         <input name="id" id="id" type="text" placeholder="아이디(920907v)" required class="form-control col-5">
-                        <input type="button" value="중복확인" class="btn btn-secondary ml-2 col-3">
+                        <input type="button" value="중복확인" class="btn btn-secondary ml-2 col-3" id="idchkbtn" onclick="idchk()">
+                    </div>
+                    <div class="form-group row">
+                    	<label class="col-3"></label>
+                    	<div class="col-5">
+                    		<p id="idsuccess" style="display: none; color: #28b421;">사용가능한 아이디 입니다.</p>
+                    		<p id="idfaile" style="display: none; color : red;">사용 불가능한 아이디 입니다.</p>
+                    		<p id="idans" style="display: none;">아이디를 다시 확인하신 후 입력해주세요(8자리 이상)</p>
+                    		<input type="hidden" id="idchkbul" value="">
+                    	</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-3">비밀번호 <span>*</span></label>
@@ -56,12 +65,20 @@
                     <div class="form-group row">
                         <label class="col-3">이메일 <span>*</span></label>
                         <input name="email" id="mail" type="text" placeholder="이메일 (920907v@naver.com)" required class="form-control col-5">
-                        <input type="button" value="중복확인" class="btn btn-secondary ml-2 col-3">
+                        <input type="button" id="emailchkbtn" value="중복확인" class="btn btn-secondary ml-2 col-3" onclick="emailchk()">
+                    </div>
+                    <div class="form-group row">
+                    	<label class="col-3"></label>
+                    	<div class="col-5">
+                    		<p id="emailsuccess" style="display: none; color: #28b421;">사용가능한 이메일 입니다.</p>
+                    		<p id="emailfaile" style="display: none; color : red;">사용 불가능한 이메일 입니다.</p>
+                    		<p id="emailans" style="display: none;">이메일을 다시 확인하신 후 입력해주세요</p>
+                    		<input type="hidden" id="emailchkbul" value="">
+                    	</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-3">휴대전화 <span>*</span></label>
                         <input name="phone" id="phone" type="text" placeholder="'-'를 포함하여 입력해주세요" required class="form-control col-5">
-                        <input type="button" value="인증번호 받기" class="btn btn-secondary ml-2 col-3">
                     </div>
                     <div class="form-group row">
                     	<label class="col-3">주소 <span>*</span></label>
@@ -88,7 +105,7 @@
                                 <label for="gender2">여성</label>
                             </div>
                             <div class="col-4">
-                                <input type="radio" name="gender" value="" id="gender3" checked>
+                                <input type="radio" name="gender" value="선택안함" id="gender3" checked>
                                 <label for="gender3">선택안함</label>
                             </div>
                         </div>
@@ -189,7 +206,15 @@
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    function sample6_execDaumPostcode() {
+	function idchk() {
+		var id = document.getElementById('id').value;
+		window.open("idchk.lo?id="+id+"&user=customer", "idchk", "width:0px, height:0px");	
+	}
+	function emailchk() {
+		var email = document.getElementById('mail').value;
+		window.open("emailchk.lo?email="+email+"&user=customer","emailchk", "width:0px, height:0px");
+	}
+    function sample6_execDaumPostcode() {	
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.

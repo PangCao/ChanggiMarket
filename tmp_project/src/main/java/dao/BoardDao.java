@@ -25,6 +25,48 @@ public class BoardDao {
 	public static BoardDao getDao() {
 		return  dao;
 	}
+	
+	public void delnoview(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		String id = request.getParameter("id");
+		String category = request.getParameter("category");
+		String sql = "";
+		if (category.equals("나만의 레시피")) {
+			sql = "delete from r_review where r_id=?";
+		}
+		else if (category.equals("공지사항")) {
+			sql = "delete from notice where n_id=?";
+		}
+		else if (category.equals("게시판")) {
+			sql = "delete from bulletin where b_id=?";
+		}
+		else if (category.equals("1:1 문의")) {
+			sql = "delete from one_qna where oq_id=?";
+		}
+		try {
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void likeup(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String c_id = (String)session.getAttribute("userid");

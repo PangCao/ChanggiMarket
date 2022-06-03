@@ -7,9 +7,11 @@
 <html>
 <head>
 <%
+	String userid = (String)session.getAttribute("userid");
 	String id = request.getParameter("id");
 	request.setCharacterEncoding("utf-8");
 	recipelist rp = (recipelist)request.getAttribute("sel_recipe");
+	String writer = rp.getR_writer();
 	ArrayList<foodprice> fp = (ArrayList<foodprice>)request.getAttribute("foodprice");
 	String addchk = request.getParameter("add");
 	if (addchk != null) {
@@ -42,7 +44,17 @@
                     <img src="../resources/images/<%=rp.getR_img() %>" alt="" class="col-12">
                 </div>
                 <div class="col-6">
-                    <h3><%=rp.getR_name() %></h3>
+                <div class="row d-flex justify-content-between" style="padding-right:15px;">
+                    <h3 class="col-6"><%=rp.getR_name() %></h3>
+                        <%
+			            	if(userid.equals(writer)) { 
+			            %>
+			            	<input type="button" onclick="recipedel()" value="레시피 삭제" class="btn btn-danger col-3">
+			            <%
+			            	}
+			            %>
+                </div>
+                    
                     <hr>
                     <h5><%=rp.getR_desc() %></h5>
                     <hr>
@@ -132,6 +144,11 @@
                             		}
                             		document.getElementById('sum_price').innerHTML = sum + "원";
 								}
+								function recipedel() {
+									if (confirm("레시피를 삭제하시겠습니까?")){
+										location.href="delrecipe.re?id=<%=rp.getR_id()%>";
+									}
+								}
 							</script>
                             <%
                             	}
@@ -187,7 +204,7 @@
                         	}
                        	 %>
                             <button class="btn btn-secondary col-5" onclick="addCart()">장바구니 담기</button>
-                            <button class="btn btn-danger col-5" onclick="goCart()">바로 구매하기</button>
+                            <button class="btn btn-success col-5" onclick="goCart()">바로 구매하기</button>
                         </div>
                     </form>
                 </div>
@@ -197,7 +214,6 @@
                 <h5>레시피 Tip</h5>
                 <div>
                     <p><%=rp.getR_tip() %></p>
-
                 </div>
             </div>
         </div>

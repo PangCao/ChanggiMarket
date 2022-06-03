@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import dto.recipelist;
 import dto.cartlist;
@@ -21,6 +24,151 @@ public class RecipeDao {
 	
 	public static RecipeDao getDao() {
 		return rd;
+	}
+	public void delrecipe(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		String r_id = request.getParameter("id");
+		
+		try {
+			dbconn = conn();
+			String sql = "delete from recipe where r_id=?";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, r_id);
+			pstmt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	
+	public void orderprice(HttpServletRequest request) {
+		String order = request.getParameter("order");
+		ArrayList<recipelist> fp = (ArrayList<recipelist>)request.getAttribute("food");
+		ArrayList<foodprice> foodprice = (ArrayList<foodprice>)request.getAttribute("foodprice");
+		int[] price = new int[fp.size()];
+		for (int i = 0; i < fp.size(); i++) {
+			recipelist rl = fp.get(i);			
+			String[] foodname = rl.getR_product().split(",");
+			String[] foodunit = rl.getR_unit().split(",");
+			for (int j = 0; j < foodname.length; j++) {
+				String name = foodname[j];
+				String unit = foodunit[j];
+				for (int x = 0; x < foodprice.size(); x++) {
+					foodprice fpri = foodprice.get(x);
+					if (fpri.getF_name().equals(name)) {
+						price[i] += fpri.getF_price() * Integer.valueOf(unit);
+						break;
+					}
+				}
+			}
+		}
+		int[] priceindex = new int[price.length];
+		for (int i = 0; i < price.length; i++) {
+			priceindex[i] = i;
+		}
+		int tmp;
+		int tmp2;
+		for (int i = 0; i < price.length-1; i++) {
+			for (int j = i+1; j < price.length; j++) {
+				if(price[i] < price[j]) {
+					tmp = price[i];
+					price[i] = price[j];
+					price[j] = tmp;
+					tmp2 = priceindex[i];
+					priceindex[i] = priceindex[j];
+					priceindex[j] = tmp2;
+				}
+			}
+		}
+		ArrayList<recipelist> fp2 = new ArrayList<recipelist>();
+		if (order.equals("highprice")) {
+			for (int i = 0; i < fp.size(); i++) {
+				fp2.add(fp.get(priceindex[i]));
+			}
+		}
+		else {
+			for (int i = 0; i < fp.size(); i++) {
+				fp2.add(fp.get(priceindex[fp.size()-i-1]));
+			}
+		}
+		request.setAttribute("food", fp2);
+	}
+	
+	
+	public void addrecipe(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		String path = request.getSession().getServletContext().getRealPath("resources/images");
+		MultipartRequest multi = null;
+		try {
+			multi = new MultipartRequest(request,path, 1024 * 1024 * 10, "utf-8", new DefaultFileRenamePolicy());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String r_writer = (String)session.getAttribute("userid");
+		String r_name = multi.getParameter("rename");
+		String r_desc = multi.getParameter("redes");
+		String r_cate = multi.getParameter("catesel");
+		String r_tip = multi.getParameter("retip");
+		r_tip = r_tip.replace("\n", "<br>");
+		String[] f_name = multi.getParameterValues("f_name_in");
+		String[] f_unit = multi.getParameterValues("f_unit_in");
+		String r_product = String.join(",", f_name).substring(1); 
+		String r_unit = String.join(",", f_unit).substring(1);
+		
+		Enumeration<String> file = multi.getFileNames();
+		String filename = file.nextElement();
+		String r_img = multi.getFilesystemName(filename); 
+		
+		
+		
+		try {
+			dbconn = conn();
+			String sql = "insert into recipe(r_writer, r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values (?,?,?,?,?,?,?,?)";
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, r_writer);
+			pstmt.setString(2, r_cate);
+			pstmt.setString(3, r_name);
+			pstmt.setString(4, r_desc);
+			pstmt.setString(5, r_product);
+			pstmt.setString(6, r_unit);
+			pstmt.setString(7, r_tip);
+			pstmt.setString(8, r_img);
+			pstmt.executeUpdate();
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} 
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 	
 	public void searchfood(HttpServletRequest request) {
@@ -125,6 +273,7 @@ public class RecipeDao {
 				String[] foods = r_foods.split(",");
 				String[] foodnum = r_foodnum.split(",");
 				String[] foodprice = new String[foods.length];
+				int r_id = rs.getInt("r_id");
 				
 				for (int i = 0; i < foods.length; i++) {
 					for (int j = 0; j < fp.size(); j++) {
@@ -135,6 +284,7 @@ public class RecipeDao {
 						}
 					} 
 				}
+				cl.setNum(r_id);
 				cl.setFoodName(name);
 				cl.setFoods(foods);
 				cl.setFoodunit(foodnum);
@@ -179,6 +329,7 @@ public class RecipeDao {
 			recipelist rp = new recipelist();
 			if (rs.next()) {
 				rp.setR_id(rs.getInt("r_id"));
+				rp.setR_writer(rs.getString("r_writer"));
 				rp.setR_category(rs.getString("r_category"));
 				rp.setR_name(rs.getString("r_name"));
 				rp.setR_desc(rs.getString("r_desc"));
@@ -253,13 +404,24 @@ public class RecipeDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<recipelist> fl = new ArrayList<recipelist>();
-
+		String order = request.getParameter("order");
+		
 		try {
 			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
-				sql = "select * from recipe";
+				if (order != null && order.equals("new")) {
+					sql = "select * from recipe order by r_id desc";
+				}
+				else {
+					sql = "select * from recipe";
+				}
 			}
 			else {
-				sql = "select * from recipe where r_name like '%"+search_title+"%'";
+				if (order != null && order.equals("new")) {
+					sql = "select * from recipe where r_name like '%"+search_title+"%' order by r_id desc";
+				}
+				else {
+					sql = "select * from recipe where r_name like '%"+search_title+"%'";
+				}
 			}
 			dbconn = conn();
 			pstmt = dbconn.prepareStatement(sql);
@@ -267,6 +429,7 @@ public class RecipeDao {
 
 			while(rs.next()) {
 				recipelist rp = new recipelist();
+				rp.setR_writer(rs.getString("r_writer"));
 				rp.setR_id(rs.getInt("r_id"));
 				rp.setR_category(rs.getString("r_category"));
 				rp.setR_name(rs.getString("r_name"));
@@ -275,7 +438,7 @@ public class RecipeDao {
 				rp.setR_unit(rs.getString("r_unit"));
 				rp.setR_tip(rs.getString("r_tip"));
 				rp.setR_img(rs.getString("r_img"));
-				fl.add(rp);				
+				fl.add(rp);
 			}
 			request.setAttribute("food", fl);
 			
@@ -330,7 +493,6 @@ public class RecipeDao {
 					dbconn.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

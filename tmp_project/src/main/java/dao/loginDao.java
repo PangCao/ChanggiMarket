@@ -18,6 +18,145 @@ public class loginDao {
 		return dao;
 	}
 	
+	public int sellnumchk(HttpServletRequest request) {
+		int chkresult = 0;
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) from seller where s_com_name=?";
+
+		String sellnum = request.getParameter("sellnum");
+		if (!sellnum.equals("")) {
+			try {
+				dbconn = conn();
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, sellnum);
+				rs = pstmt.executeQuery();
+				rs.next();
+				chkresult = rs.getInt(1); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					if (pstmt != null) {
+						pstmt.close();
+					}
+					if (dbconn != null) {
+						dbconn.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		else {
+			chkresult = -1;
+		}
+		
+		return chkresult; 
+	}
+	
+	
+	public int emailchk(HttpServletRequest request) {
+		String user = request.getParameter("user");
+		int chkresult = 0;
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		if (user.equals("customer")) {
+			sql = "select count(*) from customer where c_mail=?";
+		}
+		else if (user.equals("seller")) {
+			sql = "select count(*) from seller where s_mail=?";
+		}
+		String email = request.getParameter("email");
+		if (!email.equals("")) {
+			try {
+				dbconn = conn();
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, email);
+				rs = pstmt.executeQuery();
+				rs.next();
+				chkresult = rs.getInt(1); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					if (pstmt != null) {
+						pstmt.close();
+					}
+					if (dbconn != null) {
+						dbconn.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		else {
+			chkresult = -1;
+		}
+		
+		return chkresult; 
+	}
+	
+	public int idchk(HttpServletRequest request) {
+		String user = request.getParameter("user");
+		int chkresult = 0;
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		if (user.equals("customer")) {
+			sql = "select count(*) from customer where c_id=?";
+		}
+		else if (user.equals("seller")){
+			sql = "select count(*) from seller where s_id=?";
+		}
+		String id = request.getParameter("id");
+		if (!id.equals("")) {
+			try {
+				dbconn = conn();
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				rs.next();
+				chkresult = rs.getInt(1); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					if (pstmt != null) {
+						pstmt.close();
+					}
+					if (dbconn != null) {
+						dbconn.close();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		else {
+			chkresult = -1;
+		}
+		
+		return chkresult; 
+	}
+	
 	public void logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
@@ -137,7 +276,6 @@ public class loginDao {
 				try {
 					pstmt.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -145,7 +283,6 @@ public class loginDao {
 				try {
 					dbconn.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -158,7 +295,7 @@ public class loginDao {
 		String name = request.getParameter("name");
 		String number = request.getParameter("number");
 		String ownername = request.getParameter("ownername");
-		String mail = request.getParameter("mail");
+		String mail = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		String addr1 = request.getParameter("addr1");
 		String addr2 = request.getParameter("addr2");
