@@ -188,6 +188,7 @@ public class CartDao {
 		String[] foodnum = new String[len];
 		String[] foodprice = new String[len];
 		String file = request.getParameter("file");
+		int id = Integer.valueOf(request.getParameter("foodid"));
 		for (int i = 0; i < len; i++) {
 			foods[i] = request.getParameter("foods"+i);
 			foodnum[i] = request.getParameter("foodnum"+i);
@@ -198,20 +199,75 @@ public class CartDao {
 		cl.setFoodunit(foodnum);
 		cl.setFoodprice(foodprice);
 		cl.setFilename(file);
+		cl.setNum(id);
 		ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
 		al.add(cl);
 	}
 	
 	public void sellcnt(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
+		Connection dbconn = null;
+		PreparedStatement pstmt1 = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
 		
+		ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
+		String sql1 = "select r_sell from recipe where r_id = ?";
+		String sql2 = "update recipe set r_sell= ? where r_id = ?";
 		
+		String[] selchk = request.getParameterValues("selchk");
 		
-		
-		session.removeAttribute("myCart");
-
+		try {
+			dbconn = conn();
+			pstmt1 = dbconn.prepareStatement(sql1);
+			pstmt2 = dbconn.prepareStatement(sql2);
+			for (int i = 0; i < al.size(); i++) {
+				cartlist ca = al.get(i);
+				if (selchk[i].equals("1")) {
+					int id = ca.getNum();
+					pstmt1.setInt(1, id);
+					rs = pstmt1.executeQuery();
+					
+					if (rs.next()) {
+						int sell = rs.getInt(1);
+						pstmt2.setInt(1, sell+1);
+						pstmt2.setInt(2, id);
+						pstmt2.executeUpdate();
+						pstmt1.clearParameters();
+						pstmt2.clearParameters();
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt2 != null) {
+					pstmt2.close();
+				}
+				if (pstmt1 != null) {
+					pstmt1.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		int cnt = 0;
+		int listcnt = al.size();
+		for (int i = 0; i < listcnt; i++) {
+			if (selchk[i].equals("1")) {
+				al.remove(i-cnt);
+				cnt++;
+			}
+		}
 	}
 	
 	public void order(HttpServletRequest request) {
@@ -230,25 +286,29 @@ public class CartDao {
 		String[] singfoodprice = new String[Integer.valueOf(foodlen)];
 		String[] singfoodunit = new String[Integer.valueOf(foodlen)];
 		String cusaddr = request.getParameter("cusaddr");
-		String totalsum = request.getParameter("totalsum");
-		String shipprice = request.getParameter("shipprice");
+
+		String[] selchk = request.getParameterValues("selchk");
 		for (int i = 0; i < Integer.valueOf(foodlen); i++) {
-			singfoodlen[i] = request.getParameter("singfoodlen"+i);
-			foodimg[i] = request.getParameter("foodimg"+i);
-			foodname[i] = request.getParameter("foodname"+i);
+			if (selchk[i].equals("1")) {
+				singfoodlen[i] = request.getParameter("singfoodlen"+i);
+				foodimg[i] = request.getParameter("foodimg"+i);
+				foodname[i] = request.getParameter("foodname"+i);
+			}
 		}
 		for (int j = 0; j < Integer.valueOf(foodlen); j++) {
-			int x = Integer.valueOf(singfoodlen[j]);
-			for (int y = 0; y < x; y++) {
-				if (y == 0) {
-					singfoodname[j] = request.getParameter("singfoodname"+j+y);
-					singfoodprice[j] = request.getParameter("foodprice"+j+y);
-					singfoodunit[j] = request.getParameter("foodunit"+j+y);
-				}
-				else {
-					singfoodname[j] += ","+request.getParameter("singfoodname"+j+y);
-					singfoodprice[j] += ","+request.getParameter("foodprice"+j+y);
-					singfoodunit[j] += ","+request.getParameter("foodunit"+j+y);
+			if (selchk[j].equals("1")) {
+				int x = Integer.valueOf(singfoodlen[j]);
+				for (int y = 0; y < x; y++) {
+					if (y == 0) {
+						singfoodname[j] = request.getParameter("singfoodname"+j+y);
+						singfoodprice[j] = request.getParameter("foodprice"+j+y);
+						singfoodunit[j] = request.getParameter("foodunit"+j+y);
+					}
+					else {
+						singfoodname[j] += ","+request.getParameter("singfoodname"+j+y);
+						singfoodprice[j] += ","+request.getParameter("foodprice"+j+y);
+						singfoodunit[j] += ","+request.getParameter("foodunit"+j+y);
+					}
 				}
 			}
 		}
@@ -257,16 +317,18 @@ public class CartDao {
 			String sql = "insert into cusorder (o_date, o_id, o_f_name, o_f_img, o_f_singname, o_f_singprice, o_f_singunit, o_addr) values (?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			for (int t = 0; t < Integer.valueOf(foodlen); t++) {
-				pstmt.setString(1, date);
-				pstmt.setString(2, c_id);
-				pstmt.setString(3, foodname[t]);
-				pstmt.setString(4, foodimg[t]);
-				pstmt.setString(5, singfoodname[t]);
-				pstmt.setString(6, singfoodprice[t]);
-				pstmt.setString(7, singfoodunit[t]);
-				pstmt.setString(8, cusaddr);
-				pstmt.addBatch();
-				pstmt.clearParameters();
+				if (selchk[t].equals("1")) {
+					pstmt.setString(1, date);
+					pstmt.setString(2, c_id);
+					pstmt.setString(3, foodname[t]);
+					pstmt.setString(4, foodimg[t]);
+					pstmt.setString(5, singfoodname[t]);
+					pstmt.setString(6, singfoodprice[t]);
+					pstmt.setString(7, singfoodunit[t]);
+					pstmt.setString(8, cusaddr);
+					pstmt.addBatch();
+					pstmt.clearParameters();
+				}
 			}
 			pstmt.executeBatch();
 		}

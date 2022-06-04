@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChangiFood-장바구니</title>
 <%
 	ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
 	customer cu = (customer)session.getAttribute("user");
@@ -65,13 +65,47 @@
                     		for (int i = 0; i < al.size(); i++) {
                     			cartlist ca = al.get(i);
                     %>
+
                     	<tr>
-                        <td class="align-middle"><input type="checkbox" name="foodid" checked value="<%=i%>"></td>
+                    	<input type="hidden" value="1" id="selchk<%=i %>" name="selchk">
+                        <td class="align-middle"><input type="checkbox" name="foodid" checked value="<%=i%>" id="fchk<%=i%>" onclick="foodchk<%=i%>()"></td>
                         <td class="align-middle"><img src="../resources/images/<%=ca.getFilename() %>" alt="" class="col-12"></td>
                         <td class="align-middle"><%= ca.getFoodName() %></td>
                         <td class="align-middle">
                         <input type="hidden" name="foodimg<%=i %>" id="foodimg<%=i %>" value="<%= ca.getFilename()%>">
                         <input type="hidden" name="foodname<%=i %>" id="foodname<%=i %>" value="<%=ca.getFoodName()%>">
+                        <input type="hidden" name="foodid<%=i%>" value="<%=ca.getNum()%>">
+                        <script type="text/javascript">
+                    		function foodchk<%=i%>() {
+                    			var fchk = document.getElementById('fchk<%=i%>');
+                    			var totalprice = Number(0);
+                    			if (fchk.checked == false) {
+                    				document.getElementById('selchk<%=i%>').value = 0;
+                    				totalprice = Number(document.getElementById('totalsum').value) - Number(document.getElementById('foodsum<%=i%>').value);
+                    				document.getElementById('totalsum').value = totalprice;
+                    				document.getElementById("totalsum_view").innerHTML = totalprice + " 원";
+                    				
+                    				}
+                    			else {
+                    				document.getElementById('selchk<%=i%>').value = 1;
+                    				totalprice = Number(document.getElementById('totalsum').value) + Number(document.getElementById('foodsum<%=i%>').value);
+                    				document.getElementById('totalsum').value = totalprice;
+                    				document.getElementById("totalsum_view").innerHTML = totalprice + " 원";  
+                    			}
+                    			if (totalprice < 30000) {
+									document.getElementById("shipprice").value = 3000;
+									document.getElementById("shipprice_view").innerHTML = 3000 + " 원";
+									document.getElementById("totalsum_ship").value = Number(3000) + Number(totalprice);
+									document.getElementById("totalsum_ship_view").innerHTML = Number(3000) + Number(totalprice) + " 원";
+								}
+								else {
+									document.getElementById("shipprice").value = 0;
+									document.getElementById("shipprice_view").innerHTML = 0 + " 원";
+									document.getElementById("totalsum_ship").value = Number(0) + Number(totalprice);
+									document.getElementById("totalsum_ship_view").innerHTML = Number(0) + Number(totalprice) + " 원";
+								}
+                    		}
+                    	</script>
                             <ul>
                             <%
                             	int sum = 0;

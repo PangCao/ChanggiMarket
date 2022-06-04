@@ -58,7 +58,7 @@
 %>
 
 
-<title>Insert title here</title>
+<title>ChangiFood-Board</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>

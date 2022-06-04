@@ -21,7 +21,7 @@
 <%
 	}
 %>
-<title>로그인</title>
+<title>ChangiFood-로그인</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>

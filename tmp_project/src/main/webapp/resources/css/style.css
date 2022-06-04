@@ -418,13 +418,16 @@ body > footer > div > div > div:nth-of-type(1) > ul {
 .bottom > div:nth-of-type(2) > i {
     color: white;
 }
-body > footer > div > div > div:nth-of-type(1) > ul > li > i{
+body > footer > div > div > div:nth-of-type(1) > ul > a > li > i{
     color: white;
     font-size: 30px;
     display: inline-block;
     margin-bottom: 10px;   
 }
-body > footer > div > div > div:nth-of-type(1) > ul > li{
+body > footer > div > div > div:nth-of-type(1) > ul > a > li:hover{
+	background-color: rgb(183, 181, 181);
+}
+body > footer > div > div > div:nth-of-type(1) > ul > a > li{
     width: 100px;
     margin: 0 10px;
     border: 2px solid rgb(183, 181, 181);
@@ -437,11 +440,16 @@ body > footer > div > div > div:nth-of-type(1) > ul > li{
     border-radius: 10px;
     font-size: 15px;
     font-weight: 500;
+    color:white;
+    transition : all 0.3s;
 }
 body > footer > div > .top > div:nth-of-type(2){
     position: relative;
 }
-body > footer > div > div > ul > li {
+body > footer > div > div > ul > a > li:hover {
+	background-color: rgb(183, 181, 181);
+}
+body > footer > div > div > ul > a > li {
     width: 100px;
     margin: 0 10px;
     border: 2px solid rgb(183, 181, 181);
@@ -453,9 +461,11 @@ body > footer > div > div > ul > li {
     justify-content: center;
     border-radius: 10px;
     font-size: 15px;
-    font-weight: 500; 
+    font-weight: 500;
+    color:white; 
+    transition : all 0.3s;
 }
-body > footer > div > div > ul > li > i {
+body > footer > div > div > ul > a > li > i {
     color: white;
     font-size: 30px;
     display: inline-block;
@@ -466,7 +476,7 @@ body > footer > div > .bottom > div{
     align-items: center;
 }
 body > footer > div > .bottom > div:nth-of-type(1){
-    align-items: flex-end;
+    align-items: center;
 }
 body > footer > div > .bottom > div > p{
     display: inline-block;
@@ -476,9 +486,10 @@ body > footer > div > .bottom > div > p{
 body > footer > div > .bottom > div:nth-of-type(1) > h5{
     margin-right: 10px;
 }
-body > footer > div > .bottom > div:nth-of-type(2) > i{
+body > footer > div > .bottom > div:nth-of-type(2) > a > i{
     margin: 0 10px;
     font-size: 20px;
+    color:white;
 }
 /*footer.jsp------------------------------------end*/
 
@@ -512,6 +523,10 @@ body > .login {
      border-radius: 50px;
      padding-left: 20px;
      padding-right: 20px;
+     
+ }
+ body > .login > div > div> form > div:nth-of-type(4) > a{
+ 	transition : all 0.3s; 
  }
  body > .login > div > div> form > div:nth-of-type(3) {
      margin-top: 30px;
@@ -521,6 +536,10 @@ body > .login {
      border: 1px solid #28b421;
      color: white;
      cursor: pointer;
+ }
+ body > .login > div > div> form > div:nth-of-type(4) > a:hover {
+ 	background-color : #28b421;
+ 	color : white;
  }
  body > .login > div > div> form > div > a {
      border-radius: 50px;
@@ -573,6 +592,7 @@ body > .login {
      width: 48%;
      text-align: center;
      border-radius: 50px;
+     transition : all 0.3s;
  }
  body > .login > div > div > div:nth-of-type(3) > a:nth-of-type(1) {
      border: 1px solid #28b421;
@@ -628,6 +648,7 @@ body > .sel_sign > div > div > div > a {
     background: #28b421;
     border: 1px solid #28b421;
     color: white;
+    transition : all 0.3s;
 }
 body > .sel_sign > div > div > div > a:hover {
     background: white;
@@ -1024,6 +1045,15 @@ body > .mypage {
      margin-bottom: 20px;
      font-weight: 500;
      font-size: 17px;
+ }
+ body > .mypage > div:nth-of-type(1) > div > div > div > a > h5{
+	 margin-bottom: 20px;
+	 font-weight: 500;
+	 font-size: 17px;
+	 transition : all 0.3s;
+ }
+ body > .mypage > div:nth-of-type(1) > div > div > div > a > h5:hover{
+ 	color : #28b421;
  }
  body > .mypage > div:nth-of-type(1) > div > div > div > p {
      font-size: 13px;

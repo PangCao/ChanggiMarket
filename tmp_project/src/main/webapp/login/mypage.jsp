@@ -3,10 +3,16 @@
 <%@ page import="dto.customer" %>
 <%@ page import="dto.cartlist" %>
 <%@ page import="java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <%	
+	ArrayList<cartlist> mycart = (ArrayList<cartlist>)session.getAttribute("myCart");
+	int cartcnt = 0;
+	if (mycart != null) {
+		cartcnt = mycart.size();
+	}
 	String name = "";
 	int point = 0;
 	String c_class = "";
@@ -42,7 +48,6 @@
 	else {
 		max = cupage * 10;
 	}
-	System.out.println(cupage);
 	if (cupage == 1) {
 %>
 	<style type="text/css">
@@ -70,7 +75,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChangiFood-Mypage</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
@@ -94,8 +99,8 @@
                         <h5 class="hh">0개</h5>
                     </div>
                     <div>
-                        <h5>장바구니 &gt;</h5>
-                        <h5 class="hh">0개</h5>
+                        <a href="<c:url value='/cart/cart.jsp'/>"><h5>장바구니 &gt;</h5></a>
+                        <h5 class="hh"><%=cartcnt %>개</h5>
                     </div>
                 </div>
             </div>
@@ -108,12 +113,7 @@
                     </div>
                     <ul>
                         <a href="mypage.ca?page=1"><li>주문 내역 <span>&gt;</span></li></a>
-                        <a href="#"><li>찜한 상품<span>&gt;</span></li></a>
-                        <a href="#"><li>배송지 관리<span>&gt;</span></li></a>
-                        <a href="#"><li>상품 후기<span>&gt;</span></li></a>
-                        <a href="#"><li>상품 문의<span>&gt;</span></li></a>
-                        <a href="#"><li>적립금<span>&gt;</span></li></a>
-                        <a href="#"><li>쿠폰<span>&gt;</span></li></a>
+                        <a href="<c:url value='/community/one_qna.bo?page=1'/>"><li>상품 문의<span>&gt;</span></li></a>
                         <a href="#"><li>개인정보 수정<span>&gt;</span></li></a>
                     </ul>
                 </div>

@@ -83,7 +83,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 
-<title>Insert title here</title>
+<title>ChangiFood-Recipes</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
@@ -128,7 +128,7 @@
            		<div class="col-3">
            			<div>
            				<a href="./recipe.re?id=<%=rp.getR_id()%>"><img src="../resources/images/<%=rp.getR_img() %>" alt="" class="col-12"></a>
-                        <a href="addCartIcon.re?id=<%=rp.getR_id()%>&r_category=<%=ct%>&page=<%=cupage%>"><i class="fa-solid fa-cart-shopping"></i></a>           				
+                        <a href="addCartIcon.re?id=<%=rp.getR_id()%>&r_category=<%=ct%>&page=<%=cupage%>&order=<%=order%>"><i class="fa-solid fa-cart-shopping"></i></a>           				
            			</div>
            			<a href="./recipe.re?id=<%=rp.getR_id()%>">
 	                    <h5><%=rp.getR_name()%></h5>

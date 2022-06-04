@@ -411,6 +411,9 @@ public class RecipeDao {
 				if (order != null && order.equals("new")) {
 					sql = "select * from recipe order by r_id desc";
 				}
+				else if (order != null && order.equals("sell")) {
+					sql = "select * from recipe order by r_sell desc";
+				}
 				else {
 					sql = "select * from recipe";
 				}
@@ -418,6 +421,9 @@ public class RecipeDao {
 			else {
 				if (order != null && order.equals("new")) {
 					sql = "select * from recipe where r_name like '%"+search_title+"%' order by r_id desc";
+				}
+				else if (order != null && order.equals("sell")) {
+					sql = "select * from recipe where r_name like '%"+search_title+"%' order by r_sell desc";
 				}
 				else {
 					sql = "select * from recipe where r_name like '%"+search_title+"%'";

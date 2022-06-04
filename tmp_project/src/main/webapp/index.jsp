@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChangiFood-Home</title>
 </head>
 <body>
     <jsp:include page="menu.jsp"/>
@@ -24,10 +24,9 @@
                 <input type="radio" name="slide" id="slide3">
                 <div>
                     <div>
-                        <h3>Say thanks to the image author</h3>
-                        <p>Crediting isn’t required, but linking back is greatly appreciated and<br>
-                        allows image authors to gain exposure. You can use the following text</p>
-                        <a href="#" class="btn btn-primary">button</a>
+                        <h3>모두와 공유하고 싶은 나만의  레시피</h3>
+                        <p>나만의 노하우를 통해 레시피를 모두와 공유하고 함께 즐길 수 있는 ChanggiFood의 공간</p>
+                        <a href="<c:url value='/recipe/recipes.re?r_category=밥·죽&page=1'/>" class="btn btn-primary">Recipe</a>
                     </div>
                     <div>
                         <label class="left" for="slide3"><i class="fa-solid fa-angle-left"></i></label>
@@ -36,10 +35,9 @@
                 </div>
                 <div>
                     <div>
-                        <h3>Say thanks to the image author</h3>
-                        <p>Crediting isn’t required, but linking back is greatly appreciated and<br>
-                        allows image authors to gain exposure. You can use the following text</p>
-                        <a href="#" class="btn btn-primary">button</a>
+                        <h3>모두와 공유하고 싶은 나의 레시피 팁</h3>
+                        <p>경험한 레시피를 더 발전시켜 한층 더 뛰어난 맛과 멋을 나눌 수 있는 홈 쉐프들의 공간</p>
+                        <a href="<c:url value='/community/review.bo?page=1'/>" class="btn btn-primary">나만의 레시피</a>
                     </div>
                     <div>
                         <label class="left" for="slide1"><i class="fa-solid fa-angle-left"></i></label>
@@ -48,10 +46,10 @@
                 </div>
                 <div>
                     <div>
-                        <h3>Say thanks to the image author</h3>
-                        <p>Crediting isn’t required, but linking back is greatly appreciated and<br>
-                        allows image authors to gain exposure. You can use the following text</p>
-                        <a href="#" class="btn btn-primary">button</a>
+                        <h3>고객에게 항상 열려있는 ChanggiFood</h3>
+                        <p>고객과 소통의 중요성을 알고 항상 경청하는 태도로 고객과 함께 나아가고<br>
+                        더 나은 서비스를 제공하기 위한 ChangiFood의 고객센터</p>
+                        <a href="<c:url value='/community/faq.bo?page=1'/>" class="btn btn-primary">자주하는 질문</a>
                     </div>
                     <div>
                         <label class="left" for="slide2"><i class="fa-solid fa-angle-left"></i></label>

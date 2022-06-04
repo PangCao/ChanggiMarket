@@ -71,16 +71,17 @@ public class RecipeController extends HttpServlet{
 			String ct = request.getParameter("r_category");
 			ct = URLEncoder.encode(ct, "UTF-8");
 			String cupage = request.getParameter("page");
+			String order = request.getParameter("order");
 			if (userchk == 1) {
 				dao.price(request);
 				dao.addCartIcon(request, response);
-				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=1&id="+id+"&r_category="+ct+"&page="+cupage);
+				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=1&id="+id+"&r_category="+ct+"&page="+cupage+"&order="+order);
 			}
 			else if (userchk == 2) {
-				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=2&id="+id+"&r_category="+ct+"&page="+cupage);
+				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=2&id="+id+"&r_category="+ct+"&page="+cupage+"&order="+order);
 			}
 			else if (userchk == 0) {
-				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=0&id="+id+"&r_category="+ct+"&page="+cupage);
+				response.sendRedirect("http://localhost:8080/tmp_project/recipe/recipes.re?chk=0&id="+id+"&r_category="+ct+"&page="+cupage+"&order="+order);
 			}
 		}
 		else if (command.equals("/recipe/foodsearch.re")) {

@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChangiFood-BoardView</title>
 <%
 	Boardlist bl = (Boardlist)request.getAttribute("viewInfo");
 	String userid = (String)session.getAttribute("userid");
@@ -126,7 +126,7 @@
                 <a href="./review.bo?page=<%=cupage %>&category=<%=category %>" class="btn btn-success col-2">목록</a>
                 <%
             		}
-            		if (userid.equals(writer)){
+            		if (userid != null && userid.equals(writer)){
                 %>
                 <input type="button" onclick="delnoview()" class="btn btn-danger col-2" value="삭제">
                 <%

@@ -34,7 +34,7 @@
 		};
 	}, true);
 </script>
-<title>Insert title here</title>
+<title>ChangiFood-상품관리</title>
 <%
 	String addchk = request.getParameter("addchk");
 	ArrayList<foodmanage> alf = (ArrayList<foodmanage>)request.getAttribute("foodmanage");

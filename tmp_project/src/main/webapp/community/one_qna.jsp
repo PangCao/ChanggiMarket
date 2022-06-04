@@ -49,7 +49,7 @@
 <%
 	}
 %>
-<title>Insert title here</title>
+<title>ChangiFood-1:1 질문</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>

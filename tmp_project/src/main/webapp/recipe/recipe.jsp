@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChangiFood-Recipe</title>
 
 </head>
 <body>
@@ -47,7 +47,7 @@
                 <div class="row d-flex justify-content-between" style="padding-right:15px;">
                     <h3 class="col-6"><%=rp.getR_name() %></h3>
                         <%
-			            	if(userid.equals(writer)) { 
+			            	if(userid != null && userid.equals(writer)) { 
 			            %>
 			            	<input type="button" onclick="recipedel()" value="레시피 삭제" class="btn btn-danger col-3">
 			            <%
@@ -87,6 +87,7 @@
                             		}
                             %>
                             <tr class="form-group">
+                            	<input type="hidden" value=<%=rp.getR_id() %> name="foodid">
                                 <td><input type="checkbox" id="p_chk<%=i %>" onclick="p_chked<%=i %>()" checked></td>
                                 <td class="align-middle"><%=foods[i] %></td>
                                 <input type="hidden" name="foods<%=i %>" value="<%=foods[i] %>">
