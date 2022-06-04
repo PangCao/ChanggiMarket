@@ -1145,6 +1145,190 @@ body > .mypage > div:nth-of-type(2) > div > div:nth-last-of-type(1) > p > b{
 
 /*mypage.jsp --------------------------------------------end*/
 
+/*modi_mypage---------------------------------------------start*/
+body > .modi_mypage {
+    padding-top : 120px;
+     padding-bottom: 100px;
+     min-height : 80vh;
+ }
+ body > .modi_mypage > div:nth-of-type(1) {
+     background: #f5f5f4;
+     padding: 30px 0;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > h3 {
+     font-size: 22px;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div {
+     display: flex;
+     margin-top: 20px;
+     justify-content: space-between;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div:nth-of-type(1) > i {
+     font-size: 30px;
+     color: #28b421;
+     margin-bottom: 20px;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div:nth-of-type(1) > p {
+    font-weight: 500;
+     font-size: 17px;
+     margin-bottom: 5px;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div:nth-of-type(1) {
+     width: 30%;
+     text-align: center;
+     padding: 10px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div {
+     background: white;
+     padding: 10px;
+     padding-left: 20px;
+     padding-top: 20px;
+     width: 22%;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div > h5{
+     margin-bottom: 20px;
+     font-weight: 500;
+     font-size: 17px;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div > a > h5{
+	 margin-bottom: 20px;
+	 font-weight: 500;
+	 font-size: 17px;
+	 transition : all 0.3s;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div > a > h5:hover{
+ 	color : #28b421;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div > p {
+     font-size: 13px;
+ }
+ body > .modi_mypage > div:nth-of-type(1) > div > div > div > .hh {
+     color: #28b421;
+ }
+ body > .modi_mypage > div:nth-of-type(2) > div {
+     margin-top: 20px;
+ }
+ body > .modi_mypage > div:nth-of-type(2) > div > div:nth-of-type(1) > div {
+     margin-bottom: 15px;
+     display:flex;
+     justify-content: center;
+ }
+ body > .modi_mypage > div:nth-of-type(2) > div > div:nth-of-type(1) > ul > a {
+     font-size: 18px;
+     color: black;
+ }
+ body > .modi_mypage > div:nth-of-type(2) > div > div:nth-of-type(1) > ul > a > li {
+     display: flex;
+     justify-content: space-between;
+     border: 1px solid rgb(216, 216, 216);
+     padding: 5px 10px;
+ }
+ body > .modi_mypage > div:nth-of-type(2) > div > div:nth-of-type(1) > ul > a:nth-of-type(3) > li {
+     background-color: #28b421;
+     color: white;
+ }
+ body > .modi_mypage > div:nth-of-type(2) > div > div:nth-of-type(2) > form > div.pwans > div > p {
+ 	display: none;
+ }
+ body > .modi_mypage > div:nth-of-type(2) > div > div:nth-of-type(2) > form > div.pwans > div > p:nth-of-type(1) {
+ 	color : #28b421;
+ }
+ body > .modi_mypage > div:nth-of-type(2) > div > div:nth-of-type(2) > form > div.pwans > div > p:nth-of-type(2) {
+ 	color : red;
+ }
+/*modi_mypage---------------------------------------------end*/
+
+/*modi_mypagechk-----------------------------------------start*/
+body > .modi_mypagechk {
+    padding-top : 120px;
+     padding-bottom: 100px;
+     min-height : 80vh;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) {
+     background: #f5f5f4;
+     padding: 30px 0;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > h3 {
+     font-size: 22px;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div {
+     display: flex;
+     margin-top: 20px;
+     justify-content: space-between;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div:nth-of-type(1) > i {
+     font-size: 30px;
+     color: #28b421;
+     margin-bottom: 20px;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div:nth-of-type(1) > p {
+    font-weight: 500;
+     font-size: 17px;
+     margin-bottom: 5px;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div:nth-of-type(1) {
+     width: 30%;
+     text-align: center;
+     padding: 10px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div {
+     background: white;
+     padding: 10px;
+     padding-left: 20px;
+     padding-top: 20px;
+     width: 22%;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div > h5{
+     margin-bottom: 20px;
+     font-weight: 500;
+     font-size: 17px;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div > a > h5{
+	 margin-bottom: 20px;
+	 font-weight: 500;
+	 font-size: 17px;
+	 transition : all 0.3s;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div > a > h5:hover{
+ 	color : #28b421;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div > p {
+     font-size: 13px;
+ }
+ body > .modi_mypagechk > div:nth-of-type(1) > div > div > div > .hh {
+     color: #28b421;
+ }
+ body > .modi_mypagechk > div:nth-of-type(2) > div {
+     margin-top: 20px;
+ }
+ body > .modi_mypagechk > div:nth-of-type(2) > div > div:nth-of-type(1) > div {
+     margin-bottom: 15px;
+     display:flex;
+     justify-content: center;
+ }
+ body > .modi_mypagechk > div:nth-of-type(2) > div > div:nth-of-type(1) > ul > a {
+     font-size: 18px;
+     color: black;
+ }
+ body > .modi_mypagechk > div:nth-of-type(2) > div > div:nth-of-type(1) > ul > a > li {
+     display: flex;
+     justify-content: space-between;
+     border: 1px solid rgb(216, 216, 216);
+     padding: 5px 10px;
+ }
+ body > .modi_mypagechk > div:nth-of-type(2) > div > div:nth-of-type(1) > ul > a:nth-of-type(3) > li {
+     background-color: #28b421;
+     color: white;
+ }
+/*modi_mypagechk-------------------------------------------end*/
+
+
 /*store_management.jsp ----------------------------------start*/
 body > .s_manage {
 	padding-top : 120px;
@@ -1663,27 +1847,31 @@ body > .bo_view > div > div:nth-of-type(1) {
 body > .bo_view > div > div:nth-of-type(1) > div:nth-of-type(1) > p {
     margin-right: 20px;
 }
-body > .bo_view > div > div:nth-of-type(2) {
-    display: flex;
-    justify-content: center;
-}
 body > .bo_view > div > hr:nth-of-type(3) {
 margin-top: 50px
 }
-body > .bo_view > div > div:nth-of-type(2) {
+body > .bo_view > div > div:nth-of-type(2) > img {
+	transition : all 0.3s;
+}
+body > .bo_view > div > div:nth-of-type(2) > img:hover {
+	transform : scale(1.5);
+}
+body > .bo_view > div > div#comment {
+    display: flex;
+    justify-content: center;
     text-align: center;
     background: rgba(128, 128, 128, 0.493);
     padding: 15px 0;
     margin-bottom: 20px;
 }
-body > .bo_view > div > div:nth-of-type(2) > p {
+body > .bo_view > div > div#comment > p {
     margin-bottom: 0;
 }
-body > .bo_view > div > div:nth-of-type(3) {
+body > .bo_view > div > div:nth-last-of-type(1) {
     display: flex;
     justify-content: center;
 }
-body > .bo_view > div > div:nth-of-type(3) > a {
+body > .bo_view > div > div:nth-last-of-type(1) > a {
     margin: 0 10px;
     color: white;
 }

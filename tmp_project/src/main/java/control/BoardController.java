@@ -1,6 +1,8 @@
 package control;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,6 +46,7 @@ public class BoardController extends HttpServlet{
 		else if (command.equals("/community/notice_view.bo")) {
 			dao.noticeview(request);
 			dao.bopage(request, search_title);
+			dao.commentsearch(request);
 			String page = request.getParameter("page");
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=notice&page="+page);
 			rd.forward(request, response);
@@ -57,14 +60,14 @@ public class BoardController extends HttpServlet{
 		else if (command.equals("/community/bulletin_view.bo")) {
 			dao.bulletinview(request);
 			dao.bulletinbopage(request, search_title);
+			dao.commentsearch(request);
 			String page = request.getParameter("page");
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=bulletin&page="+page);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/bulletin_write.bo")) {
 			dao.bulletinwriter(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/bulletin.bo");
-			rd.forward(request, response);
+			response.sendRedirect("http://localhost:8080/tmp_project/community/bulletin.bo");
 		}
 		else if (command.equals("/community/one_qna.bo")) {
 			dao.one(request);
@@ -74,12 +77,12 @@ public class BoardController extends HttpServlet{
 		}
 		else if (command.equals("/community/one_write.bo")) {
 			dao.onewriter(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/community/one_qna.bo");
-			rd.forward(request, response);
+			response.sendRedirect("http://localhost:8080/tmp_project/community/one_qna.bo");
 		}
 		else if (command.equals("/community/one_view.bo")) {
 			dao.oneview(request);
 			dao.onebopage(request);
+			dao.commentsearch(request);
 			String page = request.getParameter("page");
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=1:1 문의&page="+page);
 			rd.forward(request, response);
@@ -91,6 +94,7 @@ public class BoardController extends HttpServlet{
 		else if (command.equals("/community/review_view.bo")) {
 			dao.recipe_view(request);
 			dao.review_bopage(request, search_title);
+			dao.commentsearch(request);
 			String page = request.getParameter("page");
 			RequestDispatcher rd = request.getRequestDispatcher("/community/notice_view.jsp?category=나만의 레시피&page="+page);
 			rd.forward(request, response);
@@ -144,6 +148,28 @@ public class BoardController extends HttpServlet{
 			else if (cate.equals("1:1 문의")) {
 				RequestDispatcher rd = request.getRequestDispatcher("/community/one_qnasdf.bo?page="+page+"&category="+cate);
 				rd.forward(request, response);
+			}
+		}
+		else if (command.equals("/community/comment.bo")) {
+			dao.comment(request);
+			String cate = request.getParameter("category");
+			String page = request.getParameter("page");
+			String id = request.getParameter("id");
+			if (cate.equals("나만의 레시피")) {
+				cate = URLEncoder.encode(cate, "UTF-8");
+				response.sendRedirect("http://localhost:8080/tmp_project/community/review_view.bo?page="+page+"&category="+cate+"&id="+id);
+			}
+			else if (cate.equals("게시판")) {
+				cate = URLEncoder.encode(cate, "UTF-8");
+				response.sendRedirect("http://localhost:8080/tmp_project/community/bulletin_view.bo?page="+page+"&category="+cate+"&id="+id);
+			}
+			else if (cate.equals("공지사항")) {
+				cate = URLEncoder.encode(cate, "UTF-8");
+				response.sendRedirect("http://localhost:8080/tmp_project/community/notice_view.bo?page="+page+"&category="+cate+"&id="+id);
+			}
+			else if (cate.equals("1:1 문의")) {
+				cate = URLEncoder.encode(cate, "UTF-8");
+				response.sendRedirect("http://localhost:8080/tmp_project/community/one_view.bo?page="+page+"&category="+cate+"&id="+id);
 			}
 		}
 	}

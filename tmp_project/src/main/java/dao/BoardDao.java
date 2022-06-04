@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import com.oreilly.servlet.multipart.*;
 
 import dto.Boardlist;
 import dto.oneqna;
+import dto.comment;
 
 public class BoardDao {
 	private BoardDao() {};
@@ -25,7 +27,114 @@ public class BoardDao {
 	public static BoardDao getDao() {
 		return  dao;
 	}
-	
+	public void commentsearch(HttpServletRequest request) {
+		
+		String category = request.getParameter("category");
+		int id = Integer.valueOf(request.getParameter("id"));
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<comment> alc = new ArrayList<comment>(); 
+		if (category.equals("나만의 레시피")) {
+			category = "r_review";
+		}
+		else if (category.equals("공지사항")) {
+			category = "notice";
+		}
+		else if (category.equals("게시판")) {
+			category = "bulletin";
+		}
+		String sql = "select * from b_comment where bc_name=? and bc_id=? order by bc_num desc";
+
+		try {
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			pstmt.setInt(2, id);
+			rs = pstmt.executeQuery();
+			System.out.println(category);
+			System.out.println(id);
+			while (rs.next()) {
+				comment cm = new comment();
+				cm.setBc_id(rs.getInt("bc_num"));
+				cm.setBc_writer(rs.getString("bc_writer"));
+				cm.setBc_date(rs.getString("bc_date"));
+				cm.setBc_content(rs.getString("bc_content"));
+				alc.add(cm);
+			}
+			request.setAttribute("commentlist", alc);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public void comment(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		int id = Integer.valueOf(request.getParameter("id"));
+		String category = request.getParameter("category");
+		String writer = (String)session.getAttribute("userid");
+		String content = request.getParameter("comment");
+		SimpleDateFormat formeter = new SimpleDateFormat("yyyy-MM-dd");
+		String date = formeter.format(new Date().getTime());
+		
+		if (category.equals("나만의 레시피")) {
+			category = "r_review";
+		}
+		else if (category.equals("공지사항")) {
+			category = "notice";
+		}
+		else if (category.equals("게시판")) {
+			category = "bulletin";
+		}		
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		String sql = "insert into b_comment(bc_name, bc_id, bc_writer, bc_content, bc_date) values ('"+category+"',?,?,?,?)";
+		
+		try {
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			pstmt.setString(2, writer);
+			pstmt.setString(3, content);
+			pstmt.setString(4, date);
+			pstmt.executeUpdate();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	public void delnoview(HttpServletRequest request) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
@@ -180,7 +289,7 @@ public class BoardDao {
 		
 		try {
 			dbconn = conn();
-			String sql = "select * from one_qna";
+			String sql = "select * from one_qna order by oq_id desc";
 			pstmt = dbconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			ArrayList<oneqna> al = new ArrayList<oneqna>();
@@ -1049,7 +1158,6 @@ public class BoardDao {
 			String sql = "insert into one_qna (oq_title, oq_writer, oq_content, oq_category, oq_date) values (?,?,?,?,?)"; 
 			dbconn = conn();
 			pstmt = dbconn.prepareStatement(sql);
-			System.out.println(title);
 			pstmt.setString(1, title);
 			pstmt.setString(2, id);
 			pstmt.setString(3, contents);

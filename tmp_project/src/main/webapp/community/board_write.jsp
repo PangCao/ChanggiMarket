@@ -124,6 +124,16 @@
 %>
 <script type="text/javascript">
 	function subwrite() {
+		var title = document.getElementById('title');
+		var contents = document.getElementById('contents');
+		if (title.value == "") {
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+		if (contents.value == "") {
+			alert("내용을 입력해주세요.");
+			return false;
+		}
 		document.boardForm.action = "notice_write.bo";
 		document.boardForm.submit();
 	}
@@ -134,6 +144,16 @@
 %>
 <script type="text/javascript">
 	function subwrite() {
+		var title = document.getElementById('title');
+		var contents = document.getElementById('contents');
+		if (title.value == "") {
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+		if (contents.value == "") {
+			alert("내용을 입력해주세요.");
+			return false;
+		}
 		document.boardForm.action = "bulletin_write.bo";
 		document.boardForm.submit();
 	}
@@ -144,6 +164,16 @@
 %>
 <script type="text/javascript">
 	function subwrite() {
+		var title = document.getElementById('title');
+		var contents = document.getElementById('contents');
+		if (title.value == "") {
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+		if (contents.value == "") {
+			alert("내용을 입력해주세요.");
+			return false;
+		}
 		if (document.getElementById('qnasel').value == ""){
 			alert("문의 카테고리를 선택해주세요");
 			return false;
@@ -159,6 +189,16 @@
 %>
 <script type="text/javascript">
 	function subwrite() {
+		var title = document.getElementById('title');
+		var contents = document.getElementById('contents');
+		if (title.value == "") {
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+		if (contents.value == "") {
+			alert("내용을 입력해주세요.");
+			return false;
+		}
 		document.boardForm.action = "review_write.bo";
 		document.boardForm.submit();
 	}

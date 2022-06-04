@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="dto.Boardlist" %>
+<%@ page import="java.util.*" %>
+<%@ page import="dto.comment" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +16,12 @@
 <meta charset="UTF-8">
 <title>ChangiFood-BoardView</title>
 <%
+	ArrayList<comment> alc = (ArrayList<comment>)request.getAttribute("commentlist");
+	int alcsize = 0;
+	System.out.println(alc.size());
+	if (alc != null) {
+		alcsize = alc.size();
+	}
 	Boardlist bl = (Boardlist)request.getAttribute("viewInfo");
 	String userid = (String)session.getAttribute("userid");
 	String writer = bl.getWriter();
@@ -58,22 +66,54 @@
                     <p><%=bl.getDate() %></p>
                 </div>
             </div>
-            <p style="white-space: normal;">
+            <div class="row d-flex justify-content-center mb-5">
             <%	if (!category.equals("1:1 문의")){
 	            	for (int i = 0; i < bl.getImg().length; i++){
 	            		if (!(bl.getImg()[i].equals("")) && bl.getImg()[i] != null){
             %>
-            	<img alt="" src="../resources/images/<%=bl.getImg()[i]%>" style="width:300px; height: 300px;">
+            	<img alt="" src="../resources/images/<%=bl.getImg()[i]%>" class="mx-1" style="width: 19%">
             <%
 	            		}
 	            	}
 	            }
 			%>
-            <%=bl.getContent() %></p>
+			</div>
+            <p style="white-space: normal;"><%=bl.getContent() %></p>
             <hr>
-            <p><i class="fa-solid fa-comment"></i>&nbsp; 0</p>
-            <div>
+            <p><i class="fa-solid fa-comment"></i>&nbsp; <%=alcsize %></p>
+           
+            <%
+            	if (userid != null){
+            %>
+            <form class="row d-flex justify-content-between mb-5 form-group" method="post" action="comment.bo?category=<%=category%>&id=<%=id%>&page=<%=cupage%>">
+            	<input type="text" class="col-10 form-control" name="comment">
+            	<input type="submit" class="btn btn-success px-5 col-2" style="max-width: 15%;" value="댓글 달기">
+           	</form>
+            <%
+            	}
+            	else{
+            %>
+            <div id="comment">
                 <p>로그인한 회원만 댓글 등록이 가능합니다.</p>
+            </div>
+            <%
+            	}
+            %>
+             <div class="col-12 mb-5">
+            <%
+            	if (alc != null) {
+            		for (int i = 0; i < alc.size(); i++){
+            			comment cm = alc.get(i);
+            %>
+            	<div class="row col-12 mb-2" style="border-bottom: 1px solid rgba(0,0,0,.1);">
+            		<p class="col-12"><%=cm.getBc_content() %></p>
+            		<p class="col-6" style="font-size: 0.9rem; color:rgba(0,0,0,.5);">작성자 : <%=cm.getBc_writer() %></p>
+            		<p class="col-6 text-right" style="font-size: 0.9rem; color:rgba(0,0,0,.5);">작성일 : <%=cm.getBc_date() %></p>
+            	</div>
+            <%
+            		}
+            	}
+            %>
             </div>
             <div>
             	<%

@@ -67,5 +67,21 @@ public class LoginController extends HttpServlet{
 			dao.logout(request);
 			response.sendRedirect("http://localhost:8080/tmp_project/index.jsp");			
 		}
+		else if (command.equals("/login/pwchk.lo")) {
+			int pwchkans = dao.pwchk(request);
+			if (pwchkans == 1) {
+				RequestDispatcher rd = request.getRequestDispatcher("/login/modimypage.jsp");
+				rd.forward(request, response);
+			}
+			else {
+				response.sendRedirect("http://localhost:8080/tmp_project/login/modimypagechk.jsp?error=1");	
+			}
+		}
+		else if (command.equals("/login/modi.lo")) {
+			int ans = dao.modi(request);
+			if (ans == 1) {
+				response.sendRedirect("http://localhost:8080/tmp_project/login/modimypagechk.jsp?error=2");
+			}
+		}
 	}
 }

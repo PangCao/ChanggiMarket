@@ -5,8 +5,30 @@ public class customer implements Serializable{
 	private String id;
 	private String name;
 	private String addr;
+	private String mail;
+	private String phone;
+	private String gender;
 	private int point;
 	private String c_class;
+	
+	public String getMail() {
+		return mail;
+	}
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	public String getId() {
 		return id;
 	}

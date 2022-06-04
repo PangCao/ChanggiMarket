@@ -18,6 +18,148 @@ public class loginDao {
 		return dao;
 	}
 	
+	public int modi(HttpServletRequest request) {
+		int ans = 0;
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		String id = request.getParameter("id");
+		String pwchk = request.getParameter("pwchk");
+		String name = request.getParameter("name");
+		String phone = request.getParameter("phone");
+		String email = request.getParameter("email");
+		String addr1 = request.getParameter("addr1");
+		String addr2 = request.getParameter("addr2");
+		String addr3 = request.getParameter("addr3");
+		String addr = "("+addr1+")"+addr2+" "+addr3;
+		String gender = request.getParameter("gender");
+		
+		String sql = "";
+		HttpSession session = request.getSession();
+		customer cu = (customer)session.getAttribute("user");
+		cu.setName(name);
+		
+		try {
+			dbconn = conn();
+			if (pwchk.equals("") && addr1.equals("() ")) {
+				sql = "update customer set c_name=?, c_phone=?, c_gender=? ,c_mail=? where c_id=?";
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setString(2, phone);
+				pstmt.setString(3, gender);
+				pstmt.setString(4, email);
+				pstmt.setString(5, id);
+				ans = pstmt.executeUpdate();
+			}
+			else if (pwchk.equals("") && !addr1.equals("() ")) {
+				sql = "update customer set c_name=?, c_phone=?, c_gender=?, c_addr=? ,c_mail=? where c_id=?";
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setString(2, phone);
+				pstmt.setString(3, gender);
+				pstmt.setString(4, addr);
+				pstmt.setString(5, email);
+				pstmt.setString(6, id);
+				ans = pstmt.executeUpdate();
+			}
+			else if (!pwchk.equals("") && addr1.equals("() ")) {
+				sql = "update customer set c_name=?, c_phone=?, c_gender=?, c_password=? ,c_mail=? where c_id=?";
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setString(2, phone);
+				pstmt.setString(3, gender);
+				pstmt.setString(4, pwchk);
+				pstmt.setString(5, email);
+				pstmt.setString(6, id);
+				ans = pstmt.executeUpdate();
+			}
+			else {
+				sql = "update customer set c_name=?, c_phone=?, c_gender=?, c_addr=?, c_password=? ,c_mail=? where c_id=?";
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setString(2, phone);
+				pstmt.setString(3, gender);
+				pstmt.setString(4, addr);
+				pstmt.setString(5, pwchk);
+				pstmt.setString(6, email);
+				pstmt.setString(7, id);
+				ans = pstmt.executeUpdate();
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ans;
+	}
+	
+	public int pwchk(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("userid");
+		String pw = request.getParameter("pw");
+		String user = request.getParameter("user");
+		int ans=0;
+		
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "";
+		if (user.equals("customer")) {
+			sql = "select c_name, c_mail, c_phone, c_addr, c_gender from customer where c_id = ? and c_password = ?";
+		}
+		try {
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				customer ct = new customer();
+				ct.setName(rs.getString("c_name"));
+				ct.setMail(rs.getString("c_mail"));
+				ct.setPhone(rs.getString("c_phone"));
+				ct.setAddr(rs.getString("c_addr"));
+				ct.setGender(rs.getString("c_gender"));
+				ans = 1;
+				request.setAttribute("userinfo", ct);
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ans;
+	}
+	
 	public int sellnumchk(HttpServletRequest request) {
 		int chkresult = 0;
 		Connection dbconn = null;

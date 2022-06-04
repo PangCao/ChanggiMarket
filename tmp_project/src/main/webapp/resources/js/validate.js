@@ -97,8 +97,8 @@ function validate() {
     }
     document.signForm.submit();
 }
-function success() {
-    const target = document.getElementById('check')
+	function success() {
+   		const target = document.getElementById('check')
         if(document.getElementById('pw').value != "" && document.getElementById('pwre').value != "" && document.getElementById('pw').value == document.getElementById('pwre').value) {
             document.getElementById('pwans_success').style.display = 'block';
             document.getElementById('pwans_faile').style.display = 'none';
