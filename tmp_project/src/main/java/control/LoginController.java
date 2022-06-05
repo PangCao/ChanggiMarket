@@ -83,5 +83,10 @@ public class LoginController extends HttpServlet{
 				response.sendRedirect("http://localhost:8080/tmp_project/login/modimypagechk.jsp?error=2");
 			}
 		}
+		else if (command.equals("/login/store_management.lo")) {
+			dao.orderlist(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/login/store_management.jsp");
+			rd.forward(request, response);
+		}
 	}
 }

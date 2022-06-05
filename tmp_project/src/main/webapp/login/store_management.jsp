@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="dto.orderlist" %>
 <!DOCTYPE html>
 <html>
 <head>
 <%
+	ArrayList<orderlist> alo = (ArrayList<orderlist>)request.getAttribute("orderlist");
 	String name = "";
 	if (session.getAttribute("seller") != null) {
 		name = (String)session.getAttribute("seller");
@@ -21,10 +24,10 @@
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
-    <section class="s_manage">
+	<section class="s_manage">
         <div>
             <div class="container">
-                <h3>점포 관리</h3>
+            	<h3>점포 관리</h3>
             </div>
             <div class="container">
                 <i class="fa-solid fa-user"></i>
@@ -32,10 +35,10 @@
             </div>
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-3">
-	                <div>
-	                    <img src="../resources/images/logo_green.png" width="35%">
+        	<div class="row">
+            	<div class="col-3">
+                	<div>
+                    	<img src="../resources/images/logo_green.png" width="35%">
                     </div>
                     <ul>
                         <a href="#"><li>주문 내역<span>&gt;</span></li></a>
@@ -43,7 +46,10 @@
                     </ul>
                 </div>
                 <div class="col-9">
-                    <h5>주문 내역</h5>
+                    <div>
+                        <h5>주문 내역</h5>
+                        <input type="button" value="전체선택"  class="btn btn-danger">
+                    </div>
                     <table class="table">
                         <tr>
                             <th></th>
@@ -51,7 +57,60 @@
                             <th>상품명</th>
                             <th>수량</th>
                             <th>배송지</th>
+                            <th>접수상태</th>
                         </tr>
+                        <%
+                          	if(alo != null){
+                          		for(int i = 0; i < alo.size(); i++) {
+                          			orderlist ol = alo.get(i);
+                          			String[] f_name = ol.getF_singname().split(",");
+                          			String[] f_unit = ol.getF_singunit().split(",");
+                        %>
+                        <tr>
+                            <td class="align-middle"><input type="checkbox" checked></td>
+                            <td class="align-middle"><%=ol.getId() %></td>
+                            <input type="hidden" value="<%=ol.getId() %>">
+                            <td class="align-middle">
+                            	<ul class="m-0">
+                            		<%
+                            			for(int j = 0; j < f_name.length; j++) {
+                            		%>
+                             			<li><%=f_name[j] %></li>
+                            		<%
+                            			}
+                            		%>
+                            	</ul>
+                            </td>
+                            <td class="align-middle">
+                            	<ul class="m-0">
+                            		<%
+                            			for(int x = 0; x < f_unit.length; x++) {
+                            		%>
+                             			<li><%=f_unit[x] %> 개</li>
+                            		<%
+                            			}
+                            		%>
+                            	</ul>
+                            </td>
+                            <td class="align-middle"><%=ol.getAddr() %></td>
+                            <%
+                            	if (ol.isChk()) {
+                            %>
+                            <td class="align-middle">접수 완료</td>
+                            <%
+                            	}
+                            	else {
+                            %>
+                            <td class="align-middle">접수 대기</td>
+                            <%
+                            	}
+                            %>
+                            <input type="hidden" value="<%=ol.isChk()%>">
+                        </tr>
+                        <%
+                        		}
+                          	}
+                        %>
                         <tr>
                             <td rowspan="2" class="align-middle"><input type="checkbox"></td>
                             <td rowspan="2" class="align-middle">123123</td>
@@ -65,7 +124,6 @@
                         </tr>
                     </table>
                     <div>
-                        <p><a href="#">전체 선택(0/0)</a> | <a href="#">선택 삭제</a></p>
                         <a href="" class="btn btn-secondary col-3">주문 접수</a>
                     </div>
                 </div>

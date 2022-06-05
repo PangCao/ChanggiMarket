@@ -31,7 +31,7 @@
                     %>
                     <ul>
                     	<a href="<c:url value='/login/logout.lo'/>"><li>로그아웃</li></a>
-                        <a href="<c:url value='/login/store_management.jsp'/>"><li>점포관리</li></a>
+                        <a href="<c:url value='/login/store_management.lo'/>"><li>점포관리</li></a>
                         <a href="<c:url value='/login/productmanage.sel?page=1'/>"><li>상품등록</li></a>
                     </ul>
                     <%

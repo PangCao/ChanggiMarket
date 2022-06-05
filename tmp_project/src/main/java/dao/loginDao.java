@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,13 +12,55 @@ import javax.servlet.http.HttpSession;
 import com.mysql.jdbc.Connection;
 
 import dto.customer;
+import dto.orderlist;
 
 public class loginDao {
 	private static loginDao dao = new loginDao();
 	public static loginDao getDao() {
 		return dao;
 	}
-	
+	public void orderlist(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from cusorder";
+		ArrayList<orderlist> alo = new ArrayList<orderlist>();
+		try {
+			dbconn = conn();
+			pstmt = dbconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				orderlist ol = new orderlist();
+				ol.setId(rs.getInt("o_num"));
+				ol.setDate(rs.getString("o_date"));
+				ol.setF_singname(rs.getString("o_f_singname"));
+				ol.setF_singunit(rs.getString("o_f_singunit"));
+				ol.setAddr(rs.getString("o_addr"));
+				ol.setChk(rs.getBoolean("o_chk"));
+				alo.add(ol);
+			}
+			request.setAttribute("orderlist", alo);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();					
+				}
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public int modi(HttpServletRequest request) {
 		int ans = 0;
 		Connection dbconn = null;
