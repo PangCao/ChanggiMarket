@@ -44,6 +44,7 @@ public class BoardController extends HttpServlet{
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/notice_view.bo")) {
+			dao.nextpage(request);
 			dao.noticeview(request);
 			dao.bopage(request, search_title);
 			dao.commentsearch(request);
@@ -58,6 +59,7 @@ public class BoardController extends HttpServlet{
 			rd.forward(request, response);
 		}
 		else if (command.equals("/community/bulletin_view.bo")) {
+			dao.nextpage(request);
 			dao.bulletinview(request);
 			dao.bulletinbopage(request, search_title);
 			dao.commentsearch(request);
@@ -80,6 +82,7 @@ public class BoardController extends HttpServlet{
 			response.sendRedirect("http://localhost:8080/tmp_project/community/one_qna.bo");
 		}
 		else if (command.equals("/community/one_view.bo")) {
+			dao.nextpage(request);
 			dao.oneview(request);
 			dao.onebopage(request);
 			dao.commentsearch(request);
@@ -92,6 +95,7 @@ public class BoardController extends HttpServlet{
 			response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?page=1");
 		}
 		else if (command.equals("/community/review_view.bo")) {
+			dao.nextpage(request);
 			dao.recipe_view(request);
 			dao.review_bopage(request, search_title);
 			dao.commentsearch(request);

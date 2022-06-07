@@ -27,6 +27,27 @@ public class BoardDao {
 	public static BoardDao getDao() {
 		return  dao;
 	}
+	
+	public void nextpage(HttpServletRequest request) {
+		String category = request.getParameter("category");
+		System.out.println(category);
+		String sql = "";
+		String id = request.getParameter("id");
+		
+		if (category.equals("게시판")) {
+			sql = "select n_id from notice where n_id>?";
+		}
+		else if (category.equals("공지사항")) {
+			
+		}
+		else if (category.equals("1:1 문의")) {
+			
+		}
+		else if (category.equals("나만의 레시피")) {
+	
+		}
+	}
+	
 	public void commentsearch(HttpServletRequest request) {
 		
 		String category = request.getParameter("category");
@@ -52,8 +73,6 @@ public class BoardDao {
 			pstmt.setString(1, category);
 			pstmt.setInt(2, id);
 			rs = pstmt.executeQuery();
-			System.out.println(category);
-			System.out.println(id);
 			while (rs.next()) {
 				comment cm = new comment();
 				cm.setBc_id(rs.getInt("bc_num"));
@@ -404,7 +423,6 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		PreparedStatement pstmt_sub = null;
-		
 		try {
 			dbconn = conn();		
 			

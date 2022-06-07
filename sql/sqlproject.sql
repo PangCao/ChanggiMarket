@@ -187,3 +187,16 @@ create table likelist (
     foreign key(c_id) references customer(c_id) on delete cascade,
     foreign key(r_id) references r_review(r_id) on delete cascade
 )default charset=utf8mb4;
+
+
+create table b_comment (
+	bc_num int auto_increment,
+    bc_name varchar(10),
+    bc_id int,
+    bc_writer varchar(20),
+    bc_content varchar(1000),
+    bc_date date,
+    primary key(bc_num)
+)default charset=utf8mb4;
+
+drop table b_comment;
