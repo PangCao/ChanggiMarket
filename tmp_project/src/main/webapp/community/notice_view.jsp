@@ -27,7 +27,14 @@
 	String writer = bl.getWriter();
  	int cupage = Integer.valueOf(request.getParameter("page"));
  	int id = Integer.valueOf(request.getParameter("id"));
- 	int next = id - 1;
+ 	int next = -1;
+ 	if (request.getAttribute("nextpage") != null) {
+ 		next = Integer.valueOf((String)request.getAttribute("nextpage")); 
+ 	}
+ 	int previous = -1;
+ 	if (request.getAttribute("previouspage") != null) {
+ 		previous = Integer.valueOf((String)request.getAttribute("previouspage")); 
+ 	}
  	int totalpage = (Integer)request.getAttribute("totalpage");
  	String category = request.getParameter("category");
  	String sub_title = "";
@@ -117,9 +124,40 @@
             </div>
             <div>
             	<%
-            		if (next == 0) {
+            		//이전페이지
+            		if (previous == -1) {
             	%>
-                <a class="btn btn-secondary col-2" onclick="nonext()">다음글</a>
+                <!-- <a class="btn btn-secondary col-2" onclick="noprevious()">이전글</a> -->
+                <%
+            		}
+            		else{
+            			if (category.equals("공지사항")){
+                %>
+                <a href="notice_view.bo?id=<%=previous%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">이전글</a>
+                <%
+            			}
+            			else if (category.equals("게시판")){
+            	%>
+            	<a href="bulletin_view.bo?id=<%=previous%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">이전글</a>
+            	<%
+            			}
+            			else if (category.equals("1:1 문의")){
+            				
+            	%>
+            	<a href="one_view.bo?id=<%=previous%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">이전글</a>
+            	<%
+            			}
+            			else {
+        		%>
+   				<a href="review_view.bo?id=<%=previous%>&page=<%=cupage%>&category=<%=category %>" class="btn btn-secondary col-2">이전글</a>
+        		<%
+            			}
+            		
+            		}
+            		// 다음페이지
+            		if (next == -1) {
+            	%>
+                <!-- <a class="btn btn-secondary col-2" onclick="nonext()">다음글</a> -->
                 <%
             		}
             		else{
@@ -184,8 +222,12 @@
 			location.href="delnoview.bo?id=<%=bl.getId()%>&page=<%=cupage %>&category=<%=category %>";
 		}
 	}
+	/*
 	function nonext() {
 		alert("현재 페이지가 마지막 페이지 입니다.");
 	}
+	function noprevious() {
+		alert("현재 페이지가 가장 최신 페이지 입니다.");
+	}*/
 </script>
 </html>

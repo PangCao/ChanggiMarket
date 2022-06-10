@@ -11,7 +11,7 @@ public class orderlist implements Serializable{
 	private String f_singname;
 	private String f_singunit;
 	private String addr;
-	private boolean chk;
+	private int chk;
 	public int getId() {
 		return id;
 	}
@@ -48,10 +48,10 @@ public class orderlist implements Serializable{
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	public boolean isChk() {
+	public int getChk() {
 		return chk;
 	}
-	public void setChk(boolean chk) {
+	public void setChk(int chk) {
 		this.chk = chk;
 	}
 	

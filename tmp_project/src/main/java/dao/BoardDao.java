@@ -28,23 +28,110 @@ public class BoardDao {
 		return  dao;
 	}
 	
-	public void nextpage(HttpServletRequest request) {
+	public void previouspage(HttpServletRequest request) {
+		String previouspage = "-1";
 		String category = request.getParameter("category");
-		System.out.println(category);
 		String sql = "";
 		String id = request.getParameter("id");
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
 		
 		if (category.equals("게시판")) {
-			sql = "select n_id from notice where n_id>?";
+			sql = "select b_id from bulletin where b_id > ? order by b_id asc";
 		}
 		else if (category.equals("공지사항")) {
-			
+			sql = "select n_id from notice where n_id > ? order by n_id asc";
 		}
 		else if (category.equals("1:1 문의")) {
-			
+			sql = "select oq_id from one_qna where oq_id > ? order by oq_id asc";
 		}
 		else if (category.equals("나만의 레시피")) {
+			sql = "select r_id from r_review where r_id > ? order by r_id asc";
+		}
+		try {
+			dbconn = conn();
+			pstmt = dbconn.clientPrepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				previouspage = String.valueOf(rs.getInt(1));
+			}
+			request.setAttribute("previouspage", previouspage);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
+	
+	public void nextpage(HttpServletRequest request) {
+		String nextpage = "-1";
+		String category = request.getParameter("category");
+		String sql = "";
+		String id = request.getParameter("id");
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		if (category.equals("게시판")) {
+			sql = "select b_id from bulletin where b_id < ? order by b_id desc";
+		}
+		else if (category.equals("공지사항")) {
+			sql = "select n_id from notice where n_id < ? order by n_id desc";
+		}
+		else if (category.equals("1:1 문의")) {
+			sql = "select oq_id from one_qna where oq_id < ? order by oq_id desc";
+		}
+		else if (category.equals("나만의 레시피")) {
+			sql = "select r_id from r_review where r_id < ? order by r_id desc";
+		}
+		try {
+			dbconn = conn();
+			pstmt = dbconn.clientPrepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				nextpage = String.valueOf(rs.getInt(1));
+			}
+			request.setAttribute("nextpage", nextpage);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

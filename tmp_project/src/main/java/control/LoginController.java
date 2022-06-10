@@ -77,6 +77,16 @@ public class LoginController extends HttpServlet{
 				response.sendRedirect("http://localhost:8080/tmp_project/login/modimypagechk.jsp?error=1");	
 			}
 		}
+		else if (command.equals("/login/selpwchk.lo")) {
+			int pwchkans = dao.selpwchk(request);
+			if (pwchkans == 1) {
+				RequestDispatcher rd = request.getRequestDispatcher("/login/modiseller.jsp");
+				rd.forward(request, response);
+			}
+			else {
+				response.sendRedirect("http://localhost:8080/tmp_project/login/modimypagechk.jsp?error=1");	
+			}
+		}
 		else if (command.equals("/login/modi.lo")) {
 			int ans = dao.modi(request);
 			if (ans == 1) {
@@ -84,9 +94,16 @@ public class LoginController extends HttpServlet{
 			}
 		}
 		else if (command.equals("/login/store_management.lo")) {
+			String order = request.getParameter("order");
+			String page = request.getParameter("page");
 			dao.orderlist(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/login/store_management.jsp");
+			dao.totalpage(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/login/store_management.jsp?page="+page+"&order="+order);
 			rd.forward(request, response);
+		}
+		else if (command.equals("/login/ordersub.lo")) {
+			dao.ordersub(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/login/store_management.lo?order=waiting");
 		}
 	}
 }
