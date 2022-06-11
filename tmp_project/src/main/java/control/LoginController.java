@@ -84,13 +84,19 @@ public class LoginController extends HttpServlet{
 				rd.forward(request, response);
 			}
 			else {
-				response.sendRedirect("http://localhost:8080/tmp_project/login/modimypagechk.jsp?error=1");	
+				response.sendRedirect("http://localhost:8080/tmp_project/login/modisellerchk.jsp?error=1");	
 			}
 		}
 		else if (command.equals("/login/modi.lo")) {
 			int ans = dao.modi(request);
 			if (ans == 1) {
 				response.sendRedirect("http://localhost:8080/tmp_project/login/modimypagechk.jsp?error=2");
+			}
+		}
+		else if (command.equals("/login/selmodi.lo")) {
+			int ans = dao.selmodi(request);
+			if (ans == 1) {
+				response.sendRedirect("http://localhost:8080/tmp_project/login/modisellerchk.jsp?error=2");
 			}
 		}
 		else if (command.equals("/login/store_management.lo")) {
@@ -103,7 +109,36 @@ public class LoginController extends HttpServlet{
 		}
 		else if (command.equals("/login/ordersub.lo")) {
 			dao.ordersub(request);
-			response.sendRedirect("http://localhost:8080/tmp_project/login/store_management.lo?order=waiting");
+			response.sendRedirect("http://localhost:8080/tmp_project/login/store_management.lo?page=1&order=waiting");
+		}
+		else if (command.equals("/login/idsearch.lo")) {
+			int ans = dao.idsearch(request);
+			if (ans == 1) {
+				RequestDispatcher rd = request.getRequestDispatcher("/login/find_id_ans.jsp");
+				rd.forward(request, response);
+			}
+			else {
+				response.sendRedirect("http://localhost:8080/tmp_project/login/find_id_ans.jsp?error=0");
+			}
+			
+		}
+		else if (command.equals("/login/pwsearch.lo")) {
+			int ans = dao.pwsearch(request);
+			if (ans == 0) {
+				response.sendRedirect("http://localhost:8080/tmp_project/login/find_pw_ans.jsp?error=0");
+			}
+			else {
+				RequestDispatcher rd = request.getRequestDispatcher("/login/find_pw_ans.jsp");
+				rd.forward(request, response);
+			}
+		}
+		else if (command.equals("/login/pwchange.lo")) {
+			dao.pwchange(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/login/find_pw_ans.jsp?error=1");
+		}
+		else if (command.equals("/login/unsign.lo")) {
+			dao.unsign(request);
+			response.sendRedirect("http://localhost:8080/tmp_project/index.jsp?error=1");
 		}
 	}
 }

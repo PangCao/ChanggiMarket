@@ -7,7 +7,7 @@
 <head>
 <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 <meta charset="UTF-8">
-<title>ChangiFood-상품코드 선택</title>
+<title>ChanggiFood-상품코드 선택</title>
 </head>
 <%
 	ArrayList<barcodesearch> alb = (ArrayList<barcodesearch>)request.getAttribute("barcodesearch");

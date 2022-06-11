@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>ChangiFood-장바구니</title>
+<title>ChanggiFood-장바구니</title>
 <%
 	ArrayList<cartlist> al = (ArrayList<cartlist>)session.getAttribute("myCart");
 	customer cu = (customer)session.getAttribute("user");
@@ -113,7 +113,7 @@
                             		sum += Integer.valueOf(ca.getFoodprice()[j]) *Integer.valueOf(ca.getFoodunit()[j]);
                             %>
                             	<input type="hidden" name="singfoodlen<%=i %>" id="singfoodlen<%=i %>" value="<%=ca.getFoods().length %>">
-                            	<li><label for="a<%=i %><%=j %>" class="col-4"><%= ca.getFoods()[j] %></label><p class="col-4"><%=ca.getFoodprice()[j] %> 원</p><input type="number" value="<%=ca.getFoodunit()[j] %>" min="0" class="form-control col-3" id="f_num<%=i%><%=j%>" onclick="food_num<%=i%><%=j%>()"></li>
+                            	<li><label for="a<%=i %><%=j %>" class="col-4"><%= ca.getFoods()[j] %></label><p class="col-4"><%=ca.getFoodprice()[j] %> 원</p><input type="number" value="<%=ca.getFoodunit()[j] %>" min="0" class="form-control col-3c" id="f_num<%=i%><%=j%>" onclick="food_num<%=i%><%=j%>()"></li>
                             	<input type="hidden" value="<%= ca.getFoods()[j] %>" name="singfoodname<%=i %><%=j %>" id="singfoodname<%=i %><%=j %>">
                             	<input type="hidden" value="<%=ca.getFoodprice()[j] %>" name="foodprice<%=i %><%=j %>" id="foodprice<%=i %><%=j %>">
                             	<input type="hidden" value="<%=ca.getFoodunit()[j] %>" name="foodunit<%=i %><%=j %>" id="foodunit<%=i %><%=j %>">

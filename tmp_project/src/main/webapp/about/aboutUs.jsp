@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>ChangiFood-회사소개</title>
+<title>ChanggiFood-회사소개</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
@@ -65,22 +65,22 @@
                 </div>
             </div>
             <h3>물류 혁신을 통해 최상의 품질로 전해드립니다.</h3>
-            <p>컬리는 생산자, 판매자, 소비자 간의 상생이 불러일으키는 선순환의 힘을 믿습니다.<br>그래서 생상자와 건강함 협력 관계를 맺고 장기적으로 함께 성장할 수 있도록 최선을 다하고 있습니다.</p>
+            <p>ChanggiFood는 생산자, 판매자, 소비자 간의 상생이 불러일으키는 선순환의 힘을 믿습니다.<br>그래서 생상자와 건강함 협력 관계를 맺고 장기적으로 함께 성장할 수 있도록 최선을 다하고 있습니다.</p>
             <div class="row">
                 <div class="col-6">
                     <img src="../resources/images/aboutUs2.jpg" alt="" class="col-12">
                 </div>
                 <div class="col-6 text">
-                    <h5>Kurly Fresh Solution</h5>
+                    <h5>ChanggiFood Fresh Solution</h5>
                     <h3>빠르고 신선한 샛별배송</h3>
-                    <p>&nbsp;컬리는 국내에서 가장 빠른 '샛별배송' 시스템을 구축하였습니다. 밤 11시까지 주문된 상품은 다음날 아침 7시 이전까지 배송해드려 저녁에 주문한 상품으로 다음날 아침 식사를 만들 수 있답니다.</p>
+                    <p>&nbsp;ChanggiFood는 국내에서 가장 빠른 '샛별배송' 시스템을 구축하였습니다. 밤 11시까지 주문된 상품은 다음날 아침 7시 이전까지 배송해드려 저녁에 주문한 상품으로 다음날 아침 식사를 만들 수 있답니다.</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6 text">
-                    <h5>Kurly Fresh Solution</h5>
+                    <h5>ChanggiFood Fresh Solution</h5>
                     <h3>빠르고 신선한 샛별배송</h3>
-                    <p>&nbsp;컬리는 국내에서 가장 빠른 '샛별배송' 시스템을 구축하였습니다. 밤 11시까지 주문된 상품은 다음날 아침 7시 이전까지 배송해드려 저녁에 주문한 상품으로 다음날 아침 식사를 만들 수 있답니다.</p>
+                    <p>&nbsp;ChanggiFood는 국내에서 가장 빠른 '샛별배송' 시스템을 구축하였습니다. 밤 11시까지 주문된 상품은 다음날 아침 7시 이전까지 배송해드려 저녁에 주문한 상품으로 다음날 아침 식사를 만들 수 있답니다.</p>
                 </div>
                 <div class="col-6">
                     <img src="../resources/images/aboutUs2.jpg" alt="" class="col-12">
@@ -91,9 +91,9 @@
                     <img src="../resources/images/aboutUs2.jpg" alt="" class="col-12">
                 </div>
                 <div class="col-6 text">
-                    <h5>Kurly Fresh Solution</h5>
+                    <h5>ChanggiFood Fresh Solution</h5>
                     <h3>빠르고 신선한 샛별배송</h3>
-                    <p>&nbsp;컬리는 국내에서 가장 빠른 '샛별배송' 시스템을 구축하였습니다. 밤 11시까지 주문된 상품은 다음날 아침 7시 이전까지 배송해드려 저녁에 주문한 상품으로 다음날 아침 식사를 만들 수 있답니다.</p>
+                    <p>&nbsp;ChanggiFood는 국내에서 가장 빠른 '샛별배송' 시스템을 구축하였습니다. 밤 11시까지 주문된 상품은 다음날 아침 7시 이전까지 배송해드려 저녁에 주문한 상품으로 다음날 아침 식사를 만들 수 있답니다.</p>
                 </div>
             </div>
         </div>

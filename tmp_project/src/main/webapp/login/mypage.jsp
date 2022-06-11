@@ -75,7 +75,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>ChangiFood-Mypage</title>
+<title>ChanggiFood-Mypage</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
@@ -194,7 +194,7 @@
                     </div>
                     <hr>
                     <div>
-                        <a href="../community/one_qna.jsp" class="btn btn-secondary">1:1 문의하기</a>
+                        <a href="<c:url value='/community/one_qna.bo?page=1'/>" class="btn btn-secondary">1:1 문의하기</a>
                     </div>
                 </div>
                 <div class="col-12">

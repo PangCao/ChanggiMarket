@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChanggiFood-MyPage</title>
 </head>
 <% 
 	ArrayList<cartlist> mycart = (ArrayList<cartlist>)session.getAttribute("myCart");

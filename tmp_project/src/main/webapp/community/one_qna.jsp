@@ -49,7 +49,7 @@
 <%
 	}
 %>
-<title>ChangiFood-1:1 질문</title>
+<title>ChanggiFood-1:1 질문</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>

@@ -13,15 +13,15 @@
 	String name = "";
 	int cupage = 1;
 	int totalpage = 1;
-	if (request.getParameter("page")!= null){
+	if (request.getParameter("page") != null && !request.getParameter("page").equals("null")){
 		cupage = Integer.valueOf(request.getParameter("page"));
 	}
-	if (request.getAttribute("totalpage") != null) {
+	if (request.getAttribute("totalpage") != null && !request.getAttribute("totalpage").equals("null")) {
 		totalpage = Integer.valueOf((String)request.getAttribute("totalpage"));
 	}
 	//페이지 넘버
 	int min = 1;
-	int max = (totalpage/10)+1;
+	int max = 5;
 	if (cupage > 3) {
 		min = cupage - 2;
 		max = cupage + 2;
@@ -50,7 +50,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>ChangiFood-Seller Management</title>
+<title>ChanggiFood-Seller Management</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>

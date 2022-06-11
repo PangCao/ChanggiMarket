@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>ChangiFood-Recipe Registration</title>
+<title>ChanggiFood-Recipe Registration</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>

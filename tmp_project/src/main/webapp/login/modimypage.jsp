@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChanggiFood-MyPage</title>
 <% 
 	ArrayList<cartlist> mycart = (ArrayList<cartlist>)session.getAttribute("myCart");
 	customer ct = (customer)request.getAttribute("userinfo");
@@ -165,7 +165,8 @@ function success() {
 	                              </div>
 	                         </div>
 	                         <div class="mt-5 row col-12 d-flex align-items-center justify-content-center form-group">
-	                              <input type="button" value="수정" class="btn btn-success col-10" onclick="modi()">
+	                              <input type="button" value="수정하기" class="btn btn-success col-4 mx-2" onclick="modi()">
+	                              <input type="button" value="탈퇴하기" class="btn btn-danger col-4" onclick="unsign()">
 	                         </div>
                          </form>
                     </div>
@@ -176,6 +177,12 @@ function success() {
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+	function unsign() {
+		if (confirm("ChanggiFood를 탈퇴하시겠습니까?")) {
+			document.modiForm.action = "unsign.lo";
+			document.modiForm.submit();
+		}
+	}
 	function modi() {
 		var pw = document.getElementById('pwchk');
 		var pwchk = document.getElementById('pwchkans');

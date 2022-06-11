@@ -1119,7 +1119,7 @@ public class BoardDao {
 	}
 	public void reviewwriter(HttpServletRequest request) {
 
-		String realFolder = request.getRealPath("resources/images");
+		String realFolder = request.getSession().getServletContext().getRealPath("resources/images");
 		MultipartRequest multi = null;
 		try {
 			multi = new MultipartRequest(request, realFolder, 10 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
@@ -1183,7 +1183,7 @@ public class BoardDao {
 	
 	public void bulletinwriter(HttpServletRequest request) {
 
-		String realFolder = request.getRealPath("resources/images");
+		String realFolder = request.getSession().getServletContext().getRealPath("resources/images");
 		MultipartRequest multi = null;
 		try {
 			multi = new MultipartRequest(request, realFolder, 10 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());
@@ -1290,7 +1290,7 @@ public class BoardDao {
 	
 	public void noticewriter(HttpServletRequest request) {
 
-		String realFolder = request.getRealPath("resources/images");
+		String realFolder = request.getSession().getServletContext().getRealPath("resources/images");
 		MultipartRequest multi = null;
 		try {
 			multi = new MultipartRequest(request, realFolder, 10 * 1024 * 1024, "utf-8", new DefaultFileRenamePolicy());

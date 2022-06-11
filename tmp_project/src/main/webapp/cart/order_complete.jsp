@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChanggiFood-Thanks</title>
 <link rel="stylesheet" href="/tmp_project/resources/css/bootstrap.min.css">
 <link rel="stylesheet" href="/tmp_project/resources/css/style.css?ver=1.4">
 </head>

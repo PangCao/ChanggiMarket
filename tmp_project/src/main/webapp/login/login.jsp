@@ -21,7 +21,16 @@
 <%
 	}
 %>
-<title>ChangiFood-로그인</title>
+<script type="text/javascript">
+	function openNewWindow(obj) { 
+		var popupwidth = 610;
+		var popupheight = 510;
+		var popx = (window.screen.width / 2) - (popupwidth / 2);
+		var popy = (window.screen.height / 2) - (popupheight / 2);
+		open (obj,"Mail","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, width=610, height=510, left="+popx+",top="+popy);
+	}
+</script>
+<title>ChanggiFood-로그인</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
@@ -44,7 +53,7 @@
                     </div>
                 </form>
                 <div>
-                    <a href="#">이메일 아이디 찾기</a> | <a href="#">패스워드 찾기</a>
+                    <a href="javascript:openNewWindow('find_id.jsp')">이메일 아이디 찾기</a> | <a href="javascript:openNewWindow('find_pw.jsp')">패스워드 찾기</a>
                 </div>
                 <div>
                     <span>SNS 간편 로그인</span>

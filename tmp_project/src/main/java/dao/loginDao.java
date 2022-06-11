@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.mysql.jdbc.Connection;
 
@@ -19,6 +21,289 @@ public class loginDao {
 	private static loginDao dao = new loginDao();
 	public static loginDao getDao() {
 		return dao;
+	}
+	
+	public void unsign(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		
+		HttpSession session = request.getSession();
+		String id1 = (String)session.getAttribute("userid");
+		String id2 = (String)session.getAttribute("seller");
+		String id = "";
+		String user = "";
+		if (id1 != null) {
+			id = id1;
+			user = "customer";
+		}
+		else {
+			id = id2;
+			user = "seller";
+		}
+		String sql = "";
+			if (user.equals("customer")) {
+				sql = "delete from customer where c_id=?";
+			}
+			else {
+				sql = "delete from seller where s_id=?";
+			}
+		try {
+			dbconn = conn();
+			pstmt = dbconn.clientPrepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		session.invalidate();
+	}
+	
+	public void pwchange(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		
+		String id = request.getParameter("id");
+		String user = request.getParameter("user");
+		String password = request.getParameter("pw");
+		String sql = "";
+		
+		if (user.equals("customer")) {
+			sql = "update customer set c_password=? where c_id=?";
+		}
+		else {
+			sql = "update seller set s_password=? where s_id=?";
+		}
+		
+		try {
+			dbconn = conn();
+			pstmt = dbconn.clientPrepareStatement(sql);
+			pstmt.setString(1, password);
+			pstmt.setString(2, id);
+			pstmt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	
+	public int idsearch(HttpServletRequest request) {
+		int ans = 0;
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		
+		ArrayList<String> ids = new ArrayList<String>();
+		
+		String phone = request.getParameter("phone1") + "-" + request.getParameter("phone2") + "-" + request.getParameter("phone3");
+		if (phone.length() < 12) {
+			phone = "";
+		}
+		String mail = request.getParameter("mail");
+		
+		
+		String sql = "";
+		String sql2 = "";
+		try {
+			dbconn = conn();
+			if (phone.equals("")) {
+				sql = "select c_id from customer where c_mail=? ";
+				pstmt = dbconn.clientPrepareStatement(sql);
+				pstmt.setString(1, mail);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					ids.add(rs.getString("c_id"));
+					ans = 1;
+				}
+				
+				sql2 = "select s_id from seller where s_mail=? ";
+				pstmt2 = dbconn.clientPrepareStatement(sql2);
+				pstmt2.setString(1, mail);				
+				rs2 = pstmt2.executeQuery();
+				while (rs2.next()) {
+					ids.add(rs2.getString("s_id"));
+					ans = 1;
+				}
+				 
+			}
+			else {
+				sql = "select c_id from customer where c_phone=? ";
+				pstmt = dbconn.clientPrepareStatement(sql);
+				pstmt.setString(1, phone);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					ids.add(rs.getString("c_id"));
+					ans = 1;
+				}
+				
+				sql2 = "select s_id from seller where s_phone=? ";
+				pstmt2 = dbconn.clientPrepareStatement(sql2);
+				pstmt2.setString(1, phone);
+				rs2 = pstmt2.executeQuery();
+				while (rs2.next()) {
+					ids.add(rs2.getString("s_id"));
+					ans = 1;
+				}
+			}
+			 request.setAttribute("ans", ids);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt2 != null) {
+					pstmt2.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ans;
+	}
+	public int pwsearch(HttpServletRequest request) {
+		int ans = 0;
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+				
+		String id = request.getParameter("id");
+
+		String phone = request.getParameter("phone1") + "-" + request.getParameter("phone2") + "-" + request.getParameter("phone3");
+		if (phone.length() < 12) {
+			phone = "";
+		}
+		String mail = request.getParameter("mail");
+		
+		String user = "";
+		
+		String sql = "";
+		String sql2 = "";
+
+		try {
+			dbconn = conn();
+			if (phone.equals("")) {
+				sql = "select count(*) from customer where c_mail=? and c_id=?";
+				pstmt = dbconn.clientPrepareStatement(sql);
+				pstmt.setString(1, mail);
+				pstmt.setString(2, id);
+				rs = pstmt.executeQuery();
+				rs.next();
+				if (rs.getInt(1) == 1) {
+					ans = 1;
+					user = "customer";
+				}
+				
+				sql2 = "select count(*) from seller where s_mail=? and s_id=?";
+				pstmt2 = dbconn.clientPrepareStatement(sql2);
+				pstmt2.setString(1, mail);
+				pstmt2.setString(2, id);
+				rs2 = pstmt2.executeQuery();
+				rs2.next();
+				if (rs2.getInt(1) == 1) {
+					ans = 1;
+					user = "seller";
+				}
+				 
+			}
+			else {
+				sql = "select count(*) from customer where c_phone=? and c_id=?";
+				pstmt = dbconn.clientPrepareStatement(sql);
+				pstmt.setString(1, phone);
+				pstmt.setString(2, id);
+				rs = pstmt.executeQuery();
+				rs.next();
+				if (rs.getInt(1) == 1) {
+					ans = 1;
+					user = "customer";
+				}
+				
+				sql2 = "select count(*) from seller where s_phone=? and s_id=?";
+				pstmt2 = dbconn.clientPrepareStatement(sql2);
+				pstmt2.setString(1, phone);
+				pstmt2.setString(2, id);
+				rs2 = pstmt2.executeQuery();
+				rs2.next();
+				if (rs2.getInt(1) == 1) {
+					ans = 1;
+					user = "seller";
+				}
+			}
+			request.setAttribute("id", id);
+			request.setAttribute("user", user);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt2 != null) {
+					pstmt2.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ans;
 	}
 	
 	public void totalpage(HttpServletRequest request) {
@@ -232,6 +517,89 @@ public class loginDao {
 		return ans;
 	}
 	
+	public int selmodi(HttpServletRequest request) {
+		int ans = 0;
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		String id = request.getParameter("id");
+		String pwchk = request.getParameter("pwchk");
+		String com_name = request.getParameter("com_name");
+		String owner_name = request.getParameter("owner_name");
+		String phone = request.getParameter("phone");
+		String email = request.getParameter("email");
+		String addr1 = request.getParameter("addr1");
+		String addr2 = request.getParameter("addr2");
+		String addr3 = request.getParameter("addr3");
+		String addr = "("+addr1+")"+addr2+" "+addr3;
+		
+		String sql = "";
+		
+		try {
+			dbconn = conn();
+			if (pwchk.equals("") && addr1.equals("() ")) {
+				sql = "update seller set s_com_name=?, s_owner_name=?, s_mail=?, s_phone=? where s_id=?";
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, com_name);
+				pstmt.setString(2, owner_name);
+				pstmt.setString(3, email);
+				pstmt.setString(4, phone);
+				pstmt.setString(5, id);
+				ans = pstmt.executeUpdate();
+			}
+			else if (pwchk.equals("") && !addr1.equals("() ")) {
+				sql = "update seller set s_com_name=?, s_owner_name=?, s_mail=?, s_phone=?, s_addr=? where s_id=?";
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, com_name);
+				pstmt.setString(2, owner_name);
+				pstmt.setString(3, email);
+				pstmt.setString(4, phone);
+				pstmt.setString(5, addr);
+				pstmt.setString(6, id);
+				ans = pstmt.executeUpdate();
+			}
+			else if (!pwchk.equals("") && addr1.equals("() ")) {
+				sql = "update seller set s_com_name=?, s_owner_name=?, s_mail=?, s_phone=?, s_password=? where s_id=?";
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, com_name);
+				pstmt.setString(2, owner_name);
+				pstmt.setString(3, email);
+				pstmt.setString(4, phone);
+				pstmt.setString(5, pwchk);
+				pstmt.setString(6, id);
+				ans = pstmt.executeUpdate();
+			}
+			else {
+				sql = "update seller set s_com_name=?,s_owner_name=?, s_mail=?, s_phone=?, s_addr=?, s_password=? where s_id=?";
+				pstmt = dbconn.prepareStatement(sql);
+				pstmt.setString(1, com_name);
+				pstmt.setString(2, owner_name);
+				pstmt.setString(3, email);
+				pstmt.setString(4, phone);
+				pstmt.setString(5, addr);
+				pstmt.setString(6, pwchk);
+				pstmt.setString(7, id);
+				ans = pstmt.executeUpdate();
+			}
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ans;
+	}
 	public int selpwchk(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("seller");
@@ -730,7 +1098,6 @@ public class loginDao {
 			
 		}
 		catch (Exception e) {
-			System.out.println("����2");
 			e.printStackTrace();
 		}
 		finally {

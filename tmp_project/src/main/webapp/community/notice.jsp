@@ -58,7 +58,7 @@
 %>
 
 
-<title>ChangiFood-Board</title>
+<title>ChanggiFood-Board</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>

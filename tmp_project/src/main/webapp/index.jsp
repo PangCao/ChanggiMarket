@@ -12,8 +12,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>ChangiFood-Home</title>
+<title>ChanggiFood-Home</title>
 </head>
+<%
+	if (request.getParameter("error") != null){
+		String error = request.getParameter("error");
+		if (error.equals("1")) {
+%>
+<script type="text/javascript">
+	alert("정상적으로 탈퇴되었습니다.");
+</script>
+<%
+		}
+	}
+%>
 <body>
     <jsp:include page="menu.jsp"/>
     <section class="main">

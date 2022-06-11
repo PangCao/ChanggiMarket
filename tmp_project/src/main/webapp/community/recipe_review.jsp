@@ -74,7 +74,7 @@
 <%
 	}
 %>
-<title>ChangiFood-나만의 레시피</title>
+<title>ChanggiFood-나만의 레시피</title>
 </head>
 <body>
 	<jsp:include page="/menu.jsp"/>
