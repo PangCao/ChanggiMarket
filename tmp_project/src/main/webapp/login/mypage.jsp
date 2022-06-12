@@ -8,6 +8,7 @@
 <html>
 <head>
 <%	
+	String order_p = request.getParameter("orderperiod");
 	ArrayList<cartlist> mycart = (ArrayList<cartlist>)session.getAttribute("myCart");
 	int cartcnt = 0;
 	if (mycart != null) {
@@ -112,7 +113,7 @@
 	                    <img src="../resources/images/logo_green.png" width="35%">
                     </div>
                     <ul>
-                        <a href="mypage.ca?page=1"><li>주문 내역 <span>&gt;</span></li></a>
+                        <a href="mypage.ca?page=1&orderperiod=1year"><li>주문 내역 <span>&gt;</span></li></a>
                         <a href="<c:url value='/community/one_qna.bo?page=1'/>"><li>상품 문의<span>&gt;</span></li></a>
                         <a href="<c:url value='/login/modimypagechk.jsp'/>"><li>개인정보 수정<span>&gt;</span></li></a>
                     </ul>
@@ -120,12 +121,48 @@
                 <div class="col-9">
                     <div>
                         <h5>주문내역 <small>지난 1년 간의 주문 내역 조회가 가능합니다.</small></h5>
-                        <select name="" id="" class="col-3 form-control">
-                            <option value="" selected>전체기간</option>
-                            <option value="">1개월</option>
-                            <option value="">3개월</option>
-                            <option value="">6개월</option>
+                        <%
+                        	if (order_p.equals("1year")) {
+                        %>
+                        <select name="order_period" id="order_period" class="col-3 form-control" onchange="orderperi()">
+                            <option value="1year" selected>1년</option>
+                            <option value="1month">1개월</option>
+                            <option value="3month">3개월</option>
+                            <option value="6month">6개월</option>
                         </select>
+                        <%
+                        	}
+                        	else if (order_p.equals("1month")){
+                        %>
+                        <select name="order_period" id="order_period" class="col-3 form-control" onchange="orderperi()">
+                            <option value="1year">1년</option>
+                            <option value="1month" selected>1개월</option>
+                            <option value="3month">3개월</option>
+                            <option value="6month">6개월</option>
+                        </select>
+                        <%
+                        	}
+                        	else if (order_p.equals("3month")){
+                        %>
+                        <select name="order_period" id="order_period" class="col-3 form-control" onchange="orderperi()">
+                            <option value="1year">1년</option>
+                            <option value="1month">1개월</option>
+                            <option value="3month" selected>3개월</option>
+                            <option value="6month">6개월</option>
+                        </select>
+                        <%
+                        	}
+                        	else if (order_p.equals("6month")){
+                        %>
+                        <select name="order_period" id="order_period" class="col-3 form-control" onchange="orderperi()">
+                            <option value="1year">1년</option>
+                            <option value="1month">1개월</option>
+                            <option value="3month">3개월</option>
+                            <option value="6month" selected>6개월</option>
+                        </select>
+                        <%
+                        	}
+                        %>
                     </div>
                     <hr>
                     <div>
@@ -206,14 +243,17 @@
             		}
             		else {
            		%>
-   		                 <p><a href="mypage.ca?page=<%=cupage-1%>"><b>&lt;</b></a>
+   		                 <p><a href="mypage.ca?page=<%=cupage-1%>&orderperiod=<%=order_p%>"><b>&lt;</b></a>
            		
            		<%
             			}
                 	int pagenum = (cnt/10)+1;
+                	if (cnt %10 == 0 && cnt != 0) {
+                		pagenum = cnt/10;
+                	}
                 	for (int a = 0; a < pagenum; a++) {
                 %>
-                 	<a href="mypage.ca?page=<%=a+1%>" class="pagenum"><%=a+1%></a>
+                 	<a href="mypage.ca?page=<%=a+1%>&orderperiod=<%=order_p%>" class="pagenum"><%=a+1%></a>
                	<%
                 	}
                 	if (pagenum == cupage) { 
@@ -223,7 +263,7 @@
                 	}
                 	else {
                	%>
-                <a href="mypage.ca?page=<%=cupage+1%>" class="pagenum"><b>&gt;</b></a></p>
+                <a href="mypage.ca?page=<%=cupage+1%>&orderperiod=<%=order_p%>" class="pagenum"><b>&gt;</b></a></p>
                 <%
                 	}
                 %>
@@ -232,5 +272,12 @@
         </div>
     </section>
     <jsp:include page="/footer.jsp"/>
+    <script type="text/javascript">
+    	function orderperi() {
+    		let order = document.getElementById('order_period');
+    		let ordervalue = order.options[order.selectedIndex].value;
+    		location.href="mypage.ca?orderperiod="+ordervalue+"&page=1";
+    	}
+    </script>
 </body>
 </html>

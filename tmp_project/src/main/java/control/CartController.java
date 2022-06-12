@@ -49,7 +49,8 @@ public class CartController extends HttpServlet{
 		else if (command.equals("/login/mypage.ca")) {
 			dao.mypage(request);
 			dao.pagecnt(request);
-			RequestDispatcher rd = request.getRequestDispatcher("/login/mypage.jsp");
+			String period = request.getParameter("orderperiod");
+			RequestDispatcher rd = request.getRequestDispatcher("/login/mypage.jsp?orderperiod="+period);
 			rd.forward(request, response);
 		}
 		else if (command.equals("/cart/cartdel.ca")) {

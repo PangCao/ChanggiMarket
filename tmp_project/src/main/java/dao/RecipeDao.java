@@ -25,6 +25,51 @@ public class RecipeDao {
 	public static RecipeDao getDao() {
 		return rd;
 	}
+	public void recom(HttpServletRequest request) {
+		Connection dbconn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<recipelist> alr = new ArrayList<recipelist>();
+		String sql = "select * from recipe order by r_sell desc limit 5";
+		
+		try {
+			dbconn = conn();
+			pstmt = dbconn.clientPrepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				recipelist rl = new recipelist();
+				rl.setR_name(rs.getString("r_name"));
+				rl.setR_id(rs.getInt("r_id"));
+				rl.setR_category(rs.getString("r_category"));
+				rl.setR_desc(rs.getString("r_desc"));
+				rl.setR_unit(rs.getString("r_unit"));
+				rl.setR_tip(rs.getString("r_tip"));
+				rl.setR_img(rs.getString("r_img"));
+				alr.add(rl);
+			} 
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (dbconn != null) {
+					dbconn.close();
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		request.setAttribute("recomm", alr);
+	}
+	 
 	public void delrecipe(HttpServletRequest request) {
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
@@ -405,7 +450,7 @@ public class RecipeDao {
 		ResultSet rs = null;
 		ArrayList<recipelist> fl = new ArrayList<recipelist>();
 		String order = request.getParameter("order");
-		
+
 		try {
 			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
 				if (order != null && order.equals("new")) {

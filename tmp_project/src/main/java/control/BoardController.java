@@ -134,7 +134,7 @@ public class BoardController extends HttpServlet{
 			}
 			else {
 				dao.likeup(request);
-				response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?page="+page);
+				response.sendRedirect("http://localhost:8080/tmp_project/community/review.bo?likechk=3&page="+page);
 			}
 		}
 		else if (command.equals("/community/delnoview.bo")) {

@@ -94,7 +94,7 @@
                               <img src="../resources/images/logo_green.png" width="35%">
                          </div>
                          <ul>
-                              <a href="mypage.ca?page=1"><li>주문 내역 <span>&gt;</span></li></a>
+                              <a href="mypage.ca?page=1&orderperiod=1year"><li>주문 내역 <span>&gt;</span></li></a>
                               <a href="<c:url value='/community/one_qna.bo?page=1'/>"><li>상품 문의<span>&gt;</span></li></a>
                               <a href="<c:url value='/login/modimypagechk.jsp'/>"><li>개인정보 수정<span>&gt;</span></li></a>
                          </ul>

@@ -297,7 +297,11 @@ body > .main2 > div > div > div > div:nth-of-type(1){
     width: 100%;
     height: 300px;
 }
-body > .main2 > div > div > div > div:nth-of-type(1) > img{
+body > .main2 > div > div > div > div:nth-of-type(1) > a{
+    width: 100%;
+    height: 100%;
+}
+body > .main2 > div > div > div > div:nth-of-type(1) > a > img{
     width: 100%;
     height: 100%;
 }
@@ -318,25 +322,27 @@ body > .main2 > div > div > div > div:nth-of-type(2) > div{
     height: 70px;
     opacity: 0.7;
 }
-body > .main2 > div > div > div > div:nth-of-type(3) {
+body > .main2 > div > div > div > a {
     position: absolute;
     top: 230px;
     left: 0;
     text-align: center;
-    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 10px 15px;
+    
 }
-body > .main2 > div > div > div > div:nth-of-type(3) > h4 {
+body > .main2 > div > div > div > a > div > h4 {
     font-size: 20px;
     margin-bottom: 0;
+    color: white;
 }
-body > .main2 > div > div > div > div:nth-of-type(3) > p {
+body > .main2 > div > div > div > a > div > p {
     font-size: 15px;
     margin-bottom: 0;
+    color: white;
 }
 body > .main2 > div > div  > input {
     display: none;
@@ -1652,10 +1658,11 @@ body > .recipes > div:nth-of-type(2) {
     transition: all 0.3s;
 }
 body > .recipes > div:nth-of-type(2) > ul{
-    margin-top: 15px;
+    margin-top: 20px;
 }
 body > .recipes > div:nth-of-type(2) > ul > a > li{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    font-size : 17px;
 }
 body > .recipes > div:nth-of-type(2) > ul > .cupage > li{
     color: red;

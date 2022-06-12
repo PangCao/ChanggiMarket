@@ -40,6 +40,13 @@
 	</script>
 <%	
 	}
+	else if (likechk != null && likechk.equals("3")) {
+%>
+	<script type="text/javascript">
+		alert("선택하신 레시피에 like가 +1 되었습니다.");
+	</script>
+<%
+	}
 	String search_title = request.getParameter("search_title");
 	ArrayList<Boardlist> al = (ArrayList<Boardlist>)request.getAttribute("review_list");
 	int cupage = 1;

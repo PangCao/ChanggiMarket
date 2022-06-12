@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*" %>
+<%@ page import="dto.recipelist" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +27,8 @@
 <%
 		}
 	}
+	ArrayList<recipelist> recom = (ArrayList<recipelist>)request.getAttribute("recomm");
+	if (recom != null){
 %>
 <body>
     <jsp:include page="menu.jsp"/>
@@ -90,74 +94,38 @@
                     <label for="sl2" class="left"><i class="fa-solid fa-angle-left"></i></label>
                     <label for="sl1" class="right"><i class="fa-solid fa-angle-right"></i></label>
                 </div>
+                <%
+                	for (int i = 0; i < recom.size(); i++) {
+                		recipelist rl = recom.get(i);
+                %>
                 <div class="col-4 t">
                     <div>
-                        <img src="resources/images/main04.jpg" alt="">
+                        <a href="recipe/recipe.re?id=<%=rl.getR_id()%>"><img src="resources/images/<%=rl.getR_img() %>" alt=""></a>
                     </div>
                     <div>
                         <div>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <h4>Recipe</h4>
-                        <p>Noto Sans KR is unmodulated</p>
-                    </div>
+                    <a class="col-12" href="recipe/recipe.re?id=<%=rl.getR_id()%>">
+	                    <div class="col-12">
+	                        <h4><%=rl.getR_name() %></h4>
+	                        <p><%=rl.getR_desc() %></p>
+	                    </div>
+                    </a>
                 </div>
-                <div class="col-4 t">
-                    <div>
-                        <img src="resources/images/main05.jpg" alt="">
-                    </div>
-                    <div>
-                        <div>
-                        </div>     
-                    </div>
-                    <div class="col-12">
-                        <h4>Recipe</h4>
-                        <p>Noto Sans KR is unmodulated</p>
-                    </div>
-                </div>
-                <div class="col-4 t">
-                    <div>
-                        <img src="resources/images/main06.jpg" alt="">
-                    </div>
-                    <div>
-                        <div>
-                        </div> 
-                    </div>
-                    <div class="col-12">
-                        <h4>Recipe</h4>
-                        <p>Noto Sans KR is unmodulated</p>
-                    </div>
-                </div>
-                <div class="col-4 t">
-                    <div>
-                        <img src="resources/images/main04.jpg" alt="">
-                    </div>
-                    <div>
-                        <div>
-                        </div>         
-                    </div>
-                    <div class="col-12">
-                        <h4>Recipe</h4>
-                        <p>Noto Sans KR is unmodulated</p>
-                    </div>
-                </div>
-                <div class="col-4 t">
-                    <div>
-                        <img src="resources/images/main05.jpg" alt="">
-                    </div>
-                    <div>
-                        <div>
-                        </div>         
-                    </div>
-                    <div class="col-12">
-                        <h4>Recipe</h4>
-                        <p>Noto Sans KR is unmodulated</p>
-                    </div>
-                </div>
+                <%
+                	}
+                %>
             </div>
         </div>
     </section>
     <jsp:include page="/footer.jsp"/>
 </body>
+<%
+	}
+	else {
+		response.sendRedirect("recom.re");
+	}
+%>
+
 </html>

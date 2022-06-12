@@ -99,6 +99,11 @@ public class RecipeController extends HttpServlet{
 			RequestDispatcher rd = request.getRequestDispatcher("/recipe/recipes.re?r_category=밥·죽&page=1");
 			rd.forward(request, response);
 		}
+		else if (command.equals("/recom.re")) {
+			dao.recom(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+			rd.forward(request, response);
+		}
 	}
 	
 }

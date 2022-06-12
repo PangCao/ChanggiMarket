@@ -5,6 +5,8 @@ import dto.recipelist;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -47,15 +49,32 @@ public class CartDao {
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("userid");
 		
+		String orderperiod = request.getParameter("orderperiod");
+		int diff = 0;
+		if (orderperiod.equals("1year")) {
+			diff = 12;
+		}
+		else if(orderperiod.equals("1month")) {
+			diff= 1;
+		}
+		else if(orderperiod.equals("3month")) {
+			diff = 3;
+		}
+		else if(orderperiod.equals("6month")) {
+			diff = 6;
+		}
+		LocalDateTime ldt = LocalDateTime.now().minusMonths(diff);
+		String s_date = ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 		try {
 			dbconn = conn();
-			String sql = "select count(*) from cusorder where o_id=?";
+			String sql = "select count(*) from cusorder where o_id=? and o_date > ?";
 			pstmt = dbconn.prepareStatement(sql);
 			pstmt.setString(1, id);
+			pstmt.setString(2, s_date);
 			rs = pstmt.executeQuery();
 			
 			rs.next();
@@ -88,17 +107,36 @@ public class CartDao {
 	public void mypage(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String id = (String)session.getAttribute("userid");
-		ArrayList<cartlist> al = new ArrayList<cartlist>(); 
+		ArrayList<cartlist> al = new ArrayList<cartlist>();
+		
+		String orderperiod = request.getParameter("orderperiod");
+		int diff = 0;
+		if (orderperiod.equals("1year")) {
+			diff = 12;
+		}
+		else if(orderperiod.equals("1month")) {
+			diff= 1;
+		}
+		else if(orderperiod.equals("3month")) {
+			diff = 3;
+		}
+		else if(orderperiod.equals("6month")) {
+			diff = 6;
+		}
+		LocalDateTime ldt = LocalDateTime.now().minusMonths(diff);
+		String s_date = ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+		String sql = "select * from cusorder where o_id=? and o_date > ? order by o_num desc";
 		
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			dbconn = conn();
-			String sql = "select * from cusorder where o_id=? order by o_date desc";
+			dbconn = conn();	
 			pstmt = dbconn.prepareStatement(sql);
 			pstmt.setString(1, id);
+			pstmt.setString(2, s_date);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
