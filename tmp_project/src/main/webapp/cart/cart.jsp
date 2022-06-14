@@ -48,12 +48,13 @@
                 </div>
                 <table class="table text-center">
                     <tr>
-                        <th></th>
-                        <th class="col-2"></th>
-                        <th>상품명</th>
-                        <th>상세선택</th>
-                        <th>합계</th>
-                        <th>배송방법</th>
+                        <th class="col-1">선택</th>
+                        <th class="col-2">상품이미지</th>
+                        <th class="col-2">상품명</th>
+                        <th class="col-5">상세선택</th>
+                        <th class="col-2">합계</th>
+                        <!-- 추가구현이 필요한 부분 -->
+                        <!-- <th>배송방법</th> -->
                     </tr>
                     
                     <%
@@ -113,7 +114,7 @@
                             		sum += Integer.valueOf(ca.getFoodprice()[j]) *Integer.valueOf(ca.getFoodunit()[j]);
                             %>
                             	<input type="hidden" name="singfoodlen<%=i %>" id="singfoodlen<%=i %>" value="<%=ca.getFoods().length %>">
-                            	<li><label for="a<%=i %><%=j %>" class="col-4"><%= ca.getFoods()[j] %></label><p class="col-4"><%=ca.getFoodprice()[j] %> 원</p><input type="number" value="<%=ca.getFoodunit()[j] %>" min="0" class="form-control col-3c" id="f_num<%=i%><%=j%>" onclick="food_num<%=i%><%=j%>()"></li>
+                            	<li><label for="a<%=i %><%=j %>" class="col-5"><%= ca.getFoods()[j] %></label><p class="col-5"><%=ca.getFoodprice()[j] %> 원</p><input type="number" value="<%=ca.getFoodunit()[j] %>" min="0" class="form-control col-2" id="f_num<%=i%><%=j%>" onclick="food_num<%=i%><%=j%>()"></li>
                             	<input type="hidden" value="<%= ca.getFoods()[j] %>" name="singfoodname<%=i %><%=j %>" id="singfoodname<%=i %><%=j %>">
                             	<input type="hidden" value="<%=ca.getFoodprice()[j] %>" name="foodprice<%=i %><%=j %>" id="foodprice<%=i %><%=j %>">
                             	<input type="hidden" value="<%=ca.getFoodunit()[j] %>" name="foodunit<%=i %><%=j %>" id="foodunit<%=i %><%=j %>">
@@ -159,7 +160,10 @@
                         </td>
                         <td class="align-middle" id="foodsumview<%=i%>"><%=sum %> 원</td>
                         <input type="hidden" value="<%=sum %>" id="foodsum<%=i%>">
-                        <td class="align-middle"><a href="" class="btn btn-danger">배송방법</a></td>
+                        
+                        <!-- 추가구현이 필요한 부분 -->
+                        <!-- <td class="align-middle"><a href="" class="btn btn-danger">배송방법</a></td> -->
+                        
                     </tr>
                     <% 
                     		}
