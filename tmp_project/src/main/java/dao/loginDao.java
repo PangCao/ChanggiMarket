@@ -5,11 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import com.mysql.jdbc.Connection;
 
@@ -452,7 +450,7 @@ public class loginDao {
 		
 		try {
 			dbconn = conn();
-			if (pwchk.equals("") && addr1.equals("() ")) {
+			if (pwchk.equals("") && addr.equals("() ")) {
 				sql = "update customer set c_name=?, c_phone=?, c_gender=? ,c_mail=? where c_id=?";
 				pstmt = dbconn.prepareStatement(sql);
 				pstmt.setString(1, name);
@@ -461,8 +459,10 @@ public class loginDao {
 				pstmt.setString(4, email);
 				pstmt.setString(5, id);
 				ans = pstmt.executeUpdate();
+				cu.setName(name);
+				cu.setPhone(phone);
 			}
-			else if (pwchk.equals("") && !addr1.equals("() ")) {
+			else if (pwchk.equals("") && !addr.equals("() ")) {
 				sql = "update customer set c_name=?, c_phone=?, c_gender=?, c_addr=? ,c_mail=? where c_id=?";
 				pstmt = dbconn.prepareStatement(sql);
 				pstmt.setString(1, name);
@@ -472,8 +472,11 @@ public class loginDao {
 				pstmt.setString(5, email);
 				pstmt.setString(6, id);
 				ans = pstmt.executeUpdate();
+				cu.setAddr(addr);
+				cu.setName(name);
+				cu.setPhone(phone);
 			}
-			else if (!pwchk.equals("") && addr1.equals("() ")) {
+			else if (!pwchk.equals("") && addr.equals("() ")) {
 				sql = "update customer set c_name=?, c_phone=?, c_gender=?, c_password=? ,c_mail=? where c_id=?";
 				pstmt = dbconn.prepareStatement(sql);
 				pstmt.setString(1, name);
@@ -483,6 +486,8 @@ public class loginDao {
 				pstmt.setString(5, email);
 				pstmt.setString(6, id);
 				ans = pstmt.executeUpdate();
+				cu.setName(name);
+				cu.setPhone(phone);
 			}
 			else {
 				sql = "update customer set c_name=?, c_phone=?, c_gender=?, c_addr=?, c_password=? ,c_mail=? where c_id=?";
@@ -495,6 +500,9 @@ public class loginDao {
 				pstmt.setString(6, email);
 				pstmt.setString(7, id);
 				ans = pstmt.executeUpdate();
+				cu.setAddr(addr);
+				cu.setName(name);
+				cu.setPhone(phone);
 			}
 			
 		}
@@ -536,7 +544,7 @@ public class loginDao {
 		
 		try {
 			dbconn = conn();
-			if (pwchk.equals("") && addr1.equals("() ")) {
+			if (pwchk.equals("") && addr.equals("() ")) {
 				sql = "update seller set s_com_name=?, s_owner_name=?, s_mail=?, s_phone=? where s_id=?";
 				pstmt = dbconn.prepareStatement(sql);
 				pstmt.setString(1, com_name);
@@ -546,7 +554,7 @@ public class loginDao {
 				pstmt.setString(5, id);
 				ans = pstmt.executeUpdate();
 			}
-			else if (pwchk.equals("") && !addr1.equals("() ")) {
+			else if (pwchk.equals("") && !addr.equals("() ")) {
 				sql = "update seller set s_com_name=?, s_owner_name=?, s_mail=?, s_phone=?, s_addr=? where s_id=?";
 				pstmt = dbconn.prepareStatement(sql);
 				pstmt.setString(1, com_name);
@@ -557,7 +565,7 @@ public class loginDao {
 				pstmt.setString(6, id);
 				ans = pstmt.executeUpdate();
 			}
-			else if (!pwchk.equals("") && addr1.equals("() ")) {
+			else if (!pwchk.equals("") && addr.equals("() ")) {
 				sql = "update seller set s_com_name=?, s_owner_name=?, s_mail=?, s_phone=?, s_password=? where s_id=?";
 				pstmt = dbconn.prepareStatement(sql);
 				pstmt.setString(1, com_name);
@@ -800,15 +808,14 @@ public class loginDao {
 		int chkresult = 0;
 		Connection dbconn = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 		String sql = null;
-		if (user.equals("customer")) {
-			sql = "select count(*) from customer where c_id=?";
-		}
-		else if (user.equals("seller")){
-			sql = "select count(*) from seller where s_id=?";
-		}
+		
+		sql = "select count(*) from customer where c_id=?";
 		String id = request.getParameter("id");
+		
 		if (!id.equals("")) {
 			try {
 				dbconn = conn();
@@ -817,13 +824,25 @@ public class loginDao {
 				rs = pstmt.executeQuery();
 				rs.next();
 				chkresult = rs.getInt(1); 
+				sql = "select count(*) from seller where s_id=?";
+				pstmt2 = dbconn.prepareStatement(sql);
+				pstmt2.setString(1, id);
+				rs2 = pstmt2.executeQuery();
+				rs2.next();
+				chkresult += rs2.getInt(1);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			finally {
 				try {
+					if (rs2 != null) {
+						rs2.close();
+					}
 					if (rs != null) {
 						rs.close();
+					}
+					if (pstmt2 != null) {
+						pstmt2.close();
 					}
 					if (pstmt != null) {
 						pstmt.close();

@@ -56,8 +56,7 @@ public class LoginController extends HttpServlet{
 		else if (command.equals("/login/login.lo")) {
 			boolean ans = dao.login(request);
 			if(ans) {
-				RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-				rd.forward(request, response);
+				response.sendRedirect("/tmp_project/recom.re");
 			}
 			else {
 				response.sendRedirect("/tmp_project/login/login.jsp?error=1");

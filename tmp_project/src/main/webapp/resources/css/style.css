@@ -8,7 +8,7 @@
 li {
     list-style: none;
 }
-a:hover, a:link, a:active, a {
+a:hover, a:link, a:active, a ,a:not([href]):not([tabindex]){
     color: black;
     text-decoration: none;
 }
@@ -2173,6 +2173,9 @@ body > .cart > div > form > div:nth-of-type(2) > div > div > p {
     display: flex;
     justify-content: space-between;
 }
+body > .cart > div > form > table > tbody > tr > td > a:not([href]):not([tabindex]) {
+	color: white;
+} 
 /*cart.jsp -------------------------------------end*/
 body > .o_complete {
 	min-height : 80vh;

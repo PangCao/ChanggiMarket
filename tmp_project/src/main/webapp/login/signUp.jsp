@@ -31,7 +31,7 @@
                 <form action="signup.lo" method="post" name="signForm" class="form-horizatal col-9">
                     <div class="form-group row">
                         <label class="col-3">아이디 <span>*</span></label>
-                        <input name="id" id="id" type="text" placeholder="아이디(920907v)" required class="form-control col-5">
+                        <input name="id" id="id" type="text" placeholder="아이디(8자리 이상)" required class="form-control col-5">
                         <input type="button" value="중복확인" class="btn btn-secondary ml-2 col-3" id="idchkbtn" onclick="idchk()">
                     </div>
                     <div class="form-group row">
@@ -82,12 +82,12 @@
                     </div>
                     <div class="form-group row">
                     	<label class="col-3">주소 <span>*</span></label>
-                    	<input name="addr1" type="text" id="sample6_postcode" placeholder="우편번호" class="col-5 form-control">
+                    	<input name="addr1" type="text" id="sample6_postcode" placeholder="우편번호" class="col-5 form-control" readonly>
                     	<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="ml-2 col-3 form-control btn btn-secondary">				
                     </div>
                     <div class="form-group row">
                     	<label class="col-3"></label>
-     					<input name="addr2" type="text" id="sample6_address" placeholder="주소" class="col-5 form-control">                    	
+     					<input name="addr2" type="text" id="sample6_address" placeholder="주소" class="col-5 form-control" readonly>
 					</div>
 					<div class="form-group row">
                     	<label class="col-3"></label>

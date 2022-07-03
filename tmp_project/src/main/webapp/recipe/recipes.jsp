@@ -99,7 +99,7 @@
             <hr>
             <div>
                 <p>
-                    <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=new">신상품순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=sell">판매량순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=rowprice">낮은가격순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=highprice">높은가격순</a>
+                    <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=new" id="new">신상품순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=sell" id="sell">판매량순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=rowprice" id="rowprice">낮은가격순</a> | <a href="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=highprice" id="highprice">높은가격순</a>
                 </p>
                 <form action="recipes.re?r_category=<%=ct%>&page=<%=cupage%>" method="post" class="col-4">
                     <input type="text" placeholder="검색어를 입력해주세요." class="form-control" name="search_title">
@@ -296,4 +296,13 @@
     </section>
 	<jsp:include page="/footer.jsp"/>
 </body>
+<%
+	if (order != null && !order.equals("")) {
+%>
+<script type="text/javascript">
+	document.getElementById("<%=order%>").style.color = "red";
+</script>
+<%
+	}
+%>
 </html>

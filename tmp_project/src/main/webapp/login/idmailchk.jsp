@@ -10,14 +10,15 @@
 <%
 	if (request.getParameter("idchk") != null){ 
 		int idchk = Integer.valueOf(request.getParameter("idchk"));
-		if (idchk == 1) {
+		if (idchk == -1) {
 %>
 		<script type="text/javascript">
-				opener.document.getElementById('idfaile').style.display = "block";
-				opener.document.getElementById('idsuccess').style.display = "none";
-				opener.document.getElementById('idans').style.display = "none";
-				window.close();
+			opener.document.getElementById('idfaile').style.display = "none";
+			opener.document.getElementById('idsuccess').style.display = "none";
+			opener.document.getElementById('idans').style.display = "block";
+			window.close();
 		</script>
+
 <%
 		}
 		else if (idchk == 0){
@@ -42,13 +43,13 @@
 		</script>
 <%
 		}
-		else if (idchk == -1) {
+		else if (idchk != 0) {
 %>
 		<script type="text/javascript">
-			opener.document.getElementById('idfaile').style.display = "none";
-			opener.document.getElementById('idsuccess').style.display = "none";
-			opener.document.getElementById('idans').style.display = "block";
-			window.close();
+				opener.document.getElementById('idfaile').style.display = "block";
+				opener.document.getElementById('idsuccess').style.display = "none";
+				opener.document.getElementById('idans').style.display = "none";
+				window.close();
 		</script>
 <%
 		}

@@ -51,10 +51,9 @@
                         <th class="col-1">선택</th>
                         <th class="col-2">상품이미지</th>
                         <th class="col-2">상품명</th>
-                        <th class="col-5">상세선택</th>
+                        <th class="col-4">상세선택</th>
                         <th class="col-2">합계</th>
-                        <!-- 추가구현이 필요한 부분 -->
-                        <!-- <th>배송방법</th> -->
+                        <th class="col-1">배송방법</th>
                     </tr>
                     
                     <%
@@ -75,7 +74,7 @@
                         <td class="align-middle">
                         <input type="hidden" name="foodimg<%=i %>" id="foodimg<%=i %>" value="<%= ca.getFilename()%>">
                         <input type="hidden" name="foodname<%=i %>" id="foodname<%=i %>" value="<%=ca.getFoodName()%>">
-                        <input type="hidden" name="foodid<%=i%>" value="<%=ca.getNum()%>">
+                        <input type="hidden" name="foodid<%=i%>" id="foodid<%=i%>" value="<%=ca.getNum()%>">
                         <script type="text/javascript">
                     		function foodchk<%=i%>() {
                     			var fchk = document.getElementById('fchk<%=i%>');
@@ -160,10 +159,18 @@
                         </td>
                         <td class="align-middle" id="foodsumview<%=i%>"><%=sum %> 원</td>
                         <input type="hidden" value="<%=sum %>" id="foodsum<%=i%>">
-                        
-                        <!-- 추가구현이 필요한 부분 -->
-                        <!-- <td class="align-middle"><a href="" class="btn btn-danger">배송방법</a></td> -->
-                        
+                        <td class="align-middle"><a class="btn btn-danger" onclick="shipsel()">배송방법</a><p id="ship<%=i%>"></td>
+                        <input type="hidden" id="food_sel_id<%=i%>">
+                        <script type="text/javascript">
+							function shipsel() {
+								var id = document.getElementById('foodid<%=i%>');
+								var popupwidth = 800;
+								var popupheight = 500;
+								var popx = (window.screen.width / 2) - (popupwidth / 2);
+								var popy = (window.screen.height / 2) - (popupheight / 2);
+								window.open("shipsel.ca?f_id="+id.value+"&num="+<%=i%>, "searchPop", "status=no, width="+popupwidth+", height="+popupheight+",left="+popx+",top="+popy);
+							}
+						</script>
                     </tr>
                     <% 
                     		}
@@ -174,7 +181,7 @@
                     <div class="col-5">
                         <p class="col-12"><i class="fa-solid fa-location-dot"></i> 배송지</p>
                         <hr>
-                        <p class="col-12"><%=cu.getAddr() %></p>
+                        <p class="col-12"><%=cu.getAddr()%></p>
                         <input type="hidden" value="<%=cu.getAddr() %>" name="cusaddr" id="cusaddr">
                         <div class="col-12">
                             <p>상품금액 <span id="totalsum_view"><%=totalsum%> 원</span></p>

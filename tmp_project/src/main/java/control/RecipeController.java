@@ -100,7 +100,9 @@ public class RecipeController extends HttpServlet{
 			rd.forward(request, response);
 		}
 		else if (command.equals("/recom.re")) {
+			System.out.println("도착");
 			dao.recom(request);
+			System.out.println("도착2");
 			RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 			rd.forward(request, response);
 		}

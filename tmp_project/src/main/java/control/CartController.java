@@ -61,7 +61,14 @@ public class CartController extends HttpServlet{
 			dao.seldel(request);
 			response.sendRedirect("http://localhost:8080/tmp_project/cart/cart.jsp");
 		}
+		else if (command.equals("/cart/shipsel.ca")) {
+			dao.shipsel(request);
+			String number = request.getParameter("num");
+			RequestDispatcher rd = request.getRequestDispatcher("shipselect.jsp?num="+number);
+			rd.forward(request, response);
+		}
 	}
+		
 	
 	
 

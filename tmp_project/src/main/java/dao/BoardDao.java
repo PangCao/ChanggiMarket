@@ -5,21 +5,21 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Enumeration;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Connection;
-import com.oreilly.servlet.*;
-import com.oreilly.servlet.multipart.*;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import dto.Boardlist;
-import dto.oneqna;
 import dto.comment;
+import dto.oneqna;
 
 public class BoardDao {
 	private BoardDao() {};
@@ -1066,13 +1066,13 @@ public class BoardDao {
 		ArrayList<Boardlist> al = new ArrayList<Boardlist>();
 		String sql = "";
 		try {
-			dbconn = conn();
 			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
 				sql = "select * from notice order by n_id desc";
 			}
 			else {
 				sql = "select * from notice where n_title like '%"+search_title+"%' order by n_id desc";
 			}
+				dbconn = conn();
 				pstmt = dbconn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 			
