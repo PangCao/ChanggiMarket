@@ -1643,9 +1643,6 @@ body > .recipes > div > div:nth-of-type(4) {
     justify-content: center;
     margin-top: 50px;
 } 
-body > .recipes > div > div:nth-of-type(4) > p > a:nth-of-type(1){
-    color: red;
-}
 body > .recipes > div:nth-of-type(2) {
     border: 1px solid rgb(195, 195, 195);
     border-radius: 0 20px 20px 0;

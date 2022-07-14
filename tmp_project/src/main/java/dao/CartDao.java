@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.http.HttpRequest;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +40,17 @@ public class CartDao {
 		return  dao;
 	}
 	
-	public void shipsel(HttpServletRequest request) {
+	public marketDto customerMarker(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		customer dto = (customer)session.getAttribute("user");
+		String addr = dto.getAddr();
+		addr = addr.substring(addr.indexOf(")")+1);
+		addr = addr.substring(0, addr.lastIndexOf(" "));
+		marketDto result = getGeoDataByAddress(addr);
+		return result;
+	}
+	
+	public void shipsel(HttpServletRequest request, marketDto customerMarker) {
 		request.getParameter("f_id");
 		HttpSession session = request.getSession();
 		customer dto = (customer)session.getAttribute("user");
@@ -75,7 +86,15 @@ public class CartDao {
 					marketlist.add(dt);
 				}
 			}
-		request.setAttribute("marketlist", marketlist);
+
+			ArrayList<marketDto> result = new ArrayList<marketDto>();
+			for (int i = 0; i < marketlist.size(); i++) {
+				marketDto dto2 = marketlist.get(i);				
+			if (customerMarker.getX()-0.02 <= dto2.getX() && dto2.getX() <= customerMarker.getX()+0.02 && customerMarker.getY()-0.02 <= dto2.getY() && dto2.getY() <= customerMarker.getY()+0.02) {
+				result.add(dto2);
+			}
+			}
+		request.setAttribute("marketlist", result);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -515,6 +534,7 @@ public class CartDao {
 		String[] singfoodprice = new String[Integer.valueOf(foodlen)];
 		String[] singfoodunit = new String[Integer.valueOf(foodlen)];
 		String cusaddr = request.getParameter("cusaddr");
+		String[] selid = request.getParameterValues("food_sel_id");
 
 		String[] selchk = request.getParameterValues("selchk");
 		for (int i = 0; i < Integer.valueOf(foodlen); i++) {
@@ -543,18 +563,19 @@ public class CartDao {
 		}
 		try {
 			conn = conn();
-			String sql = "insert into cusorder (o_date, o_id, o_f_name, o_f_img, o_f_singname, o_f_singprice, o_f_singunit, o_addr) values (?,?,?,?,?,?,?,?)";
+			String sql = "insert into cusorder (o_date, o_id, o_s_id, o_f_name, o_f_img, o_f_singname, o_f_singprice, o_f_singunit, o_addr) values (?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			for (int t = 0; t < Integer.valueOf(foodlen); t++) {
 				if (selchk[t].equals("1")) {
 					pstmt.setString(1, date);
 					pstmt.setString(2, c_id);
-					pstmt.setString(3, foodname[t]);
-					pstmt.setString(4, foodimg[t]);
-					pstmt.setString(5, singfoodname[t]);
-					pstmt.setString(6, singfoodprice[t]);
-					pstmt.setString(7, singfoodunit[t]);
-					pstmt.setString(8, cusaddr);
+					pstmt.setString(3, selid[t]);
+					pstmt.setString(4, foodname[t]);
+					pstmt.setString(5, foodimg[t]);
+					pstmt.setString(6, singfoodname[t]);
+					pstmt.setString(7, singfoodprice[t]);
+					pstmt.setString(8, singfoodunit[t]);
+					pstmt.setString(9, cusaddr);
 					pstmt.addBatch();
 					pstmt.clearParameters();
 				}

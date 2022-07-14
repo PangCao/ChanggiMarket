@@ -147,20 +147,26 @@
             		
             		if (cupage == 1){
             	%>
-                <p><b>&lt;</b>
+                <p><b>&lt;&nbsp;&nbsp;</b>
                 <%
             		}
             		else {
            		%>
-   		                 <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage-1%>&search_title=<%=search_title%>&order=<%=order%>"><b>&gt;</b></a></p>
+   		                 <a href="./recipes.re?r_category=<%=ct %>&page=<%=cupage-1%>&search_title=<%=search_title%>&order=<%=order%>"><b>&lt;</b></a></p>&nbsp;&nbsp;
            		
            		<%
             			}
                 	int pagenum = (cnt/20)+1;
                 	for (int a = 0; a < pagenum; a++) {
+                		if (cupage == a+1) {
                 %>
-                 	<a href="./recipes.re?r_category=<%=ct %>&page=<%=a+1%>&search_title=<%=search_title%>&order=<%=order%>"><%=a+1%></a>
+                	<a href="./recipes.re?r_category=<%=ct %>&page=<%=a+1%>&search_title=<%=search_title%>&order=<%=order%>" style="color:red;"><%=a+1%></a>&nbsp;&nbsp;
+                <%
+                		}else {
+                %>
+                 	<a href="./recipes.re?r_category=<%=ct %>&page=<%=a+1%>&search_title=<%=search_title%>&order=<%=order%>"><%=a+1%></a>&nbsp;&nbsp;
                	<%
+                		}
                 	}
                 	if (pagenum == cupage) { 
                	%>
@@ -273,25 +279,6 @@
                 	}
                 %>
             </ul>
-            <%-- <form action="recipes.re?r_category=<%=ct%>&page=<%=cupage%>&order=new" method="post">
-                <h3>가격</h3>
-                <hr>
-                <div class="form-group">
-                    <input type="checkbox" name="price" id="pricech1" value="1"><label for="pricech1">&nbsp;1만원 이하</label>
-                </div>
-                <div class="form-group">
-                    <input type="checkbox" name="price" id="pricech2" value="2"><label for="pricech2">&nbsp;1만원 ~ 5만원</label>
-                </div>
-                <div class="form-group">
-                    <input type="checkbox" name="price" id="pricech3" value="3"><label for="pricech3">&nbsp;5만원 ~ 10만원</label>
-                </div>
-                <div class="form-group">
-                    <input type="checkbox" name="price" id="pricech4" value="4"><label for="pricech4">&nbsp;10만원 이상</label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="검색" class="btn btn-danger col-12">
-                </div>
-            </form> --%>
         </div>
     </section>
 	<jsp:include page="/footer.jsp"/>

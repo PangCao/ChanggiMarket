@@ -42,14 +42,15 @@ public class RecipeController extends HttpServlet{
 		
 		if (command.equals("/recipe/recipes.re")) {
 			String order = request.getParameter("order");
-			dao.recipes(request, search_title);
+			String category = request.getParameter("r_category");
+			dao.recipes(request, search_title, category);
 			dao.price(request);
 			if (order != null) {
 				if (order.equals("rowprice") || order.equals("highprice")) {
 					dao.orderprice(request);
 				}
 			}
-			dao.count(request, search_title);
+			dao.count(request, search_title, category);
 			RequestDispatcher rd = null;
 			if (order != null) {
 				rd = request.getRequestDispatcher("/recipe/recipes.jsp?search_title="+search_title+"&order="+order);

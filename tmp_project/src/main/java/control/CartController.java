@@ -2,7 +2,6 @@ package control;
 
 import java.io.IOException;
 
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.CartDao;
+import dto.marketDto;
 
 public class CartController extends HttpServlet{
 
@@ -62,8 +62,10 @@ public class CartController extends HttpServlet{
 			response.sendRedirect("http://localhost:8080/tmp_project/cart/cart.jsp");
 		}
 		else if (command.equals("/cart/shipsel.ca")) {
-			dao.shipsel(request);
+			marketDto dto = dao.customerMarker(request);
+			dao.shipsel(request, dto);
 			String number = request.getParameter("num");
+			request.setAttribute("customerMarker", dto);
 			RequestDispatcher rd = request.getRequestDispatcher("shipselect.jsp?num="+number);
 			rd.forward(request, response);
 		}

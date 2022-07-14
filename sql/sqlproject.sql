@@ -49,7 +49,7 @@ create table recipe(
    r_id int not null auto_increment,
     r_writer varchar(20) not null,
     r_category varchar(20) not null,
-    r_name varchar(20) not null unique,
+    r_name varchar(20) not null,
     r_desc varchar(100),
     r_product varchar(500) not null,
     r_unit varchar(200),
@@ -59,6 +59,8 @@ create table recipe(
     primary key(r_id)
 )default charset=utf8mb4;
 select * from recipe;
+
+alter table recipe change r_name r_name varchar(20) not null;
 
 insert into recipe (r_writer, r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('cus1','국·탕·찌개·전골','된장찌개','구수함이 끝내주는 된장찌개','양파(100g),감자(100g),된장(100g)','1,1,1','1.물을 보글보글 끓여주세요.<br>2.된장을 풀어주세요.<br>3.완성!!!', 'djj.jpg');
 insert into recipe (r_writer, r_category, r_name, r_desc, r_product, r_unit, r_tip, r_img) values ('cus1','국·탕·찌개·전골','김치찌개','묵은지의 깊은 맛이 느껴지는 김치찌개','양파(100g),감자(100g),김치(500g)','1,1,1','1.물을 보글보글 끓여주세요.<br>2.김치와 재료를 넣어주세요.<br>3.완성!!!', 'kjj.jpg');
@@ -105,24 +107,31 @@ select * from customer;
 
 
 create table cusorder (
-   o_num int auto_increment,
+	o_num int auto_increment,
     o_date date,
-   o_id varchar(20) not null,
+	o_id varchar(20) not null,
+	o_s_id varchar(20) not null,
     o_f_name varchar(30),
     o_f_img varchar(100),
     o_f_singname varchar(500),
     o_f_singprice varchar(500),
     o_f_singunit varchar(200),
     o_addr varchar(100),
-    o_chk boolean default false,
+    o_chk int default 0,
     primary key(o_num),
-   foreign key(o_id) references customer(c_id) on delete cascade
+	foreign key(o_id) references customer(c_id),
+	foreign key(o_s_id) references seller(s_id)
 )default charset=utf8mb4;
 
-delete from cusorder where o_id ='cus3';
+update cusorder set o_s_id='admin1';
 
-alter table cusorder add column o_chk boolean default false;
+
+alter table cusorder add column o_s_id varchar(20) not null;
+delete from cusorder where o_id ='cus3';
+alter table cusorder add column o_chk int default 0;
+alter table cusorder change o_chk o_chk int default 0;
 select * from cusorder;
+
 
 drop table notice;
 

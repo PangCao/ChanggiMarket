@@ -404,7 +404,7 @@ public class RecipeDao {
 			}
 		}
 	}
-	public void count(HttpServletRequest request, String search_title) {
+	public void count(HttpServletRequest request, String search_title, String category) {
 		Connection dbconn = null;
 		String sql = "";
 		PreparedStatement pstmt = null;
@@ -412,13 +412,14 @@ public class RecipeDao {
 		
 		try {
 			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
-				sql = "select count(*) from recipe";
+				sql = "select count(*) from recipe where r_category=?";
 			}
 			else {
-				sql = "select count(*) from recipe where r_name like '%"+search_title+"%'";
+				sql = "select count(*) from recipe where r_category=? and r_name like '%"+search_title+"%'";
 			}
 			dbconn = conn();
 			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, category);
 			rs = pstmt.executeQuery();
 			rs.next();
 			int count = rs.getInt(1);
@@ -443,39 +444,39 @@ public class RecipeDao {
 		}
 	}
 	
-	public void recipes(HttpServletRequest request, String search_title) {
+	public void recipes(HttpServletRequest request, String search_title, String category) {
 		Connection dbconn = null;
 		String sql = "";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<recipelist> fl = new ArrayList<recipelist>();
 		String order = request.getParameter("order");
-
 		try {
 			if (search_title == null || search_title.equals("") || search_title.equals("null")) {
 				if (order != null && order.equals("new")) {
-					sql = "select * from recipe order by r_id desc";
+					sql = "select * from recipe where r_category=? order by r_id desc";
 				}
 				else if (order != null && order.equals("sell")) {
-					sql = "select * from recipe order by r_sell desc";
+					sql = "select * from recipe where r_category=? order by r_sell desc";
 				}
 				else {
-					sql = "select * from recipe";
+					sql = "select * from recipe where r_category=?";
 				}
 			}
 			else {
 				if (order != null && order.equals("new")) {
-					sql = "select * from recipe where r_name like '%"+search_title+"%' order by r_id desc";
+					sql = "select * from recipe where r_category=? and r_name like '%"+search_title+"%' order by r_id desc";
 				}
 				else if (order != null && order.equals("sell")) {
-					sql = "select * from recipe where r_name like '%"+search_title+"%' order by r_sell desc";
+					sql = "select * from recipe where r_category=? and r_name like '%"+search_title+"%' order by r_sell desc";
 				}
 				else {
-					sql = "select * from recipe where r_name like '%"+search_title+"%'";
+					sql = "select * from recipe where r_category=? and r_name like '%"+search_title+"%'";
 				}
 			}
 			dbconn = conn();
 			pstmt = dbconn.prepareStatement(sql);
+			pstmt.setString(1, category);
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {

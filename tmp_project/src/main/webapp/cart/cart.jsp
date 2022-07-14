@@ -22,12 +22,12 @@
 <script type="text/javascript">
 	function cartdel() {
 		if (confirm("장바구니의 상품을 모두 삭제하시겠습니까?")) {
-			location.href= "cartdel.ca";
+			location.href= "cartdel";
 		}
 	}
 	function selectdel() {
 		if (confirm("선택하신 상품을 삭제하시겠습니까?")){
-			document.cartForm.action = "seldel.ca";
+			document.cartForm.action = "seldel";
 			document.cartForm.submit();
 		}
 	}
@@ -37,7 +37,7 @@
 %>
 </head>
 <body>
-	<jsp:include page="/menu.jsp"/>
+	<jsp:include page="../menu.jsp"/>
 	<section class="cart">
         <div class="container">
             <h3>장바구니</h3>
@@ -159,13 +159,14 @@
                         </td>
                         <td class="align-middle" id="foodsumview<%=i%>"><%=sum %> 원</td>
                         <input type="hidden" value="<%=sum %>" id="foodsum<%=i%>">
-                        <td class="align-middle"><a class="btn btn-danger" onclick="shipsel()">배송방법</a><p id="ship<%=i%>"></td>
-                        <input type="hidden" id="food_sel_id<%=i%>">
+                        
+                        <td class="align-middle"><a class="btn btn-danger" onclick="shipsel<%=i%>()">배송방법</a><p id="ship<%=i%>">밀키트</p></td>
+                        <input type="hidden" id="food_sel_id<%=i%>" name="food_sel_id" value="밀키트">
                         <script type="text/javascript">
-							function shipsel() {
+							function shipsel<%=i%>() {
 								var id = document.getElementById('foodid<%=i%>');
 								var popupwidth = 800;
-								var popupheight = 500;
+								var popupheight = 800;
 								var popx = (window.screen.width / 2) - (popupwidth / 2);
 								var popy = (window.screen.height / 2) - (popupheight / 2);
 								window.open("shipsel.ca?f_id="+id.value+"&num="+<%=i%>, "searchPop", "status=no, width="+popupwidth+", height="+popupheight+",left="+popx+",top="+popy);
@@ -225,6 +226,6 @@
     		}
     	}
     </script>
-    <jsp:include page="/footer.jsp"/>
+    <jsp:include page="../footer.jsp"/>
 </body>
 </html>
